@@ -24,21 +24,21 @@ When answering design system questions, cite the source and provide:
 
 Map WDS component names to their design guidance section below:
 
-| WDS Component                        | See Guidance Under         |
-| ------------------------------------ | -------------------------- |
-| DropdownButton, DropdownIconButton   | Buttons > Dropdown         |
-| SplitButton                          | Buttons > Split dropdown   |
-| IconButton, TinyIconButton           | Buttons > Types            |
-| InputMenu, InputMenuDropdown         | Input Menus                |
-| InputNumber, InputPassword, TextArea | Input > Types              |
-| TableV2, MultiFieldTableV2           | Tables                     |
-| AutoComplete                         | Input Menus > Autocomplete |
-| CardCarousel                         | Card > Types               |
-| ProgressBar                          | Loaders > Progress bar     |
-| SortableList, SortFilterWidget       | Sort and Filter            |
-| Tree, TreeView                       | Navigation                 |
-| OverlayPanel                         | Panel or Modal             |
-| EllipsisText, CopyableText           | Typography utilities       |
+| WDS Component                                                                           | See Guidance Under         |
+| --------------------------------------------------------------------------------------- | -------------------------- |
+| DropdownButton, DropdownIconButton                                                      | Buttons > Dropdown         |
+| SplitButton                                                                             | Buttons > Split dropdown   |
+| IconButton, TinyIconButton                                                              | Buttons > Types            |
+| InputMenu, InputMenuDropdown                                                            | Input Menus                |
+| InputNumber, InputPassword, TextArea                                                    | Input > Types              |
+| TableV2, MultiFieldTableV2 _(always use V2; legacy `Table` is deprecated for new work)_ | Tables                     |
+| AutoComplete                                                                            | Input Menus > Autocomplete |
+| CardCarousel                                                                            | Card > Types               |
+| ProgressBar                                                                             | Loaders > Progress bar     |
+| SortableList, SortFilterWidget                                                          | Sort and Filter            |
+| Tree, TreeView                                                                          | Navigation                 |
+| OverlayPanel                                                                            | Panel or Modal             |
+| EllipsisText, CopyableText                                                              | Typography utilities       |
 
 For code examples, query the KB or check Storybook: `apps/docsite/storybook/stories/`
 
