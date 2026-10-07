@@ -13,13 +13,13 @@ Rules for building with the eero Design System. Covers component usage, token en
 
 - EDS = the full eero design system. It includes the `@amzn` npm packages (current standardized web components + tokens) plus Insight web components being standardized (marked 🟢 in `.kiro/steering/eds/web/insight/`).
 - The `@amzn` packages are the current source of truth for what's ready to use today.
-- Insight components that haven't been promoted yet can be referenced via `.kiro/steering/eds/web/insight/` for project-specific work.
+- Insight components that haven't been promoted yet can be referenced via `.kiro/steering/eds/web/insight/` for project-specific work. Not charts: data viz is WDS-only.
 - App (mobile) components are a separate platform — they share foundations (colors, spacing, typography) but not web components.
 
 **What is NOT EDS:**
 
-- The docsite (`apps/docsite/`) is the documentation website that documents EDS — it is not a product and not a source for components.
-- The docsite Storybook (`apps/docsite/storybook/`) contains usage _examples_ of WDS components — it is NOT the source of truth. The source is the WDS Storybook (from the `web-design-system` repo). The `@amzn` npm package is the code source of truth.
+- The EDS docsite (eds.harmony.a2z.com) documents EDS — it is not a product and not a source for components.
+- Work-in-progress components in the `ux-design-systems` repo (the EDS team's prototypes, e.g. upcoming charts) are not for consumption. A component is ready only once it ships in `@amzn/eero-web-design-system`.
 
 ---
 
@@ -47,63 +47,12 @@ Rules for building with the eero Design System. Covers component usage, token en
 - **Components (imports)** — `node_modules/@amzn/eero-web-design-system/` (unified v3, default) or `node_modules/@amzn/eero-web-design-components/` (legacy) — what you import and use in code
 - **Design tokens (imports)** — the unified package's `./tokens/*` (v3, default) or `node_modules/@amzn/eero-web-design-foundation/` (legacy) — colors, spacing, typography, radius, elevation
 - **Full styles (imports)** — `@amzn/eero-web-design-system/styles.css` (v3, default) or `@amzn/eero-web-design-components/library/styles.css` (legacy)
-- **WDS source + variant examples (reference)** — `.reference/web-design-system/` — a live git clone of the WDS repo. Read `components/src/*/stories/` for how to configure each component. This clone is also the working copy you contribute to (branch + PR from here). Keep it current before contributing — run `npm run wds:refresh`.
-- **New EDS components you build (source of truth, pre-contribution)** — `eero-design-system/web/components/` — where new EDS web components (e.g. the dataviz `Chart`) are designed and prototyped in THIS repo before being contributed to WDS. Until a component ships in `@amzn`, this is its canonical home. (Package: `@ux-design-systems/eds`; web components under `web/`, patterns under `web/patterns/`, platform-agnostic tokens under `foundation/`, mobile under `mobile/`.)
-- **Insight components (reference)** — `.reference/web-eero-insight/src/components/` — components not yet in WDS (Chart, CircularGauge, DataTable, etc.)
+- **WDS source + variant examples (reference)** — `.reference/web-design-system/` — a git clone of the WDS repo. Read `components/src/*/stories/` for how to configure each component. Re-running the EDS installer keeps it current.
+- **Insight components (reference)** — `.reference/web-eero-insight/src/components/` — Insight's own components that aren't in WDS yet (DataTable, EditableCard, etc.). Charts are the exception: see Data visualization below.
 - **Page compositions (reference)** — `.reference/web-eero-insight/src/app/` — how components assemble into full pages
 - **Design decisions** — `eds-guidelines.md` — when to use which component, accessibility, UX rules
 
 **Important:** `node_modules/@amzn/` has the components but NOT usage examples. The `.reference/` clones provide the implementation examples showing how to configure variants. Always check both.
-
-### Component lifecycle (where the source of truth lives)
-
-A new EDS component moves through three homes. Know which applies:
-
-1. **Prototype** — built in `eero-design-system/web/components/` here. Source of truth while designing.
-2. **Contribute** — WDS is a **separate repo** from ux-design-systems; `.reference/web-design-system` is your local clone of it (its git `origin` is the real WDS repo). Branch off _its_ `main`, port the component in, and open a PR into WDS. WDS eng reviews + adds.
-3. **Consume** — once WDS publishes, everyone (Insight, docsite, all apps) imports it from `@amzn/eero-web-design-system` (the unified v3 package; legacy adopters use `@amzn/eero-web-design-components`), same as Button/Card today.
-
-So `@amzn` is the source of truth for _shipped_ components; `eero-design-system/web/components/` is the source of truth for _new_ components not yet contributed.
-
-### MANDATORY: auto-refresh WDS before any WDS contribution
-
-When the user asks to contribute to WDS, open a PR into WDS, or port a component
-into WDS (any request that will branch/commit inside `.reference/web-design-system`),
-you MUST run `npm run wds:refresh` FIRST, before branching or writing any code —
-without being asked. Designers will not remember to do this; it is your job.
-
-- Run it as the first step, then branch off the freshly-updated WDS `main`.
-- This guarantees the contribution branch sits on current WDS main and the PR
-  merges cleanly.
-- Only skip if you already ran it earlier in the same session and WDS main
-  hasn't moved since.
-- If the refresh fails on auth (CodeArtifact), tell the user to run
-  `npm run codeartifact:login`, then retry — do not proceed on a stale clone.
-
-### MANDATORY: SSR-safety check before any WDS contribution
-
-WDS is server-rendered (Next.js). This repo prototypes components in Vite, which
-**never server-renders** — so a component that works perfectly here can throw or
-mismatch hydration once it ships to WDS. Before porting a component into WDS (any
-request that branches/commits inside `.reference/web-design-system`), audit it
-against this checklist and fix violations FIRST:
-
-- **`"use client"`** — any component using state, effects, refs, event handlers,
-  or browser-only APIs needs the `"use client"` directive at the top. Add it.
-- **No browser globals at module or render top-level** — `window`, `document`,
-  `localStorage`, `navigator`, `matchMedia` must be inside `useEffect` or guarded
-  with `typeof window !== "undefined"`, never called during the first render.
-- **Deterministic first render** — no `Date.now()`, `Math.random()`, or
-  locale/timezone-dependent output in the initial render path; these differ
-  between server and client and cause hydration mismatches. Compute them in
-  `useEffect` after mount.
-- **No layout measurement during render** — `getBoundingClientRect`,
-  `offsetWidth`, `scrollHeight`, etc. only exist client-side; move to `useEffect`.
-- **Charts/dataviz** — recharts and similar libs are client-only; the wrapping
-  component must be `"use client"` and tolerate a server render with no dimensions.
-
-If you cannot verify SSR-safety, flag it in the PR description so WDS eng knows to
-check it under SSR — do not silently assume Vite-passing means WDS-safe.
 
 ---
 
@@ -117,12 +66,20 @@ check it under SSR — do not silently assume Vite-passing means WDS-safe.
 >
 > **This rule overrides every other reference.** If any import list, package description, Storybook example, or older doc names plain `Table`, treat that as stale — `TableV2` wins. Resolve the conflict in favor of `TableV2` without asking.
 
+> **Data visualization — WDS only. If it's not in WDS, it's not ready.**
+>
+> Charts come from `@amzn/eero-web-design-system` and nowhere else. Today that is **`LineChart`** (WDS 3.4.0+). Check the installed package's typings for what else has shipped before building any chart.
+>
+> - Do NOT copy Insight's bespoke `Chart` / `MultiCharts` / `CircularGauge`, and do NOT install `recharts` to hand-build a chart. Those are what WDS is replacing.
+> - If the chart type or feature isn't in WDS yet (bar, area, donut, scatter, gauge, KPI/stat cards, brush/zoom, thresholds, annotations), it isn't ready to consume. Say so and ask — don't build a stand-in.
+> - Design guidance (palette, decision tree, line chart do's and don'ts) is in `eds-guidelines.md` → Data visualization.
+
 **BEFORE writing any UI code, you MUST:**
 
 1. **Check `node_modules/@amzn/eero-web-design-system/` FIRST** (unified v3; legacy repos: `@amzn/eero-web-design-components/`). Browse the full package — typings (`library/typings/`), library, styles. Look for an existing component that serves the purpose. This is the source of truth for production imports.
 2. **Check `node_modules/@amzn/eero-web-design-system/tokens/` for all styling values** (unified v3; legacy repos: `@amzn/eero-web-design-foundation/`). Browse the full package — tokens, fonts, presets. This is the source of truth for colors, spacing, typography, radius, and elevation.
 3. **For variant examples, read `.reference/web-design-system/components/src/*/stories/`.** These show every configuration of every WDS component (collapsed sidebar, brush with time range, expandable table, etc.). Use these to configure components correctly.
-4. **If NOT in WDS, check `.reference/web-eero-insight/src/components/` for Insight components.** 92 components exist in Insight that are not in WDS. Reusable examples: Charts (includes CircularGauge), DataTable, EditableCard, ExpandableCard, KeyValuePairs, SimpleData, PageSection, TableWithBulkActions, PeriodSelector, CardSkeleton, TableSkeleton, FileUpload, SimplePagination. Read the actual source code. Install their external dependencies (e.g., `recharts` for Charts) as needed.
+4. **If NOT in WDS, check `.reference/web-eero-insight/src/components/` for Insight components.** 92 components exist in Insight that are not in WDS. Reusable examples: DataTable, EditableCard, ExpandableCard, KeyValuePairs, SimpleData, PageSection, TableWithBulkActions, PeriodSelector, CardSkeleton, TableSkeleton, FileUpload, SimplePagination. Read the actual source code. **Never charts** — data viz is WDS-only (see above).
 5. **For page compositions, read `.reference/web-eero-insight/src/app/`.** This shows how components are assembled into full pages — dashboard layouts, analytics views, settings pages, detail pages. Use these as the reference for page structure.
 6. **If a WDS component exists, USE IT.** Do not create a local version.
 7. **If NOT in WDS or Insight references, check `eds-guidelines.md`** for a documented pattern or foundation that covers the use case.
@@ -163,7 +120,7 @@ When a user describes what they want to build:
 - If a value doesn't match a token, use the nearest token and note the mapping.
 - Token locations (unified v3; legacy repos use `@amzn/eero-web-design-foundation/tokens/tw-styles/...`):
   - Colors: `@amzn/eero-web-design-system/tokens/tw-styles/color-variables.css`
-  - Theme: `light-variables.css` / `dark-variables.css`
+  - Theme: `light-variables.css` (WDS 3.5+ ships no dark set)
   - All scales: `tw-custom-preset` (no `.js` extension in v3)
 
 ### Custom Hex Values from Figma
@@ -261,39 +218,6 @@ One task, one scope. Only touch what you're asked to touch.
 - Do not refactor unrelated files
 - Do not change Tailwind config, tokens, global CSS, routing, or app structure
 - Do not "fix" or "improve" things you weren't asked to touch
-
----
-
-## Running the Demo Apps
-
-The `apps/` directory contains runnable demo apps that showcase EDS in real
-product-style UIs.
-
-| Demo        | Package name                             | Run command               |
-| ----------- | ---------------------------------------- | ------------------------- |
-| eero Pulse  | `@ux-design-systems/eds-demo-eero-pulse` | `npm run demo:pulse`      |
-| Backup Data | `@ux-design-systems/eds-demo-backupdata` | `npm run demo:backupdata` |
-| Partner Hub | `@ux-design-systems/eds-demo-partnerhub` | `npm run demo:partnerhub` |
-
-**When a user asks to "run demo pulse", "run the eero pulse demo", "start
-backupdata", etc.:**
-
-1. **Run the single root command** — e.g. `npm run demo:pulse` — from the repo
-   root. It starts the demo's dev server on localhost.
-2. **Do NOT `cd` into the app directory.**
-3. **Do NOT run a separate `npm install` inside the app.** The demos are root
-   workspaces, so their dependencies are already installed and linked by the
-   one root `npm install`. Instructing a per-app install is the old,
-   pre-workspace behavior and must not be used.
-
-**Only fall back to installing if the run command errors:**
-
-- **`Cannot find module` / missing deps / workspace not linked** → run
-  `npm install` **once from the repo root** (never per-app), then re-run the
-  demo command. A root install covers all demos.
-- **`E401` / auth errors on `@amzn/*` packages** → CodeArtifact token expired.
-  Ask the user to run `npm run codeartifact:login` (interactive Amazon auth),
-  then retry.
 
 ---
 

@@ -2409,6 +2409,8 @@ return (
 
 ## Charts & Visualization
 
+> **Reference only — do not copy or rebuild these charts.** Insight's charts are bespoke and are being replaced by WDS. For new work, use the WDS **`LineChart`** from `@amzn/eero-web-design-system` (3.4.0+). Any chart type WDS hasn't shipped yet isn't ready to consume. See `eds-web-development.md` → Data visualization.
+
 ### Chart 🟢
 
 **What it does:** Universal chart component built on Recharts that supports area, bar, line, radial bar, and composed chart types with configurable axes, tooltips, reference lines, brush, and legend.
@@ -4036,43 +4038,43 @@ return (
 
 The following Insight components are **generic enough** to be candidates for inclusion in the eero Design System:
 
-| Priority | Component                                         | Reason                                                                             |
-| -------- | ------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| High     | `EditableCard`                                    | Used in 50+ places, standard card-with-edit pattern                                |
-| High     | `ExpandableCard`                                  | Used in all list views, standard expand/collapse pattern                           |
-| High     | `SimpleData`                                      | The primary key-value display — used everywhere                                    |
-| High     | `ExpandedCardContent`                             | Standard responsive grid for card details                                          |
-| High     | `DataTable`                                       | Full-featured table with card/table toggle, pagination                             |
-| High     | `PageSection`                                     | Standard page section with title and actions                                       |
-| Medium   | `Chart`                                           | Universal charting wrapper (may stay as Insight-specific due to Recharts coupling) |
-| Medium   | `PeriodFilter`                                    | Segmented + mobile dropdown pattern for time periods                               |
-| Medium   | `PeriodSelector` / `PeriodSelectorWithDatePicker` | Time period selection with custom date range                                       |
-| Medium   | `Copy`                                            | Copyable text wrapper with toast feedback                                          |
-| Medium   | `ThreeDotsMenu`                                   | Standard contextual menu pattern                                                   |
-| Medium   | `SortMenu`                                        | Sort dropdown with selected indicator                                              |
-| Medium   | `TableSkeleton` / `CardSkeleton`                  | Loading skeleton patterns                                                          |
-| Medium   | `FullScreenLoading`                               | Centered loading state                                                             |
-| Medium   | `ErrorBoundary` / `PageErrorBoundary`             | Error boundary patterns                                                            |
-| Medium   | `EditableInline`                                  | Inline edit card pattern                                                           |
-| Medium   | `ColumnEditorPanel`                               | Column visibility/reorder panel                                                    |
-| Low      | `BaseStatusDisplay`                               | Icon + label status display                                                        |
-| Low      | `DotIcon`                                         | Colored dot indicator                                                              |
-| Low      | `HintText`                                        | Text with info tooltip                                                             |
-| Low      | `HiddenInfo`                                      | Masked text with show/hide toggle                                                  |
-| Low      | `TextDivider`                                     | Horizontal rule with centered text                                                 |
-| Low      | `TooltipContent`                                  | Structured tooltip content                                                         |
-| Low      | `InfiniteScroll`                                  | Intersection Observer infinite scroll                                              |
-| Low      | `SimplePagination`                                | Simple prev/next pagination                                                        |
-| Low      | `TimeRangePaginator`                              | Time-based navigation                                                              |
-| Low      | `AlertLevelIcon`                                  | Info/warning icon with tooltip                                                     |
-| Low      | `FeatureOutageBanner`                             | Error banner with retry                                                            |
-| Low      | `IPs`                                             | IP address list with copy                                                          |
-| Low      | `KeyValuePairs`                                   | Responsive key-value grid                                                          |
-| Low      | `DropdownActions`                                 | Single button or dropdown actions                                                  |
-| Low      | `NetworkTypeFilter`                               | Multi-select network type filter                                                   |
-| Low      | `PhoneInput`                                      | International phone input                                                          |
-| Low      | `RadioSelectorModal`                              | Generic radio selection modal                                                      |
-| Low      | `DataExportsModal`                                | CSV export modal pattern                                                           |
+| Priority | Component                                         | Reason                                                                       |
+| -------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
+| High     | `EditableCard`                                    | Used in 50+ places, standard card-with-edit pattern                          |
+| High     | `ExpandableCard`                                  | Used in all list views, standard expand/collapse pattern                     |
+| High     | `SimpleData`                                      | The primary key-value display — used everywhere                              |
+| High     | `ExpandedCardContent`                             | Standard responsive grid for card details                                    |
+| High     | `DataTable`                                       | Full-featured table with card/table toggle, pagination                       |
+| High     | `PageSection`                                     | Standard page section with title and actions                                 |
+| Medium   | `Chart`                                           | Being replaced by WDS charts (`LineChart` shipped in WDS 3.4.0) — don't copy |
+| Medium   | `PeriodFilter`                                    | Segmented + mobile dropdown pattern for time periods                         |
+| Medium   | `PeriodSelector` / `PeriodSelectorWithDatePicker` | Time period selection with custom date range                                 |
+| Medium   | `Copy`                                            | Copyable text wrapper with toast feedback                                    |
+| Medium   | `ThreeDotsMenu`                                   | Standard contextual menu pattern                                             |
+| Medium   | `SortMenu`                                        | Sort dropdown with selected indicator                                        |
+| Medium   | `TableSkeleton` / `CardSkeleton`                  | Loading skeleton patterns                                                    |
+| Medium   | `FullScreenLoading`                               | Centered loading state                                                       |
+| Medium   | `ErrorBoundary` / `PageErrorBoundary`             | Error boundary patterns                                                      |
+| Medium   | `EditableInline`                                  | Inline edit card pattern                                                     |
+| Medium   | `ColumnEditorPanel`                               | Column visibility/reorder panel                                              |
+| Low      | `BaseStatusDisplay`                               | Icon + label status display                                                  |
+| Low      | `DotIcon`                                         | Colored dot indicator                                                        |
+| Low      | `HintText`                                        | Text with info tooltip                                                       |
+| Low      | `HiddenInfo`                                      | Masked text with show/hide toggle                                            |
+| Low      | `TextDivider`                                     | Horizontal rule with centered text                                           |
+| Low      | `TooltipContent`                                  | Structured tooltip content                                                   |
+| Low      | `InfiniteScroll`                                  | Intersection Observer infinite scroll                                        |
+| Low      | `SimplePagination`                                | Simple prev/next pagination                                                  |
+| Low      | `TimeRangePaginator`                              | Time-based navigation                                                        |
+| Low      | `AlertLevelIcon`                                  | Info/warning icon with tooltip                                               |
+| Low      | `FeatureOutageBanner`                             | Error banner with retry                                                      |
+| Low      | `IPs`                                             | IP address list with copy                                                    |
+| Low      | `KeyValuePairs`                                   | Responsive key-value grid                                                    |
+| Low      | `DropdownActions`                                 | Single button or dropdown actions                                            |
+| Low      | `NetworkTypeFilter`                               | Multi-select network type filter                                             |
+| Low      | `PhoneInput`                                      | International phone input                                                    |
+| Low      | `RadioSelectorModal`                              | Generic radio selection modal                                                |
+| Low      | `DataExportsModal`                                | CSV export modal pattern                                                     |
 
 ### Wrapper Components (already use EDS, just add i18n)
 

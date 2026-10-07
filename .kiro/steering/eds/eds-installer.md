@@ -59,16 +59,26 @@ volta install npm@11.6.2
 
 The installer sets up everything AI tools need: steering files, reference repos, Claude Code CLI, and IDE integration.
 
-The installer runs in two steps: a **base** install (steering + AI tooling, platform-agnostic), then an **explicit platform** (`web` or `mobile` — there is no default).
+Pick a platform (`web` or `mobile`). The base (steering + AI tooling) always installs; the platform adds its steering, reference repos, and toolchain.
 
 ```bash
-# 1) Base — steering + Claude Code + MCP. Always safe to run.
-git clone --depth 1 https://github.com/eero-inc/ux-design-systems.git /tmp/eds && bash /tmp/eds/scripts/install-eds-steering.sh && rm -rf /tmp/eds
+# Web — WDS + Insight, Node/Vite
+git clone --depth 1 https://github.com/eero-inc/ux-design-systems.git /tmp/eds && bash /tmp/eds/scripts/install-eds-steering.sh web && rm -rf /tmp/eds
 
-# 2) Then pick a platform (clones its reference repos + auto-installs its toolchain):
-bash /tmp/eds/scripts/install-eds-steering.sh web      # WDS + Insight, Node/Vite
-bash /tmp/eds/scripts/install-eds-steering.sh mobile   # real eero iOS + Android apps, native toolchain
+# Mobile — real eero iOS + Android apps, native toolchain
+git clone --depth 1 https://github.com/eero-inc/ux-design-systems.git /tmp/eds && bash /tmp/eds/scripts/install-eds-steering.sh mobile && rm -rf /tmp/eds
 ```
+
+### Updating
+
+Re-run the same one-liner. You can also drop the platform: a re-run with no platform refreshes whichever platforms are already installed. Each run brings you up to date:
+
+- **Steering** — every installed file is replaced with the latest from `main`.
+- **Reference repos** — `.reference/` clones are pulled to the latest. If you're on another branch or have local changes in a clone, it's fetched but left alone, and the installer tells you.
+- **WDS** (web) — if your project uses `@amzn/eero-web-design-system`, the installer offers to upgrade it to the latest release in your current major version (needs CodeArtifact auth).
+- **Mobile** — the iOS and Android app clones and their submodules are updated, and the toolchain is re-checked.
+
+The auto-update check tells you in Claude Code when a new EDS version is out.
 
 ### What it installs
 
@@ -85,21 +95,18 @@ bash /tmp/eds/scripts/install-eds-steering.sh mobile   # real eero iOS + Android
 | `web/insight/insight-patterns.md`       | web    | Insight page compositions and layout patterns                         |
 | `web/insight/insight-coverage-audit.md` | web    | Gap analysis between Insight and WDS                                  |
 | `mobile/eds-mobile-development.md`      | mobile | Running the real eero iOS + Android apps locally                      |
+| `mobile/eds-mobile-linter.md`           | mobile | Flags drift — checks native code against in-app eero foundations      |
 
 Shared files install on every run; `web/*` install with `web`, `mobile/*` with `mobile`.
 
 **2. Reference repo clones** → `.reference/`
 
-| Clone                          | What it provides                                                                           |
-| ------------------------------ | ------------------------------------------------------------------------------------------ |
-| `.reference/web-design-system` | Live WDS repo clone — variant examples (stories) AND the working copy you branch + PR from |
-| `.reference/web-eero-insight`  | Insight source — components, page compositions, layouts, patterns                          |
+| Clone                          | What it provides                                                    |
+| ------------------------------ | ------------------------------------------------------------------- |
+| `.reference/web-design-system` | WDS repo clone — variant examples (stories) for every WDS component |
+| `.reference/web-eero-insight`  | Insight source — components, page compositions, layouts, patterns   |
 
-These are what AI reads to understand _how_ to use components (not just what exists). The npm packages provide the piano keys (props, types, exports). The reference clones provide the sheet music (which prop combinations produce which variants, how components compose into full pages).
-
-`web-design-system` is a shallow (`--depth 1`) clone of the **separate** WDS repo — its git `origin` points at the real WDS on GitHub, so it's both the source you read for examples and the working copy you contribute from. To contribute a component built in `eero-design-system/web/components/`, branch off the clone's `main`, port the component in, and open a PR into WDS. (Shallow is fine for branch + push + PR; `npm run wds:refresh` keeps it current.)
-
-The `npm run wds:refresh` script pulls latest WDS + reinstalls deps if the lockfile changed. Designers do NOT run it manually — the AI agent runs it automatically as the first step of any WDS contribution (see the MANDATORY auto-refresh rule in `eds/web/eds-web-development.md`).
+These are what AI reads to understand _how_ to use components (not just what exists). The npm packages provide the piano keys (props, types, exports). The reference clones provide the sheet music (which prop combinations produce which variants, how components compose into full pages). Re-running the installer pulls both to the latest.
 
 **3. Claude Code CLI + IDE integration**
 
@@ -162,7 +169,7 @@ After installing, start a new Kiro or Claude Code chat to pick up the context.
 > - Tailwind preset: `require("@amzn/eero-web-design-system/tokens/tw-styles/tw-custom-preset")` (no `.js` extension)
 > - Content path: `"./node_modules/@amzn/eero-web-design-system/library/**/*.{js,css}"`
 > - Styles: `import "@amzn/eero-web-design-system/styles.css"`
-> - Fonts: `@amzn/eero-web-design-system/fonts/fonts.css` — Tokens: `@amzn/eero-web-design-system/tokens/tw-styles/*` (e.g. `color-variables.css`, `light-variables.css`, `dark-variables.css`)
+> - Fonts: `@amzn/eero-web-design-system/fonts/fonts.css` — Tokens: `@amzn/eero-web-design-system/tokens/tw-styles/*` (e.g. `color-variables.css`, `light-variables.css`)
 >
 > **Legacy (pre-v3, two packages).** The old `@amzn/eero-web-design-components`
 > (2.21.x) + `@amzn/eero-web-design-foundation` (0.6.x) are still published, so
@@ -175,9 +182,9 @@ After installing, start a new Kiro or Claude Code chat to pick up the context.
 
 ### Core EDS package
 
-| Package                              | Version | What it is                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@amzn/eero-web-design-system` (WDS) | 3.0.0   | Unified package — 40+ production React components (Button, Card, Input, Select, Switch, Tabs, Tag, Icon, Modal, Table, Search, Loader, Tooltip, and more) **plus** the foundation: design tokens (colors, spacing, typography, radius, elevation), Tailwind CSS preset, Centra No2 font files, and CSS variables for theming. Built on Ant Design, styled with eero tokens. |
+| Package                              | Version            | What it is                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@amzn/eero-web-design-system` (WDS) | 3.x (latest 3.5.0) | Unified package — 40+ production React components (Button, Card, Input, Select, Switch, Tabs, Tag, Icon, Modal, Table, Search, Loader, Tooltip, and more) **plus** the foundation: design tokens (colors, spacing, typography, radius, elevation), Tailwind CSS preset, Centra No2 font files, and CSS variables for theming. Built on Ant Design, styled with eero tokens. |
 
 > **Legacy (pre-v3):** the two separate packages `@amzn/eero-web-design-components` (2.21.x, components) and `@amzn/eero-web-design-foundation` (0.6.x, tokens/foundation) are still published for adopters not yet on v3.
 
@@ -450,17 +457,13 @@ Set `data-theme` on a parent element:
 <body data-theme="light"></body>
 ```
 
-For dark mode, toggle to `data-theme="dark"` and also import:
-
-```tsx
-import "@amzn/eero-web-design-system/tokens/tw-styles/dark-variables.css";
-```
+> **Dark mode isn't available in WDS 3.5+.** WDS stopped publishing the dark token set (`dark-variables.css`) pending a contrast pass, so `data-theme="dark"` has nothing to apply. Use `data-theme="light"`. Projects pinned to an older 3.x can still import `dark-variables.css` until they upgrade.
 
 ---
 
 ## WDS Component Reference
 
-All WDS components are named exports from the unified `@amzn/eero-web-design-system` (v3.0.0) barrel. Each component is also available as a subpath export (e.g. `"@amzn/eero-web-design-system/Button"`):
+All WDS components are named exports from the unified `@amzn/eero-web-design-system` (v3.0.0) barrel (latest: 3.5.0). Each component is also available as a subpath export (e.g. `"@amzn/eero-web-design-system/Button"`):
 
 ```tsx
 import {
@@ -488,6 +491,7 @@ import {
   InputNumber,
   InputPassword,
   IntervalSelector,
+  LineChart,
   Loader,
   Menu,
   MiniExpand,
@@ -554,32 +558,34 @@ import {
 
 ### Key component APIs
 
-| Component           | Key props                                                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `Button`            | `type` ("primary" / "default" / "text" / "link"), `label`, `leftIcon`, `rightIcon`, `loading`, `danger`, `ghost`, `fullWidth`, `size`                        |
-| `Card`              | `title`, `size` (1-10), `expandable`, `isCollapsed`, `footer`, `extra`                                                                                       |
-| `CardCarousel`      | Horizontal card scrolling container                                                                                                                          |
-| `Input`             | `id` (required), `label`, `caption`, `state` ("default" / "error" / "warning"), `layout` ("horizontal" / "vertical")                                         |
-| `InputMenu`         | `id` (required), `type` (use `INPUT_MENU_TYPES`), searchable dropdown menus                                                                                  |
-| `Select`            | `id` (required), `label`, `options`, `placeholder`, `state`                                                                                                  |
-| `AutoComplete`      | Typeahead input with filtered suggestions                                                                                                                    |
-| `Switch`            | `format` ("small" / "default" / "large"), `checked`, `onChange`                                                                                              |
-| `Tabs`              | `items` (array of `{key, label, children}`), `topIcons`, `tabFillSpace`                                                                                      |
-| `Tag`               | `color` ("grey" / "navy" / "periwinkle" / "green" / "orange" / "red" / "turquoise" / "ocean" / "purple"), `status`, `size` ("regular" / "large"), `showIcon` |
-| `CheckableTag`      | Selectable tag — acts as a filter chip                                                                                                                       |
-| `Icon`              | `icon` (use `ICONS` enum values like `ICONS.FUNCTIONAL_HOME`)                                                                                                |
-| `Search`            | `id` (required), `placeholder`                                                                                                                               |
-| `Modal`             | Standard Ant Design Modal API                                                                                                                                |
-| `OverlayPanel`      | Sliding panel overlay (alternative to Modal for complex content)                                                                                             |
-| `TableV2`           | TanStack-based table with sorting, filtering, pagination                                                                                                     |
-| `MultiFieldTableV2` | Editable table with inline field editing, validation, add/remove rows                                                                                        |
-| `Brush`             | Time-range selection chart (drag to select a range)                                                                                                          |
-| `ProgressBar`       | Determinate/indeterminate progress indicator                                                                                                                 |
-| `SortableList`      | Drag-to-reorder list                                                                                                                                         |
-| `SortFilterWidget`  | Combined sort + filter controls                                                                                                                              |
-| `Pagination`        | Page navigation with `PaginationInfo`                                                                                                                        |
-| `Layout`            | App shell with `Sidebar` — collapsible navigation layout                                                                                                     |
-| `Tree` / `TreeView` | Hierarchical data display with expand/collapse                                                                                                               |
+| Component           | Key props                                                                                                                                                                     |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`            | `type` ("primary" / "default" / "text" / "link"), `label`, `leftIcon`, `rightIcon`, `loading`, `danger`, `ghost`, `fullWidth`, `size`                                         |
+| `Card`              | `title`, `size` (1-10), `expandable`, `isCollapsed`, `footer`, `extra`                                                                                                        |
+| `CardCarousel`      | Horizontal card scrolling container                                                                                                                                           |
+| `Input`             | `id` (required), `label`, `caption`, `state` ("default" / "error" / "warning"), `layout` ("horizontal" / "vertical")                                                          |
+| `InputMenu`         | `id` (required), `type` (use `INPUT_MENU_TYPES`), searchable dropdown menus                                                                                                   |
+| `Select`            | `id` (required), `label`, `options`, `placeholder`, `state`                                                                                                                   |
+| `AutoComplete`      | Typeahead input with filtered suggestions                                                                                                                                     |
+| `Switch`            | `format` ("small" / "default" / "large"), `checked`, `onChange`                                                                                                               |
+| `Tabs`              | `items` (array of `{key, label, children}`), `topIcons`, `tabFillSpace`                                                                                                       |
+| `Tag`               | `color` ("grey" / "navy" / "periwinkle" / "green" / "orange" / "red" / "turquoise" / "ocean" / "purple"), `status`, `size` ("regular" / "large"), `showIcon`                  |
+| `CheckableTag`      | Selectable tag — acts as a filter chip                                                                                                                                        |
+| `Icon`              | `icon` (use `ICONS` enum values like `ICONS.FUNCTIONAL_HOME`)                                                                                                                 |
+| `Search`            | `id` (required), `placeholder`                                                                                                                                                |
+| `Modal`             | Standard Ant Design Modal API                                                                                                                                                 |
+| `OverlayPanel`      | Sliding panel overlay (alternative to Modal for complex content)                                                                                                              |
+| `TableV2`           | TanStack-based table with sorting, filtering, pagination                                                                                                                      |
+| `MultiFieldTableV2` | Editable table with inline field editing, validation, add/remove rows                                                                                                         |
+| `Brush`             | Time-range selection chart (drag to select a range)                                                                                                                           |
+| `ProgressBar`       | Determinate/indeterminate progress indicator                                                                                                                                  |
+| `SortableList`      | Drag-to-reorder list                                                                                                                                                          |
+| `SortFilterWidget`  | Combined sort + filter controls                                                                                                                                               |
+| `Pagination`        | Page navigation with `PaginationInfo`                                                                                                                                         |
+| `Layout`            | App shell with `Sidebar` — collapsible navigation layout                                                                                                                      |
+| `Sidebar`           | Navigation rail; `footerItems` pins rows (e.g. Help, Settings) to the bottom (3.5.0+)                                                                                         |
+| `LineChart`         | `data`, `series` (`{key, label, color?}`), `height` (number or `"fill"`), `rightAxisKeys` (dual axis), `syncId` (3.4.0+). **The only WDS chart today — data viz is WDS-only** |
+| `Tree` / `TreeView` | Hierarchical data display with expand/collapse                                                                                                                                |
 
 ### Where to find variant examples
 
@@ -672,7 +678,7 @@ The WDS team is planning to migrate the Web Design System package to ABT after t
 | Components render unstyled                          | Wrong CSS import order                                  | Foundation CSS must load before component CSS before Tailwind                                                 |
 | Centra No2 font not loading                         | Missing font import                                     | Import `@amzn/eero-web-design-system/fonts/fonts.css` in entry file                                           |
 | Tailwind classes not applying to WDS                | Missing content path                                    | Add `./node_modules/@amzn/eero-web-design-system/library/**/*.{js,css}` to `content` in `tailwind.config.cjs` |
-| Dark mode not working                               | Missing theme attribute or CSS                          | Set `data-theme="dark"` on parent element and import `dark-variables.css`                                     |
+| Dark mode not working                               | WDS 3.5+ no longer publishes the dark token set         | Expected — dark mode is unavailable until WDS republishes it. Use `data-theme="light"`                        |
 | `Cannot find module '@amzn/...'`                    | Not authenticated or wrong registry                     | Check `.npmrc` points to CodeArtifact, re-run `codeartifact:login`                                            |
 | Reference clone fails (404)                         | Not in eds-adopters team                                | Ask Isaac Park to add you to [eds-adopters](https://github.com/orgs/eero-inc/teams/eds-adopters)              |
 | Installer script 404                                | Using old `curl` command                                | Use the `git clone` one-liner (see Full Installer section above)                                              |

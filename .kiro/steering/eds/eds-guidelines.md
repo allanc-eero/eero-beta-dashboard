@@ -5,7 +5,7 @@ description: Complete offline EDS design reference — components, patterns, fou
 
 # eero UX Design System
 
-> **Last synced:** 2026-05-16
+> **Last synced:** 2026-05-16 (Data visualization: 2026-10-06)
 > **Source:** Contentful (PE space) + EDS docsite
 > **To regenerate:** Pull latest guidance from Contentful/KB and update this file.
 > **Source priority:** Use EDS Knowledge Base (if configured) over this file. This is the offline fallback.
@@ -24,23 +24,25 @@ When answering design system questions, cite the source and provide:
 
 Map WDS component names to their design guidance section below:
 
-| WDS Component                                                                           | See Guidance Under         |
-| --------------------------------------------------------------------------------------- | -------------------------- |
-| DropdownButton, DropdownIconButton                                                      | Buttons > Dropdown         |
-| SplitButton                                                                             | Buttons > Split dropdown   |
-| IconButton, TinyIconButton                                                              | Buttons > Types            |
-| InputMenu, InputMenuDropdown                                                            | Input Menus                |
-| InputNumber, InputPassword, TextArea                                                    | Input > Types              |
-| TableV2, MultiFieldTableV2 _(always use V2; legacy `Table` is deprecated for new work)_ | Tables                     |
-| AutoComplete                                                                            | Input Menus > Autocomplete |
-| CardCarousel                                                                            | Card > Types               |
-| ProgressBar                                                                             | Loaders > Progress bar     |
-| SortableList, SortFilterWidget                                                          | Sort and Filter            |
-| Tree, TreeView                                                                          | Navigation                 |
-| OverlayPanel                                                                            | Panel or Modal             |
-| EllipsisText, CopyableText                                                              | Typography utilities       |
+| WDS Component                                                                           | See Guidance Under              |
+| --------------------------------------------------------------------------------------- | ------------------------------- |
+| DropdownButton, DropdownIconButton                                                      | Buttons > Dropdown              |
+| SplitButton                                                                             | Buttons > Split dropdown        |
+| IconButton, TinyIconButton                                                              | Buttons > Types                 |
+| InputMenu, InputMenuDropdown                                                            | Input Menus                     |
+| InputNumber, InputPassword, TextArea                                                    | Input > Types                   |
+| TableV2, MultiFieldTableV2 _(always use V2; legacy `Table` is deprecated for new work)_ | Tables                          |
+| AutoComplete                                                                            | Input Menus > Autocomplete      |
+| CardCarousel                                                                            | Card > Types                    |
+| ProgressBar                                                                             | Loaders > Progress bar          |
+| SortableList, SortFilterWidget                                                          | Sort and Filter                 |
+| Tree, TreeView                                                                          | Navigation                      |
+| OverlayPanel                                                                            | Panel or Modal                  |
+| EllipsisText, CopyableText                                                              | Typography utilities            |
+| LineChart _(data viz is WDS-only — see Data visualization)_                             | Data visualization > Line chart |
+| Sidebar (incl. `footerItems` for bottom-pinned rows)                                    | Navigation                      |
 
-For code examples, query the KB or check Storybook: `apps/docsite/storybook/stories/`
+For code examples, query the KB or check the WDS stories: `.reference/web-design-system/components/src/*/stories/`
 
 ## UX Tenets 🧭
 
@@ -2541,194 +2543,235 @@ For future designs that call for complex, table-oriented pages, a toolbar can se
 
 ---
 
-### Visualization
+### Data visualization
 
-Visualization transforms raw data into interactive charts, graphs, and other visual elements within eero's UI.
+> **Synced from Contentful (Data visualization: Foundations, Decision tree, Line chart) on 2026-10-06.**
+>
+> **What you can build with today:** charts come from `@amzn/eero-web-design-system` only. Right now that's **`LineChart`** (WDS 3.4.0+). The other chart types below (bar, area, donut, scatter, gauge, KPI/stat/dashboard cards) are still in progress and **not ready to consume**. Don't hand-build them or copy Insight's bespoke charts. Ask the EDS team instead.
 
-## Goal
+## Foundations
 
-The primary goal of visualization is to communicate complex data and patterns effectively to users, allowing them to comprehend and interpret the information more easily. By using visual elements, data visualization helps users identify trends, patterns, correlations, and outliers within the data, enabling them to make informed decisions and gain valuable insights.
+The shared foundation layer for all charts in eero Insight: color palettes, interaction behaviors, loading states, and accessibility rules. Individual chart pages cover anatomy and configuration — this section covers what's universal.
 
-## Principles
+### Principles
 
-[layout:2-col]
+- **Start from the question.** Pick the chart that answers what the user is actually asking — a trend over time, a comparison, a relationship, or a part of a whole. The Decision tree walks through it.
+- **Color with purpose.** Color carries meaning, so spend it deliberately. Use the categorical palette in order for unrelated series, and reserve the semantic colors for status. Never lean on color alone.
+- **Show only what earns its place.** Every series, label, and gridline competes for attention. Keep the directly-compared set small and let the legend carry the rest, so the insight stays in front.
+- **Stay consistent across a view.** When the same measure appears in more than one chart, keep its color and framing the same, so a dashboard reads as one story rather than several.
 
-### Simplify complexity
+### Color
 
-The visual representation should simplify complex data, making it easier for users to understand and interpret. Avoid clutter and unnecessary details, focusing on the essential information.
+- **Categorical palette** — use the colors in index order for multi-series charts: Ocean, Turquoise, Purple, Periwinkle, Plum, Terracotta. Never skip or reorder. If you need more than six series, the chart is too complex — redesign the data model.
+- **Semantic colors** — reserved for meaning (status). Never use them for arbitrary data series.
 
-[col]
+### Color strategies
 
-### Clear communication
+| Strategy    | When                                                                                                                                                                                                                                             | Example                                         |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| Categorical | Unordered groups. Use the six categorical colors in order, keeping the directly-compared set small so the colors stay distinct.                                                                                                                  | Wi-Fi bands (2.4 / 5 / 6 GHz), device types     |
+| Sequential  | Ordered data on a single scale. Light → dark within ONE hue family so it reads as one group, not a rainbow. Keep it to a handful of steps. A sequential ramp shows magnitude, not good/bad — reserve status hues (green/red/orange) for meaning. | Distribution, rollout %                         |
+| Comparison  | A vs B. The new/test thing gets the vibrant color (Turquoise); the baseline gets a muted gray (Gray-6) so it recedes.                                                                                                                            | Beta firmware (Turquoise) vs Production (Gray)  |
+| Diverging   | Opposed measures around a shared baseline — a layout, not a color ramp: one series reads one way, the other the opposite, each in its own color.                                                                                                 | New activations (up) vs churned networks (down) |
+| Blend       | A harmonious two-color ramp between two hues, for many related series where a single-hue ramp runs out of contrast.                                                                                                                              | Severity (orange → red), ocean → turquoise      |
 
-Data visualization should effectively communicate the intended message to users. Use appropriate labels, titles, and annotations to provide context and guide users in interpreting the visuals correctly.
+### Interaction
 
-[/layout]
+| Element       | Hover behavior                                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------ |
+| Line / area   | The point under the cursor is marked so it's clear which reading the tooltip describes.          |
+| Bar           | The hovered column lifts out of the background so the eye stays on it.                           |
+| Donut segment | The tooltip names the segment and its share — the ring itself stays calm.                        |
+| Legend item   | Hovering an entry highlights its series on the plot, and hovering the plot highlights the entry. |
 
-[layout:2-col]
+- **Click** — the chart doesn't own what happens on a click; it hands the click off so the app can act (drill in, filter, open detail).
+- **Tooltip** — shows the point's label and each series' value; when the series are parts of a whole, it adds a total.
+- **Zoom** — for a dense series, a draggable brush below the plot zooms into a window without leaving the chart.
+- **Crosshair** — a vertical hairline follows the cursor on time-series charts. Synced charts move together so one moment reads across a dashboard. Sync only charts that share a timeline.
 
-### User-centric 
+### States
 
-Ensure that the visuals align with their knowledge level and goals, providing relevant insights and actionable information.
+Each state keeps the space it holds so the layout doesn't jump, and one card's trouble never blocks the rest.
 
-[col]
+- **Loading** — hold the chart's space with a calm placeholder. Don't swap in a spinner or mix half-loaded data with the placeholder.
+- **Empty** — say plainly there's nothing to show yet ("No data available"), rather than a blank or broken frame.
+- **Error** — explain the data couldn't load and offer a way back ("Failed to load"). Don't show a broken chart or take over the page for one card's failure.
+- **Live** — new readings arrive at the leading edge while the window keeps a steady scale. A subtle pulse signals live; respect reduced motion.
 
-### Visual hierarchy 
+### Data & labels
 
-Establish a clear visual hierarchy to guide user attention and highlight the most important data points. Use size, color, and placement to emphasize key elements and facilitate quick comprehension.
+**Metric naming**
 
-[/layout]
+- Name metrics by what they measure, not how they're visualized: "Outages" not "Outage Trends"
+- Keep labels under 30 characters. Include units if not obvious: "Avg RSSI (dBm)"
+- Filtered series append the filter: "Outages (v7.2.1)"
+- Per-entity series include the entity: "AP-Lobby-01 (mean −56)"
 
-[layout:2-col]
+**Subtitles**
 
-### Consistency 
+- Time-series charts: derive from the selected interval (e.g., "Last 12 hours · 30 min intervals")
+- Snapshot charts (donut, KPI): "Point-in-time snapshot · As of [timestamp]"
 
-Maintain consistency in the design elements, such as colors, fonts, and styles, across different visualizations within the user interface. This fosters familiarity and ease of use, enhancing the overall user experience.
+**X-axis labels** — the chart shows each point's label exactly as you provide it; choosing the text is yours.
 
-[col]
+- Match the label to the range: "6am" for a day, "Wed" for a week, "Jun 8" for a month.
+- Rolling windows: 12 hours or longer → label on the hour ("12am, 1am"); 6 hours or less → finer time ("2:15am"). Use am/pm, not 24-hour time.
+- When the window crosses midnight, mark the crossover with the day or date ("Wed 12am").
+- The axis thins labels as points get dense (always keeping first and last). Long category labels truncate with an ellipsis; the full text stays in the tooltip.
 
-### Accuracy
+**Data density**
 
-Guarantee the accuracy and integrity of the data presented in the visualizations. Perform thorough data validation and ensure that the visual representation reflects the underlying data accurately.
+- Pre-aggregating into buckets? Prefer the peak or average per bucket over the sum — summing telemetry inflates values and distorts the shape.
 
-[/layout]
+### Do
 
-## Types
+- Always use the `var(--token, fallback)` format
+- Use the 1px white stroke between stacked segments (3:1 contrast)
+- Pair color with position, labels, or patterns — never color alone
+- Keep stacked charts to a few segments so each stays readable
 
-### Line
+### Don't
 
-Line charts are used to depict how a particular variable or a set of variables changes over time or along a continuous axis, where all data points are connected by lines. Each data point represents a specific value at a given point in time or along the defined axis. The line's trajectory provides a visual depiction of the data's behavior, allowing users to identify trends, patterns, and changes more easily.
+- Hardcode hex without the CSS variable
+- Pair red + green as adjacent segments (colorblind conflict)
+- Use semantic colors for non-semantic data series
+- Reach past the six categorical colors for one chart — group the rest
 
-[layout:2-col]
+### Accessibility
 
-#### Low density
+- **Color** — 3:1 minimum contrast between adjacent segments (WCAG 2.1 non-text); 1px white stroke separators on stacked bars and areas; donut segments separated by a 3° padding angle; never encode meaning with color alone.
+- **Motion** — respect `prefers-reduced-motion`: disable entrance animations and the live pulse. Skeleton shimmer is acceptable.
+- **Keyboard** — a chart plot is a single Tab stop with a visible focus ring; arrow keys move between points; Home/End jump to first/last; Enter or Space activates the focused point; legend items are real buttons.
+- **Screen readers** — every chart needs an `aria-label` describing the insight (e.g., "Outage trends, increasing 12% over 6 hours"); focusing a point announces its category and each visible series' value.
 
-[col]
-
-#### Step density
-
-[/layout]
-
-[layout:2-col]
-
-#### High density
-
-[col]
-
-#### High density multi-line
-
-[/layout]
-
-#### Tips:
-
-- Use for displaying up to 5 categories or data variables
-- Use a single color’s scale when displaying change over time
-- Use a legend when displaying a line chart containing 2 or more lines
-
-### Bar
-
-Bar charts are used to compare values across different categories or groups and highlight variations or relationships in the data, where rectangular bars display categorical or numerical data. Each category or group is represented by a separate bar, with the length or height of the bar indicating the value or magnitude of the data it represents. 
-
-In the case of numerical data, bar visualizations can also be used to represent ranges or intervals by using stacked bars or grouped bars. Stacked bars show the composition of the total value for each category, while grouped bars allow direct comparison of values within each category.
-
-[layout:2-col]
-
-#### Single bar
-
-[col]
-
-#### Grouped bar
-
-[/layout]
-
-#### Tips:
-
-- Use up to 5 categories or variables
-- Use multiple colors when comparing categories
-- Use single color ramp when displaying change over time
-- Use a legend when comparing 2 or more categories
-
-### Mixed bar
-
-Mixed charts are a combination of both bar charts and line charts into a single visual representation. It incorporates both rectangular bars and continuous lines to display and compare different types of data simultaneously. In these charts, the bars are typically used to represent categorical or discrete data, while the line(s) are used to represent continuous or sequential data. 
-
-#### Tips:
-
-- Use for displaying up to 5 categories or variables
-- Use multiple colors when comparing categories
-- Use single color ramp when displaying change over time
-- Use a legend when comparing 2 or more categories
-
-### Brushes
-
-In some of our visualizations, a brush can be added as an interactive tool that lets users select a specific region of a visualization by clicking and dragging over part of it to filter or highlight data within that selected area. Brushes within visualizations can be used to filter other parts of the page, such as a table. An example of this can be found in the Client device details page.
-
-Brushes can be used in line and timeline components, as well as on their own in select circumstances, such as in the page header.
-
-### Circular and semicircular gauges
-
-**Circular** gauge charts are used to illustrate the amount of a numeric value within a known maximum value or a percentage. The data is displayed by the fill within the gauge and accompanied by a numeric value in the center of the chart. The circular shape of the gauge allows for a more compact display compared to linear or bar charts, making it suitable for small spaces or dashboards where multiple data points need to be presented together.
-
-**Semicircular gauge** charts are similar to Radial ones but recommended to use in scenarios when it requires more prominent representation of the data.
-
-#### Tips:
-
-- Use to highlight a single metric
-- Use when a specified range is defined
-- Use categorical color scale
-- Don’t use to highlight a trend
-- Don’t use to indicate part-to-whole
-- Don’t use sequential or diverging color scales
-
-### Progress bar
-
-Progress bar charts are used to illustrate a percentage. It typically consists of a horizontal bar that is segmented or filled to indicate the degree of completion or progress. The progress bar can be divided into discrete sections or filled gradually, representing the proportion of the task or process that has been completed. As the task progresses, the bar fills up from one end to the other, visually indicating the advancing completion. The length of the progress bar represents the total duration or quantity of the task or process, while the filled portion represents the completed portion. Note: The progress bar is sometimes typically used as a static visualization on dashboards, rather than a loader that updates dynamically.
-
-#### Tips:
-
-- Use to highlight a single metric
-- Use when a specified range is defined
-
-### Donut
-
-Donut charts are used to illustrate the distribution of categorical data within a whole. They are particularly useful for showcasing relative proportions or comparing different groups to the total. Users can easily grasp the relationship between each category and the total value by comparing the sizes of the sectors. The size of each categorical sector corresponds to the proportion or percentage of the whole it represents.
-
-#### Tips:
-
-- Use up to 5 data points
-- Use simplified data when possible
-- Use with part-to-whole data sets
-- Don’t display donut slices less than 10%
-- Don’t use to indicate a set range
-
-### Area
-
-Area charts depict quantitative data as a series of data points connected by a line, with the area between the line and the horizontal axis being filled. The filled area visually emphasizes the magnitude of the data and helps users perceive the overall pattern or trend more easily. It is commonly used to display trends and patterns over time or along a continuous axis. Area charts are particularly effective in showing the cumulative or aggregated values of multiple variables over time. By stacking multiple areas on top of each other, each representing a different variable, users can compare the contribution of each variable to the overall trend.
-
-[layout:2-col]
-
-#### Single series
-
-[col]
-
-#### Multi series
-
-[/layout]
-
-#### Tips:
-
-- Use for displaying up to 5 categories or variables
-- Use a single color’s scale when displaying change over time
-- Use a legend when displaying 2 or more areas
-
-## Editorial
-
-- Select the most appropriate visualization type that effectively represents the data and supports the intended message. Consider factors such as the nature of the data, the relationships to be portrayed, and the target audience. 
-- Simplify the visualization by eliminating unnecessary elements and reducing visual clutter. Remove any distracting elements that do not contribute to the understanding of the data. 
-- Ensure the data used in the visualization is accurate, reliable, and relevant to the editorial context.
-- Provide sufficient context and annotations to help the audience interpret the visualization correctly. Include informative titles, axis labels, legends, and explanatory notes that clarify the meaning of the data and provide necessary background information.
-- Use consistent and intuitive color schemes that enhance clarity and comprehension. Color choices should support the data hierarchy, highlight important elements, and enable users to distinguish between different categories or data points easily. Consider color blindness and ensure accessibility by using color combinations with sufficient contrast.
-- Maintain visual consistency throughout the visualization and across related visualizations within the editorial content. Consistent use of types, colors, and layouts helps establish a cohesive visual language and fosters better recognition and understanding for the audience.
+## Decision tree
+
+How to choose the right chart type. Work down the questions in order; the first one you answer **yes** is your chart. If none fit, use a table. Only `LineChart` is in WDS today — if the answer is another chart type, it isn't ready to consume yet.
+
+### By metric type
+
+| Metric type                        | Chart         | Color strategy                       |
+| ---------------------------------- | ------------- | ------------------------------------ |
+| Throughput / bandwidth             | Line or area  | Categorical (palette order)          |
+| Latency / response time            | Line chart    | Categorical (single line)            |
+| Error rate / health                | KPI + bar     | Semantic (green/orange/red)          |
+| Device count / fleet               | KPI + donut   | Categorical or semantic              |
+| Uptime / availability              | Gauge or KPI  | Semantic (green/red)                 |
+| Distribution / histogram           | Bar chart     | Sequential                           |
+| Comparison (A vs B)                | Line or area  | Comparison (vibrant + gray)          |
+| Correlation (two measures)         | Scatter chart | Single color (shape is the story)    |
+| Firmware rollout % (many versions) | Stacked area  | Sequential or Blend (one hue family) |
+
+### Refinement questions
+
+- **How much data?** Many points suit a line or area chart; a short list of exact numbers is often clearer as a KPI or alongside a table.
+- **How many series need direct comparison?** Keep that set small and let the legend carry the rest — or split into more than one chart.
+- **Exact numbers or the shape?** For precise values, pair the chart with a KPI or a table; for the trend, let the chart lead.
+- **Is there a target or limit?** Mark it with a reference line and lean on semantic color.
+- **Comparing against another period?** Use the comparison strategy — current vibrant, baseline gray.
+- **Is it live?** A steadily updating line chart with a fixed scale reads best.
+- **Hero or supporting detail?** Give the main insight more room.
+- **Does order matter?** Rank with a bar, follow time with a line or area, show a split with a donut.
+
+### Do
+
+- Use the categorical palette in index order (1→6)
+- Reserve semantic colors for meaning only
+- Keep directly-compared series to a handful; let the legend carry the rest
+- Use KPIs for single scalar values
+- Add reference lines for thresholds/SLAs
+- Show a loading skeleton while data fetches
+- Provide an empty state with a helpful message
+- Include an aria-label describing the insight
+- Use tabular-nums for all numeric values
+- Pair color with labels (never color alone)
+- Provide a data table alternative for a11y
+- Respect prefers-reduced-motion
+
+### Don't
+
+- Skip or reorder palette colors
+- Use semantic colors for arbitrary series
+- Crowd a chart with more directly-compared lines than the eye can follow
+- Use pie charts (use donut instead)
+- Use 3D effects or decorative gradients
+- Animate on load without user opt-in
+- Show raw error stack traces to users
+- Encode meaning with color alone
+- Mix color strategies within one chart
+- Hardcode colors — always use tokens
+- Create bespoke charts without design approval
+
+## Line chart
+
+**WDS component:** `LineChart` from `@amzn/eero-web-design-system` (3.4.0+). Examples: `.reference/web-design-system/components/src/LineChart/stories/`.
+
+Shows change over time. Use when the connection between data points matters and you want to compare trends across one or more series.
+
+### What WDS LineChart supports today
+
+| Need                                                                                               | Prop                                       |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Data rows (category/time label + one numeric key per series)                                       | `data: { label: string; [key]: number }[]` |
+| Series (key, label, optional token color; auto-assigned from the categorical palette when omitted) | `series: { key; label; color? }[]`         |
+| Fixed height (default 300) or fill a sized container                                               | `height?: number \| "fill"`                |
+| Dual Y-axis for different units                                                                    | `rightAxisKeys?: string[]`                 |
+| Synced crosshair/tooltip across charts                                                             | `syncId?: string`                          |
+| Legend labels (localized)                                                                          | `l10n_*` props                             |
+
+The legend (show/hide toggling, visible-series cap with "Show all"), tooltip, hover dimming, and reduced-motion animation are built in.
+
+**Not in WDS yet** (described in the design guidance, coming in later WDS releases): brush/zoom, threshold lines, annotations, emphasis ("color as focus"), on-plot value labels, downsampling, and the keyboard-navigation layer. Don't hand-build these — leave them out until WDS ships them.
+
+### When to use
+
+- Time-series data — hourly, daily, or monthly trends
+- Comparing metrics on one time axis (a handful for direct comparison; more through the toggleable legend)
+- When the shape or direction of change is the insight
+
+### When not to use
+
+- Comparing categories, or non-continuous data — use a bar chart _(not in WDS yet)_
+- Showing parts of a whole — use a donut or stacked bar _(not in WDS yet)_
+- A single value — use a KPI card _(not in WDS yet)_
+
+### Types
+
+- **Single series** — one metric's trend over time. No legend; the title names it.
+- **Multi-series (2–5)** — a handful of metrics on the same scale, colored from the categorical palette in order.
+- **Dual Y-axis** — two related metrics in fundamentally different units (e.g., % and dBm). The primary scale stays on the right, the secondary on the left.
+- **Many series** — beyond a handful, the chart shows a capped set and moves the rest into a toggleable legend with "Show all".
+- **Threshold lines** and **high density (brush)** — designed, not in WDS yet.
+
+### Anatomy
+
+1. **Line** — traces the trend; thickens on hover to pick one series out.
+2. **Y axis** — sits on the right so the latest values are closest to the scale. Compact labels.
+3. **X axis** — marks time or category; you choose the label text, the axis thins labels as data gets dense.
+4. **Grid** — faint horizontal guides.
+5. **Dots** — mark readings on sparse data and step back on dense series. The hovered/focused point is always marked.
+6. **Legend** — names each series; click to isolate, hover to highlight. Hidden for a single line.
+7. **Tooltip** — each series' name, color, and value for the point under the cursor.
+8. **Crosshair & sync** — lines up the cursor with the point being read; synced charts move together.
+9. **States** — loading, empty, and error (see Foundations → States).
+
+### Do
+
+- Keep to a handful of overlapping series for direct comparison; use the legend to explore more
+- Show a legend when the chart has 2 or more lines
+- For many series, lean on the visible-series cap and the legend's "Show all" toggle rather than drawing every line at once
+- Use a dual Y-axis only when the units differ fundamentally, such as % and dBm
+
+### Don't
+
+- Force many overlapping lines on at once when the comparison is unreadable — use the legend toggle or split the chart
+- Show a legend for a single line — the title already names it
+- Use a dual Y-axis when series share the same unit — use a multi-line chart instead
+- Rely on color alone to tell series apart
+
+### Accessibility
+
+Keyboard, screen-reader, color, and motion rules are shared across all charts — see Foundations → Accessibility above.
 
 ---
 
