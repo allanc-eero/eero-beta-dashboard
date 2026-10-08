@@ -101,7 +101,7 @@ export default function AttachmentsPanel({ deviceId, shipmentId }: AttachmentsPa
       size={2}
       title={
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-[var(--ui-text-text-primary)]">Attachments</span>
+          <span className="text-sm font-semibold text-text-primary">Attachments</span>
           {canEdit() && (
             <Button
               type="text"
@@ -114,7 +114,7 @@ export default function AttachmentsPanel({ deviceId, shipmentId }: AttachmentsPa
     >
       {/* Upload form */}
       {showUpload && (
-        <div className="mb-4 p-3 bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg border border-[var(--ui-background-layer-border-border-layer-page)] space-y-3">
+        <div className="mb-4 p-3 bg-layer-page-hover rounded-lg border border-border-layer-page space-y-3">
           <Select
             id="attachment-type"
             label="Document Type"
@@ -139,9 +139,9 @@ export default function AttachmentsPanel({ deviceId, shipmentId }: AttachmentsPa
               type="file"
               onChange={handleFileSelect}
               accept=".pdf,.png,.jpg,.jpeg,.gif,.xlsx,.xls,.csv,.doc,.docx,.txt"
-              className="w-full text-xs text-[var(--ui-text-text-tertiary)] file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-[var(--ui-support-fill-support-info)] file:text-[var(--ui-support-text-icon-support-info)]"
+              className="w-full text-xs text-text-tertiary file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-fill-support-info file:text-text+icon-support-info"
             />
-            <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-1">Max 5MB. PDF, images, Excel, Word, CSV.</p>
+            <p className="text-xs text-text-placeholder mt-1">Max 5MB. PDF, images, Excel, Word, CSV.</p>
           </div>
         </div>
       )}
@@ -150,15 +150,15 @@ export default function AttachmentsPanel({ deviceId, shipmentId }: AttachmentsPa
       {attachments.length > 0 ? (
         <div className="space-y-2 max-h-48 overflow-y-auto">
           {attachments.map((att) => (
-            <div key={att.id} className="flex items-center justify-between p-2 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-md hover:bg-[var(--ui-background-layer-layer-page-hover)]">
+            <div key={att.id} className="flex items-center justify-between p-2 border border-border-layer-page rounded-md hover:bg-layer-page-hover">
               <div className="flex items-center gap-2 min-w-0">
                 <span className="text-base">{FILE_ICONS[att.fileType] || '📎'}</span>
                 <div className="min-w-0">
-                  <p className="text-xs font-medium text-[var(--ui-text-text-primary)] truncate">{att.fileName}</p>
-                  <p className="text-xs text-[var(--ui-text-text-placeholder)]">
+                  <p className="text-xs font-medium text-text-primary truncate">{att.fileName}</p>
+                  <p className="text-xs text-text-placeholder">
                     {att.attachmentType.replace(/_/g, ' ')} · {formatFileSize(att.fileSize)} · {new Date(att.uploadedAt).toLocaleDateString()}
                   </p>
-                  {att.notes && <p className="text-xs text-[var(--ui-text-text-tertiary)] truncate">{att.notes}</p>}
+                  {att.notes && <p className="text-xs text-text-tertiary truncate">{att.notes}</p>}
                 </div>
               </div>
               <div className="flex items-center gap-1 shrink-0 ml-2">
@@ -171,7 +171,7 @@ export default function AttachmentsPanel({ deviceId, shipmentId }: AttachmentsPa
           ))}
         </div>
       ) : (
-        <p className="text-xs text-[var(--ui-text-text-placeholder)]">No files attached</p>
+        <p className="text-xs text-text-placeholder">No files attached</p>
       )}
     </Card>
   );

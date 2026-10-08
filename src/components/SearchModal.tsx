@@ -209,7 +209,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
           <div className="max-h-[450px] overflow-y-auto">
             {Object.entries(grouped).map(([type, items]) => (
               <div key={type} className="mb-3">
-                <p className="text-xs font-semibold text-[var(--ui-text-text-placeholder)] uppercase tracking-wider px-1 py-1">
+                <p className="text-xs font-semibold text-text-placeholder uppercase tracking-wider px-1 py-1">
                   {typeLabels[type as ResultType]} ({items.length})
                 </p>
                 {items.map((result) => (
@@ -221,11 +221,11 @@ export default function SearchModal({ onClose }: SearchModalProps) {
                         onClose();
                       }
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[var(--ui-background-layer-layer-page-hover)] transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-layer-page-hover transition-colors text-left"
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm text-[var(--ui-text-text-primary)] truncate">{result.title}</p>
-                      <p className="text-xs text-[var(--ui-text-text-tertiary)] truncate">{result.subtitle}</p>
+                      <p className="font-medium text-sm text-text-primary truncate">{result.title}</p>
+                      <p className="text-xs text-text-tertiary truncate">{result.subtitle}</p>
                     </div>
                     {result.badge && (
                       <Tag color={result.badgeColor || 'grey'} size="regular">
@@ -240,16 +240,16 @@ export default function SearchModal({ onClose }: SearchModalProps) {
         )}
 
         {query && results.length === 0 && (
-          <div className="p-8 text-center text-[var(--ui-text-text-tertiary)]">
+          <div className="p-8 text-center text-text-tertiary">
             <p className="text-sm">No results found for &ldquo;{query}&rdquo;</p>
-            <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-1">Try searching by serial number, name, email, or program</p>
+            <p className="text-xs text-text-placeholder mt-1">Try searching by serial number, name, email, or program</p>
           </div>
         )}
 
         {!query && (
-          <div className="p-6 text-center text-[var(--ui-text-text-placeholder)] text-sm">
+          <div className="p-6 text-center text-text-placeholder text-sm">
             <p>Search across all devices, people, archived programs, and shipments</p>
-            <p className="text-xs mt-2 text-[var(--ui-text-text-disabled)]">Includes deactivated devices and opted-out testers</p>
+            <p className="text-xs mt-2 text-text-disabled">Includes deactivated devices and opted-out testers</p>
           </div>
         )}
       </Modal>

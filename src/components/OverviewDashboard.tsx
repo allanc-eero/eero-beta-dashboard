@@ -20,7 +20,7 @@ function DonutChart({ title, items, total, size, strokeWidth, centerLabel, cente
 
   return (
     <Card size={3}>
-      <p className="mb-4 text-xs font-bold uppercase text-[var(--ui-text-text-secondary)]">{title}</p>
+      <p className="mb-4 text-xs font-bold uppercase text-text-secondary">{title}</p>
       <div className="flex items-center gap-4">
         <div className="relative shrink-0" style={{ width: `${size}px`, height: `${size}px` }}>
           <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
@@ -35,18 +35,18 @@ function DonutChart({ title, items, total, size, strokeWidth, centerLabel, cente
               const display = centerValue !== undefined ? centerValue : (total > 0 ? total.toLocaleString() : items.length);
               const isText = typeof display === 'string' && isNaN(Number(display));
               const fontSize = isText ? (display.length > 8 ? '11px' : '13px') : (size > 130 ? '20px' : '18px');
-              return <span className="font-bold text-[var(--ui-text-text-primary)]" style={{ fontSize, lineHeight: 1.1 }}>{display}</span>;
+              return <span className="font-bold text-text-primary" style={{ fontSize, lineHeight: 1.1 }}>{display}</span>;
             })()}
-            <span className="mt-0.5 uppercase text-[var(--ui-text-text-tertiary)]" style={{ fontSize: size > 130 ? '9px' : '8px' }}>{centerLabel}</span>
+            <span className="mt-0.5 uppercase text-text-tertiary" style={{ fontSize: size > 130 ? '9px' : '8px' }}>{centerLabel}</span>
           </div>
         </div>
         <div className="flex flex-col" style={{ gap: size > 130 ? '6px' : '4px', fontSize: size > 130 ? '12px' : '11px' }}>
           {items.map((item, i) => (
             <div key={i} className="flex items-center" style={{ gap: size > 130 ? '8px' : '6px' }}>
               <span className="inline-block shrink-0 rounded-[2px]" style={{ width: size > 130 ? '10px' : '8px', height: size > 130 ? '10px' : '8px', backgroundColor: item.color }} />
-              <span className="text-[var(--ui-text-text-secondary)]">{item.name}</span>
-              <b className="text-[var(--ui-text-text-primary)]">{item.count}</b>
-              <span className="text-[var(--ui-core-gray-gray-5)]">{total > 0 ? Math.round((item.count / total) * 100) : 0}%</span>
+              <span className="text-text-secondary">{item.name}</span>
+              <b className="text-text-primary">{item.count}</b>
+              <span className="text-Gray-gray-5">{total > 0 ? Math.round((item.count / total) * 100) : 0}%</span>
             </div>
           ))}
         </div>
@@ -107,9 +107,9 @@ export default function OverviewDashboard() {
             { label: 'Programs', value: programs },
             { label: 'People', value: people },
           ].map((s, i) => (
-            <div key={s.label} className={`min-w-0 flex-1 basis-1/3 px-4 sm:basis-0 ${i > 0 ? 'border-l border-[var(--ui-background-layer-border-border-layer-page)]' : ''}`}>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">{s.label}</p>
-              <p className="mt-0.5 text-lg font-semibold text-[var(--ui-text-text-primary)]">{s.value}</p>
+            <div key={s.label} className={`min-w-0 flex-1 basis-1/3 px-4 sm:basis-0 ${i > 0 ? 'border-l border-border-layer-page' : ''}`}>
+              <p className="text-xs text-text-tertiary">{s.label}</p>
+              <p className="mt-0.5 text-lg font-semibold text-text-primary">{s.value}</p>
             </div>
           ))}
         </div>

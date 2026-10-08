@@ -53,7 +53,7 @@ export default function JiraPanel({ deviceId }: { deviceId: string }) {
       size={2}
       title={
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-[var(--ui-text-text-primary)]">JIRA Tickets</span>
+          <span className="text-sm font-semibold text-text-primary">JIRA Tickets</span>
           {canEdit() && (
             <Button
               type="text"
@@ -65,7 +65,7 @@ export default function JiraPanel({ deviceId }: { deviceId: string }) {
       }
     >
       {showCreate && (
-        <div className="mb-3 p-3 bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg border border-[var(--ui-background-layer-border-border-layer-page)]">
+        <div className="mb-3 p-3 bg-layer-page-hover rounded-lg border border-border-layer-page">
           <Input
             id="jira-summary"
             value={summary}
@@ -82,28 +82,28 @@ export default function JiraPanel({ deviceId }: { deviceId: string }) {
       {tickets.length > 0 ? (
         <div className="space-y-2 max-h-48 overflow-y-auto">
           {tickets.map((ticket) => (
-            <div key={ticket.id} className="p-2 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-md">
+            <div key={ticket.id} className="p-2 border border-border-layer-page rounded-md">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-medium text-[var(--ui-core-periwinkle-periwinkle-6)]">{ticket.key}</span>
+                  <span className="text-xs font-mono font-medium text-Periwinkle-periwinkle-6">{ticket.key}</span>
                   <Tag color={statusColors[ticket.status] || 'grey'} size="regular">{ticket.status}</Tag>
                 </div>
                 {canEdit() && (ticket.status === 'open' || ticket.status === 'in_progress') && (
                   <Button type="text" label="Close" onClick={() => closeJiraTicket(ticket.id)} />
                 )}
               </div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)] mt-1">{ticket.summary}</p>
+              <p className="text-xs text-text-tertiary mt-1">{ticket.summary}</p>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-xs text-[var(--ui-text-text-placeholder)]">{typeLabels[ticket.type] || ticket.type}</span>
+                <span className="text-xs text-text-placeholder">{typeLabels[ticket.type] || ticket.type}</span>
                 {ticket.linkedFirmware && (
-                  <span className="text-xs text-[var(--ui-text-text-placeholder)]">· fw {ticket.linkedFirmware}</span>
+                  <span className="text-xs text-text-placeholder">· fw {ticket.linkedFirmware}</span>
                 )}
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-xs text-[var(--ui-text-text-placeholder)]">No tickets linked to this device</p>
+        <p className="text-xs text-text-placeholder">No tickets linked to this device</p>
       )}
     </Card>
   );

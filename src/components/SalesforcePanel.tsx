@@ -31,32 +31,32 @@ export default function SalesforcePanel({ deviceId, deviceSerial }: SalesforcePa
       size={2}
       title={
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-[var(--ui-text-text-primary)]">Salesforce Cases</span>
-          <span className="text-xs text-[var(--ui-text-text-placeholder)]">{cases.length} case(s)</span>
+          <span className="text-sm font-semibold text-text-primary">Salesforce Cases</span>
+          <span className="text-xs text-text-placeholder">{cases.length} case(s)</span>
         </div>
       }
     >
       {cases.length === 0 ? (
-        <p className="text-xs text-[var(--ui-text-text-placeholder)]">No Salesforce cases linked to this device</p>
+        <p className="text-xs text-text-placeholder">No Salesforce cases linked to this device</p>
       ) : (
         <div className="space-y-2">
           {cases.map((c) => (
-            <div key={c.id} className="p-2 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg">
+            <div key={c.id} className="p-2 border border-border-layer-page rounded-lg">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs font-mono font-medium text-[var(--ui-text-text-primary)]">#{c.caseNumber}</span>
+                <span className="text-xs font-mono font-medium text-text-primary">#{c.caseNumber}</span>
                 <Tag color={statusColors[c.status] || 'grey'} size="regular">{c.status}</Tag>
               </div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)] truncate">{c.subject}</p>
-              <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-0.5">{new Date(c.createdAt).toLocaleDateString()}</p>
+              <p className="text-xs text-text-tertiary truncate">{c.subject}</p>
+              <p className="text-xs text-text-placeholder mt-0.5">{new Date(c.createdAt).toLocaleDateString()}</p>
               {c.jiraTicketKey && (
-                <p className="text-xs text-[var(--ui-core-periwinkle-periwinkle-6)] mt-0.5">→ Escalated to {c.jiraTicketKey}</p>
+                <p className="text-xs text-Periwinkle-periwinkle-6 mt-0.5">→ Escalated to {c.jiraTicketKey}</p>
               )}
             </div>
           ))}
         </div>
       )}
 
-      <p className="text-xs text-[var(--ui-text-text-disabled)] mt-3 italic">API integration required for live data</p>
+      <p className="text-xs text-text-disabled mt-3 italic">API integration required for live data</p>
     </Card>
   );
 }

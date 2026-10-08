@@ -125,7 +125,7 @@ export default function DogfooderPortal() {
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--ui-background-layer-background-page)]">
+    <div className="min-h-screen bg-background-page">
       {/* First-time welcome modal */}
       {showWelcome && (
         <WelcomeModal
@@ -136,14 +136,14 @@ export default function DogfooderPortal() {
         />
       )}
       {/* Top nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--ui-background-layer-layer-page)] border-b border-[var(--ui-background-layer-border-border-layer-page)] px-6 py-3 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-layer-page border-b border-border-layer-page px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Wifi size={24} className="text-[var(--ui-core-periwinkle-periwinkle-6)]" strokeWidth={1.5} />
-          <span className="text-lg font-bold text-[var(--ui-text-text-primary)]">Dogfood Portal</span>
+          <Wifi size={24} className="text-Periwinkle-periwinkle-6" strokeWidth={1.5} />
+          <span className="text-lg font-bold text-text-primary">Dogfood Portal</span>
           <Tag color="purple" size="regular">Dogfooder</Tag>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-[var(--ui-text-text-tertiary)]">{currentUser?.name}</span>
+          <span className="text-sm text-text-tertiary">{currentUser?.name}</span>
           <Button
             type="text"
             onClick={logout}
@@ -154,7 +154,7 @@ export default function DogfooderPortal() {
       </nav>
 
       {/* Tab navigation */}
-      <div className="fixed top-[57px] left-0 right-0 z-40 bg-[var(--ui-background-layer-layer-page)] border-b border-[var(--ui-background-layer-border-border-layer-page)]">
+      <div className="fixed top-[57px] left-0 right-0 z-40 bg-layer-page border-b border-border-layer-page">
         <div className="flex gap-1 max-w-[1280px] mx-auto px-4 overflow-x-auto no-scrollbar">
           {tabs.map((tab) => (
             <button
@@ -162,8 +162,8 @@ export default function DogfooderPortal() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-3.5 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === tab.id
-                  ? 'border-[var(--ui-core-periwinkle-periwinkle-6)] text-[var(--ui-core-periwinkle-periwinkle-6)]'
-                  : 'border-transparent text-[var(--ui-text-text-tertiary)] hover:text-[var(--ui-text-text-secondary)] hover:border-[var(--ui-background-layer-border-border-layer-page)]'
+                  ? 'border-Periwinkle-periwinkle-6 text-Periwinkle-periwinkle-6'
+                  : 'border-transparent text-text-tertiary hover:text-text-secondary hover:border-border-layer-page'
               }`}
             >
               <span className="shrink-0">{tab.icon}</span>
@@ -226,8 +226,11 @@ export default function DogfooderPortal() {
 
 // ─── Confetti Burst ───────────────────────────────────────────────────────────
 function Confetti() {
-  // Decorative multi-color celebration burst — intentional rainbow, no semantic token
-  const colors = ['var(--ui-core-periwinkle-periwinkle-6)', '#4f6bc6', '#f59e0b', '#10b981', '#ef4444', '#a855f7', '#ec4899'];
+  // Decorative multi-color celebration burst — EDS core ramp tokens (no semantic token for decoration)
+  const colors = [
+    'var(--ui-core-periwinkle-periwinkle-6)', 'var(--ui-core-periwinkle-periwinkle-4)', 'var(--ui-core-yellow-yellow-5)',
+    'var(--ui-core-green-green-4)', 'var(--ui-core-red-red-5)', 'var(--ui-core-purple-purple-5)', 'var(--ui-core-terracotta-terracotta-5)',
+  ];
   // Generate a fixed set of pieces with randomized position/timing/color
   const pieces = Array.from({ length: 80 }, (_, i) => {
     const left = Math.random() * 100;
@@ -269,51 +272,51 @@ function WelcomeModal({ name, onClose, onGoToLearn, onBrowsePrograms }: { name: 
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
       <Confetti />
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[var(--ui-background-layer-layer-page)] rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+      <div className="relative bg-layer-page rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
         {/* Festive header */}
-        <div className="bg-gradient-to-br from-[var(--ui-core-periwinkle-periwinkle-6)] to-[var(--ui-core-periwinkle-periwinkle-7)] px-8 pt-8 pb-6 text-center text-white relative">
-          <button onClick={onClose} className="absolute top-4 right-4 text-white/70 hover:text-white">
+        <div className="bg-gradient-to-br from-Periwinkle-periwinkle-6 to-Periwinkle-periwinkle-7 px-8 pt-8 pb-6 text-center text-text-on-color relative">
+          <button onClick={onClose} className="absolute top-4 right-4 text-white/70 hover:text-text-on-color">
             <X size={20} />
           </button>
           <div className="text-5xl mb-2">🎉🐶</div>
           <h2 className="text-2xl font-bold">Congrats on joining, {firstName}!</h2>
-          <p className="text-blue-100 mt-2 text-sm">You're officially an eero Dogfooder.</p>
+          <p className="text-Periwinkle-periwinkle-2 mt-2 text-sm">You're officially an eero Dogfooder.</p>
         </div>
 
         {/* Body */}
         <div className="px-8 py-6 space-y-4">
-          <p className="text-[var(--ui-text-text-secondary)] leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             Welcome to the pack! 🐾 We're thrilled to have you on the team and we genuinely
             look forward to working with you. You're now one of the first people on the planet
             to play with eero's newest hardware and software — and your feedback shapes what
             millions of homes will use next.
           </p>
 
-          <div className="bg-[var(--ui-support-fill-support-info)] rounded-xl p-4">
-            <p className="text-sm font-semibold text-[var(--ui-text-text-primary)] flex items-center gap-2 mb-1">
-              <PartyPopper size={16} className="text-[var(--ui-core-periwinkle-periwinkle-6)]" /> Spread the word!
+          <div className="bg-fill-support-info rounded-xl p-4">
+            <p className="text-sm font-semibold text-text-primary flex items-center gap-2 mb-1">
+              <PartyPopper size={16} className="text-Periwinkle-periwinkle-6" /> Spread the word!
             </p>
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">
+            <p className="text-sm text-text-tertiary">
               Know someone who'd love early access to the future of WiFi? Tell your teammates to
               join the Dogfood program — the more testers, the better the products. 🚀
             </p>
           </div>
 
-          <div className="bg-[var(--ui-support-fill-support-info)] rounded-xl p-4">
-            <p className="text-sm font-semibold text-[var(--ui-text-text-primary)] flex items-center gap-2 mb-1">
-              <Rocket size={16} className="text-[var(--ui-core-periwinkle-periwinkle-6)]" /> Ready to test something?
+          <div className="bg-fill-support-info rounded-xl p-4">
+            <p className="text-sm font-semibold text-text-primary flex items-center gap-2 mb-1">
+              <Rocket size={16} className="text-Periwinkle-periwinkle-6" /> Ready to test something?
             </p>
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">
+            <p className="text-sm text-text-tertiary">
               Browse the open and upcoming dogfood programs and sign up for the ones you want to test.
               This is how you join — no Slack form needed.
             </p>
           </div>
 
-          <div className="bg-[var(--ui-background-layer-layer-page-hover)] rounded-xl p-4">
-            <p className="text-sm font-semibold text-[var(--ui-text-text-primary)] flex items-center gap-2 mb-1">
-              <BookOpen size={16} className="text-[var(--ui-text-text-tertiary)]" /> Get familiar with the program
+          <div className="bg-layer-page-hover rounded-xl p-4">
+            <p className="text-sm font-semibold text-text-primary flex items-center gap-2 mb-1">
+              <BookOpen size={16} className="text-text-tertiary" /> Get familiar with the program
             </p>
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">
+            <p className="text-sm text-text-tertiary">
               Head to the <strong>Learn</strong> menu to find out how dogfooding works, how to give
               great feedback (Shake-to-Report!), helpful Slack channels, videos, and docs.
             </p>
@@ -354,14 +357,14 @@ function DashboardView({ name, deviceCount, programCount, programs, endingReturn
     <div className="space-y-6">
       {/* End-of-program return alert */}
       {endingReturns.length > 0 && (
-        <div className="bg-[var(--ui-support-fill-support-warning)] border border-[var(--ui-support-border-support-warning)] rounded-xl p-5">
+        <div className="bg-fill-support-warning border border-border-support-warning rounded-xl p-5">
           <div className="flex items-start gap-3">
             <span className="text-2xl">📦</span>
             <div className="flex-1">
-              <h3 className="text-sm font-semibold text-[var(--ui-support-text-icon-support-warning)]">Time to return your devices</h3>
+              <h3 className="text-sm font-semibold text-text+icon-support-warning">Time to return your devices</h3>
               <div className="mt-1 space-y-1">
                 {endingReturns.map((r, i) => (
-                  <p key={i} className="text-sm text-[var(--ui-support-text-icon-support-warning)]">
+                  <p key={i} className="text-sm text-text+icon-support-warning">
                     <strong>{r.offering.name}</strong> ({r.phase.name}) {r.daysLeft >= 0 ? `ends in ${r.daysLeft} day${r.daysLeft === 1 ? '' : 's'}` : `ended ${Math.abs(r.daysLeft)} day${Math.abs(r.daysLeft) === 1 ? '' : 's'} ago`} — {r.devices.length} device(s) to return.
                   </p>
                 ))}
@@ -376,8 +379,8 @@ function DashboardView({ name, deviceCount, programCount, programs, endingReturn
 
       <Card size={5}>
         <div className="p-8">
-          <h1 className="text-2xl font-bold text-[var(--ui-text-text-primary)]">Welcome, {name}</h1>
-          <p className="text-[var(--ui-text-text-tertiary)] mt-2">Here's your dogfood program overview.</p>
+          <h1 className="text-2xl font-bold text-text-primary">Welcome, {name}</h1>
+          <p className="text-text-tertiary mt-2">Here's your dogfood program overview.</p>
           {programs.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               {programs.map((p) => (
@@ -392,17 +395,17 @@ function DashboardView({ name, deviceCount, programCount, programs, endingReturn
       {announcements.length > 0 && (
         <Card size={4}>
           <div className="p-6">
-            <h3 className="text-sm font-semibold text-[var(--ui-text-text-primary)] mb-4">Announcements</h3>
+            <h3 className="text-sm font-semibold text-text-primary mb-4">Announcements</h3>
             <div className="space-y-4">
               {announcements.map((a) => {
                 const t = announcementTag(a.level);
                 return (
-                  <div key={a.id} className="flex items-start gap-3 border-b border-[var(--ui-background-layer-border-border-layer-page)] pb-4 last:border-0 last:pb-0">
+                  <div key={a.id} className="flex items-start gap-3 border-b border-border-layer-page pb-4 last:border-0 last:pb-0">
                     <Tag color={t.color} size="regular">{t.label}</Tag>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">{a.title}</p>
-                      <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-0.5">{a.body}</p>
-                      <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-1">{new Date(a.date).toLocaleDateString()}</p>
+                      <p className="text-sm font-medium text-text-primary">{a.title}</p>
+                      <p className="text-sm text-text-tertiary mt-0.5">{a.body}</p>
+                      <p className="text-xs text-text-placeholder mt-1">{new Date(a.date).toLocaleDateString()}</p>
                     </div>
                   </div>
                 );
@@ -415,21 +418,21 @@ function DashboardView({ name, deviceCount, programCount, programs, endingReturn
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card size={3}>
           <div className="p-6">
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">My Devices</p>
-            <p className="text-3xl font-bold text-[var(--ui-text-text-primary)] mt-1">{deviceCount}</p>
-            {deviceCount === 0 && <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-2">Devices will appear once assigned by your admin.</p>}
+            <p className="text-sm text-text-tertiary">My Devices</p>
+            <p className="text-3xl font-bold text-text-primary mt-1">{deviceCount}</p>
+            {deviceCount === 0 && <p className="text-xs text-text-placeholder mt-2">Devices will appear once assigned by your admin.</p>}
           </div>
         </Card>
         <Card size={3}>
           <div className="p-6">
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">Programs</p>
-            <p className="text-3xl font-bold text-[var(--ui-text-text-primary)] mt-1">{programCount}</p>
+            <p className="text-sm text-text-tertiary">Programs</p>
+            <p className="text-3xl font-bold text-text-primary mt-1">{programCount}</p>
           </div>
         </Card>
         <Card size={3}>
           <div className="p-6">
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">Issues Reported</p>
-            <p className="text-3xl font-bold text-[var(--ui-text-text-primary)] mt-1">0</p>
+            <p className="text-sm text-text-tertiary">Issues Reported</p>
+            <p className="text-3xl font-bold text-text-primary mt-1">0</p>
           </div>
         </Card>
       </div>
@@ -458,12 +461,12 @@ function DevicesView({ devices, networkDevices }: { devices: any[]; networkDevic
     <div className="space-y-6">
       {/* On the way — devices in transit to the tester */}
       {inTransit.length > 0 && (
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-support-border-support-info)] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[var(--ui-support-border-support-info)] bg-[var(--ui-support-fill-support-info)]">
-            <h2 className="text-base font-semibold text-[var(--ui-support-text-icon-support-info)] flex items-center gap-2">📦 On the Way to You ({inTransit.length})</h2>
-            <p className="text-xs text-[var(--ui-support-text-icon-support-info)] mt-1">Devices shipping to you. Track them with the links below — they'll show as online once set up.</p>
+        <div className="bg-layer-page rounded-xl border border-border-support-info overflow-hidden">
+          <div className="px-6 py-4 border-b border-border-support-info bg-fill-support-info">
+            <h2 className="text-base font-semibold text-text+icon-support-info flex items-center gap-2">📦 On the Way to You ({inTransit.length})</h2>
+            <p className="text-xs text-text+icon-support-info mt-1">Devices shipping to you. Track them with the links below — they'll show as online once set up.</p>
           </div>
-          <div className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+          <div className="divide-y divide-border-layer-page">
             {inTransit.map((device) => {
               const tracking = device.leg2Tracking || device.tracking || '';
               const carrier = device.leg2Carrier || device.leg1Carrier || '';
@@ -471,22 +474,22 @@ function DevicesView({ devices, networkDevices }: { devices: any[]; networkDevic
               return (
                 <div key={`transit-${device.id || device.serial}`} className="px-6 py-4 flex items-center justify-between gap-4">
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">{device.model || 'eero Device'} <span className="text-xs text-[var(--ui-text-text-placeholder)] font-normal">· {device.program || '—'}</span></p>
-                    <p className="text-xs text-[var(--ui-text-text-tertiary)] font-mono">{device.serialNumber || device.serial}</p>
+                    <p className="text-sm font-medium text-text-primary">{device.model || 'eero Device'} <span className="text-xs text-text-placeholder font-normal">· {device.program || '—'}</span></p>
+                    <p className="text-xs text-text-tertiary font-mono">{device.serialNumber || device.serial}</p>
                   </div>
                   <div className="text-right shrink-0">
                     {tracking ? (
                       url ? (
-                        <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] hover:underline font-medium">
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 hover:underline font-medium">
                           {carrier ? `${carrier} ` : ''}{tracking} ↗
                         </a>
                       ) : (
-                        <span className="text-sm font-mono text-[var(--ui-text-text-secondary)]">{tracking}</span>
+                        <span className="text-sm font-mono text-text-secondary">{tracking}</span>
                       )
                     ) : (
-                      <span className="text-xs text-[var(--ui-text-text-placeholder)]">Tracking pending</span>
+                      <span className="text-xs text-text-placeholder">Tracking pending</span>
                     )}
-                    <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-0.5">{(device.shipmentStatus || 'in transit').replace(/_/g, ' ')}</p>
+                    <p className="text-xs text-text-placeholder mt-0.5">{(device.shipmentStatus || 'in transit').replace(/_/g, ' ')}</p>
                   </div>
                 </div>
               );
@@ -499,18 +502,18 @@ function DevicesView({ devices, networkDevices }: { devices: any[]; networkDevic
       {devices.length === 0 ? (
         <Card size={3}>
           <div className="p-12 text-center">
-            <Smartphone size={48} className="mx-auto text-[var(--ui-text-text-disabled)] mb-4" />
-            <p className="text-[var(--ui-text-text-tertiary)]">No devices assigned to you yet.</p>
-            <p className="text-sm text-[var(--ui-text-text-placeholder)] mt-1">Once your admin assigns devices, they'll appear here automatically.</p>
+            <Smartphone size={48} className="mx-auto text-text-disabled mb-4" />
+            <p className="text-text-tertiary">No devices assigned to you yet.</p>
+            <p className="text-sm text-text-placeholder mt-1">Once your admin assigns devices, they'll appear here automatically.</p>
           </div>
         </Card>
       ) : (
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[var(--ui-background-layer-border-border-layer-page)]">
-            <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)]">My Devices ({devices.length})</h2>
+        <div className="bg-layer-page rounded-xl border border-border-layer-page overflow-hidden">
+          <div className="px-6 py-4 border-b border-border-layer-page">
+            <h2 className="text-lg font-semibold text-text-primary">My Devices ({devices.length})</h2>
           </div>
           <table className="w-full">
-            <thead className="bg-[var(--ui-background-layer-layer-page-hover)] text-xs text-[var(--ui-text-text-tertiary)] uppercase">
+            <thead className="bg-layer-page-hover text-xs text-text-tertiary uppercase">
               <tr>
                 <th className="px-6 py-3 text-left">Device</th>
                 <th className="px-6 py-3 text-left">Serial</th>
@@ -520,17 +523,17 @@ function DevicesView({ devices, networkDevices }: { devices: any[]; networkDevic
                 <th className="px-6 py-3 text-left">Tracking</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+            <tbody className="divide-y divide-border-layer-page">
               {devices.map((device) => (
-                <tr key={device.id || device.serial} className="hover:bg-[var(--ui-background-layer-layer-page-hover)]">
-                  <td className="px-6 py-4 text-sm font-medium text-[var(--ui-text-text-primary)]">{device.model || 'eero Device'}</td>
-                  <td className="px-6 py-4 text-sm text-[var(--ui-text-text-tertiary)] font-mono">{device.serialNumber || device.serial}</td>
+                <tr key={device.id || device.serial} className="hover:bg-layer-page-hover">
+                  <td className="px-6 py-4 text-sm font-medium text-text-primary">{device.model || 'eero Device'}</td>
+                  <td className="px-6 py-4 text-sm text-text-tertiary font-mono">{device.serialNumber || device.serial}</td>
                   <td className="px-6 py-4">
                     <DeviceStatusTag status={device.status} />
                   </td>
-                  <td className="px-6 py-4 text-sm text-[var(--ui-text-text-tertiary)]">{device.program || '—'}</td>
-                  <td className="px-6 py-4 text-sm text-[var(--ui-text-text-tertiary)]">{device.network || '—'}</td>
-                  <td className="px-6 py-4 text-sm text-[var(--ui-text-text-tertiary)] font-mono">{device.leg2Tracking || device.tracking || '—'}</td>
+                  <td className="px-6 py-4 text-sm text-text-tertiary">{device.program || '—'}</td>
+                  <td className="px-6 py-4 text-sm text-text-tertiary">{device.network || '—'}</td>
+                  <td className="px-6 py-4 text-sm text-text-tertiary font-mono">{device.leg2Tracking || device.tracking || '—'}</td>
                 </tr>
               ))}
             </tbody>
@@ -540,13 +543,13 @@ function DevicesView({ devices, networkDevices }: { devices: any[]; networkDevic
 
       {/* Other devices on my network */}
       {networkDevices.length > 0 && (
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[var(--ui-background-layer-border-border-layer-page)]">
-            <h2 className="text-base font-semibold text-[var(--ui-text-text-primary)]">Other Devices on My Network ({networkDevices.length})</h2>
-            <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-1">Devices shared on your network but assigned to others or unassigned.</p>
+        <div className="bg-layer-page rounded-xl border border-border-layer-page overflow-hidden">
+          <div className="px-6 py-4 border-b border-border-layer-page">
+            <h2 className="text-base font-semibold text-text-primary">Other Devices on My Network ({networkDevices.length})</h2>
+            <p className="text-xs text-text-placeholder mt-1">Devices shared on your network but assigned to others or unassigned.</p>
           </div>
           <table className="w-full">
-            <thead className="bg-[var(--ui-background-layer-layer-page-hover)] text-xs text-[var(--ui-text-text-tertiary)] uppercase">
+            <thead className="bg-layer-page-hover text-xs text-text-tertiary uppercase">
               <tr>
                 <th className="px-6 py-3 text-left">Device</th>
                 <th className="px-6 py-3 text-left">Serial</th>
@@ -554,15 +557,15 @@ function DevicesView({ devices, networkDevices }: { devices: any[]; networkDevic
                 <th className="px-6 py-3 text-left">Network</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+            <tbody className="divide-y divide-border-layer-page">
               {networkDevices.map((device) => (
-                <tr key={device.id || device.serial} className="hover:bg-[var(--ui-background-layer-layer-page-hover)]">
-                  <td className="px-6 py-4 text-sm font-medium text-[var(--ui-text-text-primary)]">{device.model || 'eero Device'}</td>
-                  <td className="px-6 py-4 text-sm text-[var(--ui-text-text-tertiary)] font-mono">{device.serialNumber || device.serial}</td>
+                <tr key={device.id || device.serial} className="hover:bg-layer-page-hover">
+                  <td className="px-6 py-4 text-sm font-medium text-text-primary">{device.model || 'eero Device'}</td>
+                  <td className="px-6 py-4 text-sm text-text-tertiary font-mono">{device.serialNumber || device.serial}</td>
                   <td className="px-6 py-4">
                     <DeviceStatusTag status={device.status} />
                   </td>
-                  <td className="px-6 py-4 text-sm text-[var(--ui-text-text-tertiary)]">{device.network || '—'}</td>
+                  <td className="px-6 py-4 text-sm text-text-tertiary">{device.network || '—'}</td>
                 </tr>
               ))}
             </tbody>
@@ -579,9 +582,9 @@ function ProgramsView({ programs, devices, closedPrograms }: { programs: string[
     return (
       <Card size={3}>
         <div className="p-12 text-center">
-          <Layers size={48} className="mx-auto text-[var(--ui-text-text-disabled)] mb-4" />
-          <p className="text-[var(--ui-text-text-tertiary)]">You're not part of any programs yet.</p>
-          <p className="text-sm text-[var(--ui-text-text-placeholder)] mt-1">Programs will appear here once you're enrolled by an admin.</p>
+          <Layers size={48} className="mx-auto text-text-disabled mb-4" />
+          <p className="text-text-tertiary">You're not part of any programs yet.</p>
+          <p className="text-sm text-text-placeholder mt-1">Programs will appear here once you're enrolled by an admin.</p>
         </div>
       </Card>
     );
@@ -595,11 +598,11 @@ function ProgramsView({ programs, devices, closedPrograms }: { programs: string[
         const programDevices = devices.filter((d) => d.program === program);
         const isClosed = closedSet.has(program.toLowerCase());
         return (
-          <div key={program} className={`bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6 ${isClosed ? 'opacity-90' : ''}`}>
+          <div key={program} className={`bg-layer-page rounded-xl border border-border-layer-page p-6 ${isClosed ? 'opacity-90' : ''}`}>
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold text-[var(--ui-text-text-primary)]">{program}</h3>
-                <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-1">{programDevices.length} device(s) assigned to you</p>
+                <h3 className="text-lg font-semibold text-text-primary">{program}</h3>
+                <p className="text-sm text-text-tertiary mt-1">{programDevices.length} device(s) assigned to you</p>
               </div>
               {isClosed ? (
                 <Tag color="grey" size="regular">Closed</Tag>
@@ -608,14 +611,14 @@ function ProgramsView({ programs, devices, closedPrograms }: { programs: string[
               )}
             </div>
             {isClosed && (
-              <p className="text-xs text-[var(--ui-text-text-tertiary)] mt-2 bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg px-3 py-2">
+              <p className="text-xs text-text-tertiary mt-2 bg-layer-page-hover rounded-lg px-3 py-2">
                 This program has been closed by the beta team. If you still have devices, check the Returns tab for next steps.
               </p>
             )}
             {programDevices.length > 0 && (
               <div className="mt-4 space-y-2">
                 {programDevices.map((d) => (
-                  <div key={d.id || d.serial} className="flex items-center gap-4 text-sm text-[var(--ui-text-text-tertiary)] bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg px-4 py-2">
+                  <div key={d.id || d.serial} className="flex items-center gap-4 text-sm text-text-tertiary bg-layer-page-hover rounded-lg px-4 py-2">
                     <span className="font-mono text-xs">{d.serialNumber || d.serial}</span>
                     <span>{d.model || 'eero Device'}</span>
                     <span className="ml-auto">
@@ -713,17 +716,17 @@ function ReportView({ devices, userName, userEmail }: { devices: any[]; userName
   ];
 
   return (
-    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-8 max-w-2xl">
-      <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-2">Report an Issue</h2>
-      <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-6">
-        Although we encourage everyone to use <strong className="text-[var(--ui-text-text-secondary)]">Shake-to-Report</strong> to
+    <div className="bg-layer-page rounded-xl border border-border-layer-page p-8 max-w-2xl">
+      <h2 className="text-lg font-semibold text-text-primary mb-2">Report an Issue</h2>
+      <p className="text-sm text-text-tertiary mb-6">
+        Although we encourage everyone to use <strong className="text-text-secondary">Shake-to-Report</strong> to
         submit bugs (it lets us gather data logs and other useful telemetry), you can also share feedback
         here — bugs, positive experiences, feature requests, or hardware issues. Attach screenshots or
         videos to help us see what you saw.
       </p>
 
       {submitted && createdTicket && (
-        <div className="mb-6 p-4 bg-[var(--ui-support-fill-support-success)] border border-[var(--ui-support-border-support-success)] rounded-lg text-sm text-[var(--ui-support-text-support-success)]">
+        <div className="mb-6 p-4 bg-fill-support-success border border-border-support-success rounded-lg text-sm text-text-support-success">
           ✓ Report submitted — created JIRA ticket{' '}
           <a href={createdTicket.url} target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:opacity-80">
             {createdTicket.key}
@@ -733,14 +736,14 @@ function ReportView({ devices, userName, userEmail }: { devices: any[]; userName
       )}
 
       {error && (
-        <div className="mb-6 p-4 bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-lg text-sm text-[var(--ui-support-text-support-error)]">
+        <div className="mb-6 p-4 bg-fill-support-error border border-border-support-error rounded-lg text-sm text-text-support-error">
           ⚠️ {error}
         </div>
       )}
 
       <div className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-[var(--ui-text-text-secondary)] mb-1">Category</label>
+          <label className="block text-sm font-medium text-text-secondary mb-1">Category</label>
           <Select
             id="report-category"
             value={category || undefined}
@@ -752,7 +755,7 @@ function ReportView({ devices, userName, userEmail }: { devices: any[]; userName
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[var(--ui-text-text-secondary)] mb-1">Device (optional)</label>
+          <label className="block text-sm font-medium text-text-secondary mb-1">Device (optional)</label>
           <Select
             id="report-device"
             value={selectedDevice}
@@ -773,19 +776,19 @@ function ReportView({ devices, userName, userEmail }: { devices: any[]; userName
 
         {/* Attachments — screenshots & videos */}
         <div>
-          <label className="block text-sm font-medium text-[var(--ui-text-text-secondary)] mb-1">Attachments (optional)</label>
-          <p className="text-xs text-[var(--ui-text-text-placeholder)] mb-2">Add screenshots or screen recordings. Images, MP4, MOV, WebM supported.</p>
+          <label className="block text-sm font-medium text-text-secondary mb-1">Attachments (optional)</label>
+          <p className="text-xs text-text-placeholder mb-2">Add screenshots or screen recordings. Images, MP4, MOV, WebM supported.</p>
           <label
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
             onDrop={(e) => { e.preventDefault(); setDragOver(false); addFiles(e.dataTransfer.files); }}
             className={`flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
-              dragOver ? 'border-[var(--ui-core-periwinkle-periwinkle-6)] bg-[var(--ui-support-fill-support-info)]' : 'border-[var(--ui-background-layer-border-border-layer-page)] hover:border-[var(--ui-text-text-placeholder)]'
+              dragOver ? 'border-Periwinkle-periwinkle-6 bg-fill-support-info' : 'border-border-layer-page hover:border-text-placeholder'
             }`}
           >
-            <Upload size={28} className="text-[var(--ui-text-text-disabled)] mb-2" />
-            <p className="text-sm font-medium text-[var(--ui-text-text-secondary)]">Drag & drop files here</p>
-            <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-0.5">or click to browse</p>
+            <Upload size={28} className="text-text-disabled mb-2" />
+            <p className="text-sm font-medium text-text-secondary">Drag & drop files here</p>
+            <p className="text-xs text-text-placeholder mt-0.5">or click to browse</p>
             <input
               type="file"
               multiple
@@ -801,11 +804,11 @@ function ReportView({ devices, userName, userEmail }: { devices: any[]; userName
               {attachments.map((file, i) => {
                 const isVideo = file.type.startsWith('video/');
                 return (
-                  <div key={`${file.name}-${i}`} className="flex items-center justify-between gap-3 p-2.5 bg-[var(--ui-background-layer-layer-page-hover)] border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg">
+                  <div key={`${file.name}-${i}`} className="flex items-center justify-between gap-3 p-2.5 bg-layer-page-hover border border-border-layer-page rounded-lg">
                     <div className="flex items-center gap-2 min-w-0">
-                      {isVideo ? <Video size={16} className="text-purple-500 shrink-0" /> : <FileText size={16} className="text-[var(--ui-core-periwinkle-periwinkle-6)] shrink-0" />}
-                      <span className="text-sm text-[var(--ui-text-text-secondary)] truncate">{file.name}</span>
-                      <span className="text-xs text-[var(--ui-text-text-placeholder)] shrink-0">{formatSize(file.size)}</span>
+                      {isVideo ? <Video size={16} className="text-Purple-purple-5 shrink-0" /> : <FileText size={16} className="text-Periwinkle-periwinkle-6 shrink-0" />}
+                      <span className="text-sm text-text-secondary truncate">{file.name}</span>
+                      <span className="text-xs text-text-placeholder shrink-0">{formatSize(file.size)}</span>
                     </div>
                     <Button type="text" onClick={() => removeFile(i)} ariaLabel="Remove file" label={<X size={16} />} />
                   </div>
@@ -851,9 +854,9 @@ function LearnView() {
   return (
     <div className="space-y-6">
       {/* Hero / What is dogfood */}
-      <div className="bg-gradient-to-br from-[var(--ui-core-periwinkle-periwinkle-6)] to-[var(--ui-core-periwinkle-periwinkle-7)] rounded-xl p-8 text-white">
+      <div className="bg-gradient-to-br from-Periwinkle-periwinkle-6 to-Periwinkle-periwinkle-7 rounded-xl p-8 text-text-on-color">
         <h1 className="text-2xl font-bold">Welcome to the Dogfood Program</h1>
-        <p className="mt-3 text-blue-100 leading-relaxed max-w-3xl">
+        <p className="mt-3 text-Periwinkle-periwinkle-2 leading-relaxed max-w-3xl">
           "Eating your own dog food" is the practice of using our own products before our customers do.
           At eero, <strong>every employee network is in dogfood</strong> — a pre-beta phase where we test new
           features, software, and hardware in real-world conditions. The dogfooding environment (we call it
@@ -863,9 +866,9 @@ function LearnView() {
       </div>
 
       {/* Why it matters */}
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-3">Why dogfooding matters</h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] leading-relaxed mb-4">
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-3">Why dogfooding matters</h2>
+        <p className="text-sm text-text-tertiary leading-relaxed mb-4">
           Your participation makes you part of our front-line quality assurance team. By testing in
           real-world conditions, you directly shape products millions of homes rely on. Here's the impact:
         </p>
@@ -876,8 +879,8 @@ function LearnView() {
             'Get early access to the latest hardware and software',
             'Have a direct line to the engineering team',
           ].map((point) => (
-            <div key={point} className="flex items-start gap-2 text-sm text-[var(--ui-text-text-secondary)]">
-              <span className="text-[var(--ui-core-green-green-6)] mt-0.5">✓</span>
+            <div key={point} className="flex items-start gap-2 text-sm text-text-secondary">
+              <span className="text-Green-green-6 mt-0.5">✓</span>
               <span>{point}</span>
             </div>
           ))}
@@ -885,63 +888,63 @@ function LearnView() {
       </div>
 
       {/* How to give feedback */}
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-3">How to give great feedback</h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] leading-relaxed mb-4">
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-3">How to give great feedback</h2>
+        <p className="text-sm text-text-tertiary leading-relaxed mb-4">
           The most important thing is just submitting feedback. If you see something out of the ordinary,
           there are two easy ways to report it:
         </p>
         <div className="space-y-3">
-          <div className="flex items-start gap-3 p-3 bg-[var(--ui-support-fill-support-info)] rounded-lg">
+          <div className="flex items-start gap-3 p-3 bg-fill-support-info rounded-lg">
             <span className="text-xl">📱</span>
             <div>
-              <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">Shake-to-Report (preferred)</p>
-              <p className="text-sm text-[var(--ui-text-text-tertiary)]">Shake your device while in the eero Dogfood app to auto-generate a Jira ticket with diagnostic info pre-filled.</p>
+              <p className="text-sm font-medium text-text-primary">Shake-to-Report (preferred)</p>
+              <p className="text-sm text-text-tertiary">Shake your device while in the eero Dogfood app to auto-generate a Jira ticket with diagnostic info pre-filled.</p>
             </div>
           </div>
-          <div className="flex items-start gap-3 p-3 bg-[var(--ui-support-fill-support-info)] rounded-lg">
+          <div className="flex items-start gap-3 p-3 bg-fill-support-info rounded-lg">
             <span className="text-xl">💬</span>
             <div>
-              <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">Slack support request</p>
-              <p className="text-sm text-[var(--ui-text-text-tertiary)]">Open your Slack DMs and type <code className="bg-[var(--ui-background-layer-layer-page)] px-1.5 py-0.5 rounded text-xs">/DogfoodSupportRequest</code> to submit a request.</p>
+              <p className="text-sm font-medium text-text-primary">Slack support request</p>
+              <p className="text-sm text-text-tertiary">Open your Slack DMs and type <code className="bg-layer-page px-1.5 py-0.5 rounded text-xs">/DogfoodSupportRequest</code> to submit a request.</p>
             </div>
           </div>
         </div>
-        <div className="mt-4 p-3 bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg border border-[var(--ui-background-layer-border-border-layer-page)]">
-          <p className="text-xs font-medium text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-1">Good feedback example</p>
-          <p className="text-sm text-[var(--ui-text-text-tertiary)] italic">
+        <div className="mt-4 p-3 bg-layer-page-hover rounded-lg border border-border-layer-page">
+          <p className="text-xs font-medium text-text-tertiary uppercase tracking-wider mb-1">Good feedback example</p>
+          <p className="text-sm text-text-tertiary italic">
             "On 3/28 8:27 PM PST I was streaming Netflix on my laptop using wifi and it fell offline. I had to
             toggle wifi on/off several times before it reconnected to my network (Quinntague) a few minutes
             later. My phone had wifi during this time."
           </p>
         </div>
-        <p className="text-xs text-[var(--ui-text-text-tertiary)] mt-3">
+        <p className="text-xs text-text-tertiary mt-3">
           💡 Tip: Give each eero device a unique nickname in the app <em>before</em> you hit an issue — it helps engineers identify the right device fast.
         </p>
       </div>
 
       {/* Video series */}
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-1">Video series</h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-4">A three-part series to help you get familiar with dogfooding.</p>
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-1">Video series</h2>
+        <p className="text-sm text-text-tertiary mb-4">A three-part series to help you get familiar with dogfooding.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {VIDEOS.map((v) => {
             const available = Boolean(v.url);
             const inner = (
               <>
-                <PlayCircle size={28} className={available ? 'text-[var(--ui-core-periwinkle-periwinkle-6)]' : 'text-[var(--ui-text-text-disabled)]'} />
+                <PlayCircle size={28} className={available ? 'text-Periwinkle-periwinkle-6' : 'text-text-disabled'} />
                 <div className="mt-2">
-                  <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">{v.title}</p>
-                  <p className={`text-xs mt-0.5 ${available ? 'text-[var(--ui-core-green-green-6)]' : 'text-[var(--ui-text-text-placeholder)]'}`}>{v.status}</p>
+                  <p className="text-sm font-medium text-text-primary">{v.title}</p>
+                  <p className={`text-xs mt-0.5 ${available ? 'text-Green-green-6' : 'text-text-placeholder'}`}>{v.status}</p>
                 </div>
               </>
             );
             return available ? (
-              <a key={v.title} href={v.url} target="_blank" rel="noopener noreferrer" className="block p-4 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg hover:border-[var(--ui-core-periwinkle-periwinkle-6)] hover:bg-[var(--ui-support-fill-support-info)] transition-colors">
+              <a key={v.title} href={v.url} target="_blank" rel="noopener noreferrer" className="block p-4 border border-border-layer-page rounded-lg hover:border-Periwinkle-periwinkle-6 hover:bg-fill-support-info transition-colors">
                 {inner}
               </a>
             ) : (
-              <div key={v.title} className="p-4 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg bg-[var(--ui-background-layer-layer-page-hover)] cursor-default">
+              <div key={v.title} className="p-4 border border-border-layer-page rounded-lg bg-layer-page-hover cursor-default">
                 {inner}
               </div>
             );
@@ -950,11 +953,11 @@ function LearnView() {
       </div>
 
       {/* Documentation */}
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-1 flex items-center gap-2">
-          <FileText size={18} className="text-[var(--ui-text-text-tertiary)]" /> Documentation
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-1 flex items-center gap-2">
+          <FileText size={18} className="text-text-tertiary" /> Documentation
         </h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-4">Key Confluence pages for the dogfood program.</p>
+        <p className="text-sm text-text-tertiary mb-4">Key Confluence pages for the dogfood program.</p>
         <div className="space-y-2">
           {CONFLUENCE_DOCS.map((doc) => (
             <a
@@ -962,24 +965,24 @@ function LearnView() {
               href={doc.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-start justify-between gap-4 p-3 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg hover:border-[var(--ui-core-periwinkle-periwinkle-6)] hover:bg-[var(--ui-support-fill-support-info)] transition-colors group"
+              className="flex items-start justify-between gap-4 p-3 border border-border-layer-page rounded-lg hover:border-Periwinkle-periwinkle-6 hover:bg-fill-support-info transition-colors group"
             >
               <div>
-                <p className="text-sm font-medium text-[var(--ui-text-text-primary)] group-hover:text-[var(--ui-core-periwinkle-periwinkle-6)]">{doc.title}</p>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)] mt-0.5">{doc.desc}</p>
+                <p className="text-sm font-medium text-text-primary group-hover:text-Periwinkle-periwinkle-6">{doc.title}</p>
+                <p className="text-xs text-text-tertiary mt-0.5">{doc.desc}</p>
               </div>
-              <ExternalLink size={16} className="text-[var(--ui-text-text-tertiary)] group-hover:text-[var(--ui-core-periwinkle-periwinkle-6)] shrink-0 mt-0.5" />
+              <ExternalLink size={16} className="text-text-tertiary group-hover:text-Periwinkle-periwinkle-6 shrink-0 mt-0.5" />
             </a>
           ))}
         </div>
       </div>
 
       {/* Slack channels */}
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-1 flex items-center gap-2">
-          <MessageSquare size={18} className="text-[var(--ui-text-text-tertiary)]" /> Slack channels
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-1 flex items-center gap-2">
+          <MessageSquare size={18} className="text-text-tertiary" /> Slack channels
         </h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-4">Connect with the team and other dogfooders.</p>
+        <p className="text-sm text-text-tertiary mb-4">Connect with the team and other dogfooders.</p>
         <div className="space-y-2">
           {SLACK_CHANNELS.map((ch) => (
             <a
@@ -987,35 +990,35 @@ function LearnView() {
               href={ch.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-start justify-between gap-4 p-3 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-colors group"
+              className="flex items-start justify-between gap-4 p-3 border border-border-layer-page rounded-lg hover:border-Purple-purple-3 hover:bg-Purple-purple-1 transition-colors group"
             >
               <div>
-                <p className="text-sm font-medium text-purple-700">{ch.name}</p>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)] mt-0.5">{ch.desc}</p>
+                <p className="text-sm font-medium text-Purple-purple-7">{ch.name}</p>
+                <p className="text-xs text-text-tertiary mt-0.5">{ch.desc}</p>
               </div>
-              <ExternalLink size={16} className="text-[var(--ui-text-text-tertiary)] group-hover:text-purple-600 shrink-0 mt-0.5" />
+              <ExternalLink size={16} className="text-text-tertiary group-hover:text-Purple-purple-6 shrink-0 mt-0.5" />
             </a>
           ))}
         </div>
       </div>
 
       {/* Contact / support */}
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-1">Need help or support?</h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-4">Support is available 7 days/week, 8am–5pm CST.</p>
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-1">Need help or support?</h2>
+        <p className="text-sm text-text-tertiary mb-4">Support is available 7 days/week, 8am–5pm CST.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <a href="mailto:beta-team@eero.com" className="flex items-center gap-3 p-3 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg hover:bg-[var(--ui-background-layer-layer-page-hover)]">
-            <Mail size={18} className="text-[var(--ui-text-text-tertiary)]" />
+          <a href="mailto:beta-team@eero.com" className="flex items-center gap-3 p-3 border border-border-layer-page rounded-lg hover:bg-layer-page-hover">
+            <Mail size={18} className="text-text-tertiary" />
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">General questions</p>
-              <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">beta-team@eero.com</p>
+              <p className="text-xs text-text-tertiary">General questions</p>
+              <p className="text-sm font-medium text-text-primary">beta-team@eero.com</p>
             </div>
           </a>
-          <a href="mailto:dogfood-jira@eero.com" className="flex items-center gap-3 p-3 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg hover:bg-[var(--ui-background-layer-layer-page-hover)]">
-            <Mail size={18} className="text-[var(--ui-text-text-tertiary)]" />
+          <a href="mailto:dogfood-jira@eero.com" className="flex items-center gap-3 p-3 border border-border-layer-page rounded-lg hover:bg-layer-page-hover">
+            <Mail size={18} className="text-text-tertiary" />
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Jira filing</p>
-              <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">dogfood-jira@eero.com</p>
+              <p className="text-xs text-text-tertiary">Jira filing</p>
+              <p className="text-sm font-medium text-text-primary">dogfood-jira@eero.com</p>
             </div>
           </a>
         </div>
@@ -1067,10 +1070,10 @@ function JoinProgramView({ userName, userEmail }: { userName: string; userEmail:
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] flex items-center gap-2">
-          <Rocket size={20} className="text-[var(--ui-core-periwinkle-periwinkle-6)]" /> Join a Dogfood Program
+        <h2 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+          <Rocket size={20} className="text-Periwinkle-periwinkle-6" /> Join a Dogfood Program
         </h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-1">
+        <p className="text-sm text-text-tertiary mt-1">
           Browse new and upcoming dogfood programs and sign up for the ones you want to test. No more
           hunting through the Slack channel — the beta team sees your interest here directly.
         </p>
@@ -1079,9 +1082,9 @@ function JoinProgramView({ userName, userEmail }: { userName: string; userEmail:
       {visible.length === 0 ? (
         <Card size={3}>
           <div className="p-12 text-center">
-            <Rocket size={40} className="mx-auto text-[var(--ui-text-text-disabled)] mb-3" />
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">No programs are open for sign-up right now.</p>
-            <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-1">Check back soon — new programs are added regularly.</p>
+            <Rocket size={40} className="mx-auto text-text-disabled mb-3" />
+            <p className="text-sm text-text-tertiary">No programs are open for sign-up right now.</p>
+            <p className="text-xs text-text-placeholder mt-1">Check back soon — new programs are added regularly.</p>
           </div>
         </Card>
       ) : (
@@ -1091,24 +1094,24 @@ function JoinProgramView({ userName, userEmail }: { userName: string; userEmail:
             const isSignedUp = Boolean(signup);
             const isUpcoming = p.status === 'upcoming';
             return (
-              <div key={p.id} className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-5 flex flex-col">
+              <div key={p.id} className="bg-layer-page rounded-xl border border-border-layer-page p-5 flex flex-col">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div>
-                    <h3 className="text-base font-semibold text-[var(--ui-text-text-primary)]">{p.name}</h3>
-                    <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-0.5">{p.product}</p>
+                    <h3 className="text-base font-semibold text-text-primary">{p.name}</h3>
+                    <p className="text-xs text-text-placeholder mt-0.5">{p.product}</p>
                   </div>
                   <Tag color={STATUS_TAG[p.status]} size="regular">{p.status}</Tag>
                 </div>
 
-                <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-3 flex-1">{p.description}</p>
+                <p className="text-sm text-text-tertiary mb-3 flex-1">{p.description}</p>
 
                 {p.requirements && (
-                  <div className="mb-3 text-xs text-[var(--ui-text-text-tertiary)]">
-                    <span className="font-medium text-[var(--ui-text-text-secondary)]">Requirements:</span> {p.requirements}
+                  <div className="mb-3 text-xs text-text-tertiary">
+                    <span className="font-medium text-text-secondary">Requirements:</span> {p.requirements}
                   </div>
                 )}
 
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[var(--ui-text-text-tertiary)] mb-4">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-tertiary mb-4">
                   {p.startDate && (
                     <span className="flex items-center gap-1"><Calendar size={12} /> Starts {new Date(p.startDate).toLocaleDateString()}</span>
                   )}
@@ -1122,12 +1125,12 @@ function JoinProgramView({ userName, userEmail }: { userName: string; userEmail:
 
                 {/* Action area */}
                 {isSignedUp ? (
-                  <div className="p-3 bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] rounded-lg">
+                  <div className="p-3 bg-fill-support-info border border-border-support-info rounded-lg">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-[var(--ui-support-text-icon-support-info)]">✓ Thanks for signing up!</span>
+                      <span className="text-sm font-medium text-text+icon-support-info">✓ Thanks for signing up!</span>
                       <Tag color={SIGNUP_TAG[signup!.status]} size="regular">{signup!.status}</Tag>
                     </div>
-                    <p className="text-xs text-[var(--ui-support-text-icon-support-info)]">
+                    <p className="text-xs text-text+icon-support-info">
                       If you're picked for this program, you'll be notified shortly. Once selected, your
                       device(s) and program details will appear in your account automatically.
                     </p>
@@ -1229,9 +1232,9 @@ function ReturnsView({ userName, userEmail, endingReturns, addOptOut, getOptOuts
     return (
       <Card size={3}>
         <div className="p-12 text-center">
-          <PackageCheck size={40} className="mx-auto text-[var(--ui-text-text-disabled)] mb-3" />
-          <p className="text-sm text-[var(--ui-text-text-tertiary)]">No returns needed right now.</p>
-          <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-1">When a program you're in nears its end date, your assigned devices will appear here with return instructions.</p>
+          <PackageCheck size={40} className="mx-auto text-text-disabled mb-3" />
+          <p className="text-sm text-text-tertiary">No returns needed right now.</p>
+          <p className="text-xs text-text-placeholder mt-1">When a program you're in nears its end date, your assigned devices will appear here with return instructions.</p>
         </div>
       </Card>
     );
@@ -1240,18 +1243,18 @@ function ReturnsView({ userName, userEmail, endingReturns, addOptOut, getOptOuts
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] flex items-center gap-2">
-          <PackageCheck size={20} className="text-[var(--ui-core-periwinkle-periwinkle-6)]" /> Return Your Devices
+        <h2 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+          <PackageCheck size={20} className="text-Periwinkle-periwinkle-6" /> Return Your Devices
         </h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-1">
+        <p className="text-sm text-text-tertiary mt-1">
           One of your programs is wrapping up. Here's what's next for each device.
         </p>
       </div>
 
       {/* Agent intro / next steps */}
-      <div className="bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] rounded-xl p-4 flex items-start gap-3">
+      <div className="bg-fill-support-info border border-border-support-info rounded-xl p-4 flex items-start gap-3">
         <span className="text-xl">📬</span>
-        <p className="text-sm text-[var(--ui-support-text-icon-support-info)]">
+        <p className="text-sm text-text+icon-support-info">
           A dogfood agent will be in touch with next steps for returning your device. Once you've shipped
           it out, please come back here and mark the device as returned with your tracking number.
         </p>
@@ -1262,12 +1265,12 @@ function ReturnsView({ userName, userEmail, endingReturns, addOptOut, getOptOuts
         const isConfirmed = confirmed[device.id] || device.status === 'pending_return';
         const tn = trackingInput[device.id] || '';
         return (
-          <div key={device.id} className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-5">
+          <div key={device.id} className="bg-layer-page rounded-xl border border-border-layer-page p-5">
             <div className="flex items-start justify-between gap-3 mb-3">
               <div>
-                <h3 className="text-base font-semibold text-[var(--ui-text-text-primary)]">{device.model || 'eero Device'}</h3>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)] font-mono">{device.serialNumber}</p>
-                <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-0.5">{offering.name} · {phase.name} · {device.country || 'Region unknown'}</p>
+                <h3 className="text-base font-semibold text-text-primary">{device.model || 'eero Device'}</h3>
+                <p className="text-xs text-text-tertiary font-mono">{device.serialNumber}</p>
+                <p className="text-xs text-text-placeholder mt-0.5">{offering.name} · {phase.name} · {device.country || 'Region unknown'}</p>
               </div>
               {isConfirmed && (
                 <Tag color="orange" size="regular">Pending Return</Tag>
@@ -1275,13 +1278,13 @@ function ReturnsView({ userName, userEmail, endingReturns, addOptOut, getOptOuts
             </div>
 
             {isConfirmed ? (
-              <div className="p-3 bg-[var(--ui-support-fill-support-success)] border border-[var(--ui-support-border-support-success)] rounded-lg text-sm text-[var(--ui-support-text-support-success)]">
+              <div className="p-3 bg-fill-support-success border border-border-support-success rounded-lg text-sm text-text-support-success">
                 ✓ Marked as returned{device.returnTrackingNumber ? <> — tracking <span className="font-mono font-medium">{device.returnTrackingNumber}</span></> : ''}. The beta team can now track this device's return. Thank you!
               </div>
             ) : domestic ? (
               /* ── US / Canada: self-ship + enter tracking number ── */
               <div className="space-y-3">
-                <p className="text-sm text-[var(--ui-text-text-tertiary)]">
+                <p className="text-sm text-text-tertiary">
                   When your agent has arranged the return and you've dropped off the package, enter your
                   return tracking number below and mark it returned.
                 </p>
@@ -1303,7 +1306,7 @@ function ReturnsView({ userName, userEmail, endingReturns, addOptOut, getOptOuts
             ) : (
               /* ── International: re-teck website ── */
               <div className="space-y-3">
-                <p className="text-sm text-[var(--ui-text-text-tertiary)]">
+                <p className="text-sm text-text-tertiary">
                   For international returns, please process your return through the re-teck returns portal.
                   Select "Eero/Wifi Router", enter your DSNs and shipping info, and choose
                   "end of Beta program/Recall" as the reason.
@@ -1312,7 +1315,7 @@ function ReturnsView({ userName, userEmail, endingReturns, addOptOut, getOptOuts
                   href="https://termination-returns-emea.re-teck.com/recycling/home"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--ui-background-layer-layer-page)] border border-[var(--ui-support-border-support-info)] text-[var(--ui-core-periwinkle-periwinkle-6)] rounded-lg text-sm font-medium hover:bg-[var(--ui-support-fill-support-info)]"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-layer-page border border-border-support-info text-Periwinkle-periwinkle-6 rounded-lg text-sm font-medium hover:bg-fill-support-info"
                 >
                   Open re-teck returns portal <ExternalLink size={14} />
                 </a>
@@ -1380,42 +1383,42 @@ function LeaveProgramView({ userName, userEmail, devices, programs, addOptOut, e
     ];
     const doneCount = Object.values(tasks).filter(Boolean).length;
     return (
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-8 max-w-2xl">
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-8 max-w-2xl">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 bg-[var(--ui-support-fill-support-warning)] rounded-full flex items-center justify-center">
-            <DoorOpen size={20} className="text-[var(--ui-core-orange-orange-6)]" />
+          <div className="w-10 h-10 bg-fill-support-warning rounded-full flex items-center justify-center">
+            <DoorOpen size={20} className="text-Orange-orange-6" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)]">Opt-out requested</h2>
-            <p className="text-sm text-[var(--ui-text-text-tertiary)]">Submitted {new Date(existingOptOut.optOutDate).toLocaleDateString()} — the beta team has been notified.</p>
+            <h2 className="text-lg font-semibold text-text-primary">Opt-out requested</h2>
+            <p className="text-sm text-text-tertiary">Submitted {new Date(existingOptOut.optOutDate).toLocaleDateString()} — the beta team has been notified.</p>
           </div>
         </div>
 
-        <div className="my-5 p-4 bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] rounded-lg text-sm text-[var(--ui-text-text-secondary)]">
+        <div className="my-5 p-4 bg-fill-support-info border border-border-support-info rounded-lg text-sm text-text-secondary">
           Thanks for being part of the dogfood program! The beta team will reach out to arrange device
           return and finish removing you from all systems on their end. In the meantime, here's what you
           can do to wrap up on your side.
         </div>
 
-        <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3">Your tasks ({doneCount}/{myTasks.length})</h3>
+        <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3">Your tasks ({doneCount}/{myTasks.length})</h3>
         <div className="space-y-2">
           {myTasks.map((t) => (
             <button
               key={t.key}
               onClick={() => toggleTask(t.key)}
-              className={`w-full text-left flex items-start gap-3 p-3 rounded-lg border transition-colors ${tasks[t.key] ? 'bg-[var(--ui-support-fill-support-success)] border-[var(--ui-support-border-support-success)]' : 'bg-[var(--ui-background-layer-layer-page)] border-[var(--ui-background-layer-border-border-layer-page)] hover:border-[var(--ui-text-text-placeholder)]'}`}
+              className={`w-full text-left flex items-start gap-3 p-3 rounded-lg border transition-colors ${tasks[t.key] ? 'bg-fill-support-success border-border-support-success' : 'bg-layer-page border-border-layer-page hover:border-text-placeholder'}`}
             >
-              {tasks[t.key] ? <CheckCircle size={20} className="text-[var(--ui-core-green-green-6)] shrink-0 mt-0.5" /> : <Circle size={20} className="text-[var(--ui-text-text-disabled)] shrink-0 mt-0.5" />}
+              {tasks[t.key] ? <CheckCircle size={20} className="text-Green-green-6 shrink-0 mt-0.5" /> : <Circle size={20} className="text-text-disabled shrink-0 mt-0.5" />}
               <div>
-                <p className={`text-sm font-medium ${tasks[t.key] ? 'text-[var(--ui-support-text-support-success)] line-through' : 'text-[var(--ui-text-text-primary)]'}`}>{t.label}</p>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)] mt-0.5">{t.desc}</p>
+                <p className={`text-sm font-medium ${tasks[t.key] ? 'text-text-support-success line-through' : 'text-text-primary'}`}>{t.label}</p>
+                <p className="text-xs text-text-tertiary mt-0.5">{t.desc}</p>
               </div>
             </button>
           ))}
         </div>
 
         {doneCount === myTasks.length && (
-          <div className="mt-4 p-3 bg-[var(--ui-support-fill-support-success)] border border-[var(--ui-support-border-support-success)] rounded-lg text-sm text-[var(--ui-support-text-support-success)]">
+          <div className="mt-4 p-3 bg-fill-support-success border border-border-support-success rounded-lg text-sm text-text-support-success">
             ✓ All set on your end! The beta team will confirm receipt of your devices and complete your offboarding.
           </div>
         )}
@@ -1425,16 +1428,16 @@ function LeaveProgramView({ userName, userEmail, devices, programs, addOptOut, e
 
   // ── Opt-out form ──
   return (
-    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-8 max-w-2xl">
-      <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-2">Leave the Dogfood Program</h2>
-      <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-6">
+    <div className="bg-layer-page rounded-xl border border-border-layer-page p-8 max-w-2xl">
+      <h2 className="text-lg font-semibold text-text-primary mb-2">Leave the Dogfood Program</h2>
+      <p className="text-sm text-text-tertiary mb-6">
         We're sorry to see you go! Opting out lets the beta team know to retrieve your devices and return
         your network to its default state. You can always rejoin later.
       </p>
 
       <div className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-[var(--ui-text-text-secondary)] mb-1">Why are you leaving?</label>
+          <label className="block text-sm font-medium text-text-secondary mb-1">Why are you leaving?</label>
           <Select
             id="leave-reason"
             value={reason}
@@ -1454,17 +1457,17 @@ function LeaveProgramView({ userName, userEmail, devices, programs, addOptOut, e
         />
 
         {/* What happens next */}
-        <div className="p-4 bg-[var(--ui-background-layer-layer-page-hover)] border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg">
-          <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-2">What happens next</h3>
-          <ul className="space-y-1.5 text-sm text-[var(--ui-text-text-tertiary)]">
-            <li className="flex items-start gap-2"><span className="text-[var(--ui-core-periwinkle-periwinkle-6)] mt-0.5">•</span> The beta team is notified and will arrange to retrieve your {devices.length} device(s).</li>
-            <li className="flex items-start gap-2"><span className="text-[var(--ui-core-periwinkle-periwinkle-6)] mt-0.5">•</span> You'll get a checklist to disconnect devices and reset your network to default.</li>
-            <li className="flex items-start gap-2"><span className="text-[var(--ui-core-periwinkle-periwinkle-6)] mt-0.5">•</span> The team resets your network off the dogfood (stage) environment and removes you from all systems.</li>
+        <div className="p-4 bg-layer-page-hover border border-border-layer-page rounded-lg">
+          <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-2">What happens next</h3>
+          <ul className="space-y-1.5 text-sm text-text-tertiary">
+            <li className="flex items-start gap-2"><span className="text-Periwinkle-periwinkle-6 mt-0.5">•</span> The beta team is notified and will arrange to retrieve your {devices.length} device(s).</li>
+            <li className="flex items-start gap-2"><span className="text-Periwinkle-periwinkle-6 mt-0.5">•</span> You'll get a checklist to disconnect devices and reset your network to default.</li>
+            <li className="flex items-start gap-2"><span className="text-Periwinkle-periwinkle-6 mt-0.5">•</span> The team resets your network off the dogfood (stage) environment and removes you from all systems.</li>
           </ul>
         </div>
 
         {devices.length > 0 && (
-          <div className="text-xs text-[var(--ui-text-text-tertiary)]">
+          <div className="text-xs text-text-tertiary">
             Devices currently assigned to you: <span className="font-mono">{devices.map((d) => d.serialNumber || d.serial).join(', ')}</span>
           </div>
         )}
@@ -1521,15 +1524,15 @@ function ProfileView({ email, profile, onSave }: { email: string; profile: any; 
   };
 
   return (
-    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-8 max-w-2xl">
-      <h2 className="text-lg font-semibold text-[var(--ui-text-text-primary)] mb-2">My Profile</h2>
-      <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-6">
+    <div className="bg-layer-page rounded-xl border border-border-layer-page p-8 max-w-2xl">
+      <h2 className="text-lg font-semibold text-text-primary mb-2">My Profile</h2>
+      <p className="text-sm text-text-tertiary mb-6">
         Keep your contact and shipping details up to date so the beta team can reach you and ship hardware
         to the right place.
       </p>
 
       {saved && (
-        <div className="mb-6 p-4 bg-[var(--ui-support-fill-support-success)] border border-[var(--ui-support-border-support-success)] rounded-lg text-sm text-[var(--ui-support-text-support-success)]">
+        <div className="mb-6 p-4 bg-fill-support-success border border-border-support-success rounded-lg text-sm text-text-support-success">
           ✓ Your profile has been updated.
         </div>
       )}
@@ -1538,12 +1541,12 @@ function ProfileView({ email, profile, onSave }: { email: string; profile: any; 
         {/* Account email (read-only) */}
         <div>
           <Input id="profile-email" type="email" label="eero Email (login)" value={email} readOnly disabled layout="vertical" />
-          <p className="text-xs text-[var(--ui-text-text-placeholder)] mt-1">This is your login and can't be changed here. Contact the beta team if it needs to change.</p>
+          <p className="text-xs text-text-placeholder mt-1">This is your login and can't be changed here. Contact the beta team if it needs to change.</p>
         </div>
 
         {/* Contact */}
         <div>
-          <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3">Contact</h3>
+          <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3">Contact</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input id="profile-phone" type="tel" label="Phone Number" value={form.phoneNumber} onChange={(e: React.ChangeEvent<HTMLInputElement>) => update('phoneNumber', e.target.value)} placeholder="+1 555 123 4567" layout="vertical" />
             <Input id="profile-prod-email" type="email" label="Production Account Email" value={form.productionEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => update('productionEmail', e.target.value)} placeholder="you@example.com" layout="vertical" />
@@ -1555,7 +1558,7 @@ function ProfileView({ email, profile, onSave }: { email: string; profile: any; 
 
         {/* Shipping address */}
         <div>
-          <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3">Shipping Address</h3>
+          <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3">Shipping Address</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <Input id="profile-street" type="text" label="Street Address" value={form.streetAddress} onChange={(e: React.ChangeEvent<HTMLInputElement>) => update('streetAddress', e.target.value)} layout="vertical" />
@@ -1577,7 +1580,7 @@ function ProfileView({ email, profile, onSave }: { email: string; profile: any; 
             />
           </div>
           {form.preferWorkAddress && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 border-l-2 border-[var(--ui-background-layer-border-border-layer-page)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 border-l-2 border-border-layer-page">
               <div className="md:col-span-2">
                 <Input id="profile-work-street" type="text" label="Work Street" value={form.workStreet} onChange={(e: React.ChangeEvent<HTMLInputElement>) => update('workStreet', e.target.value)} layout="vertical" />
               </div>

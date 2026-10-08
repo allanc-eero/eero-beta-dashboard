@@ -133,8 +133,8 @@ export default function LoginPage() {
   const prevStep = () => { setError(''); setStep((s) => s - 1); };
 
   const ErrorBox = ({ children }: { children: React.ReactNode }) => (
-    <div className="p-3 bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-lg">
-      <p className="text-xs text-[var(--ui-support-text-support-error)]">{children}</p>
+    <div className="p-3 bg-fill-support-error border border-border-support-error rounded-lg">
+      <p className="text-xs text-text-support-error">{children}</p>
     </div>
   );
 
@@ -142,8 +142,8 @@ export default function LoginPage() {
   // While checking which providers exist, don't flash the email form.
   if (ssoAvailable === null) {
     return (
-      <div className="min-h-screen bg-[var(--ui-background-layer-background-page)] flex items-center justify-center">
-        <p className="text-sm text-[var(--ui-text-text-tertiary)]">Loading…</p>
+      <div className="min-h-screen bg-background-page flex items-center justify-center">
+        <p className="text-sm text-text-tertiary">Loading…</p>
       </div>
     );
   }
@@ -151,21 +151,21 @@ export default function LoginPage() {
   if (ssoAvailable) {
     const notAuthorized = ssoStatus === 'authenticated' && !!ssoSession?.user?.email;
     return (
-      <div className="min-h-screen bg-[var(--ui-background-layer-background-page)] flex items-center justify-center">
+      <div className="min-h-screen bg-background-page flex items-center justify-center">
         <div className="w-full max-w-sm">
-          <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-md border border-[var(--ui-background-layer-border-border-layer-page)] p-8 text-center">
-            <Wifi size={48} className="mx-auto text-[var(--ui-core-periwinkle-periwinkle-6)] mb-4" strokeWidth={1.5} />
-            <h1 className="text-2xl font-bold text-[var(--ui-text-text-primary)]">{APP_NAME}</h1>
+          <div className="bg-layer-page rounded-xl shadow-md border border-border-layer-page p-8 text-center">
+            <Wifi size={48} className="mx-auto text-Periwinkle-periwinkle-6 mb-4" strokeWidth={1.5} />
+            <h1 className="text-2xl font-bold text-text-primary">{APP_NAME}</h1>
             {notAuthorized ? (
               <>
-                <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-2 mb-4">
+                <p className="text-sm text-text-tertiary mt-2 mb-4">
                   Signed in as <b>{ssoSession!.user!.email}</b>, but this account isn’t authorized for {APP_NAME}. Ask an admin to add you.
                 </p>
                 <Button type="default" label="Sign out" fullWidth onClick={() => signOut()} />
               </>
             ) : (
               <>
-                <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-2 mb-6">Sign in with your eero SSO account</p>
+                <p className="text-sm text-text-tertiary mt-2 mb-6">Sign in with your eero SSO account</p>
                 <Button type="primary" label="Sign in with SSO" fullWidth onClick={() => signIn(SSO_PROVIDER_ID)} />
               </>
             )}
@@ -178,13 +178,13 @@ export default function LoginPage() {
   // ─── LOGIN VIEW (local/dev fallback when SSO is not configured) ──────────────
   if (mode === 'login') {
     return (
-      <div className="min-h-screen bg-[var(--ui-background-layer-background-page)] flex items-center justify-center">
+      <div className="min-h-screen bg-background-page flex items-center justify-center">
         <div className="w-full max-w-sm">
-          <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-md border border-[var(--ui-background-layer-border-border-layer-page)] p-8">
+          <div className="bg-layer-page rounded-xl shadow-md border border-border-layer-page p-8">
             <div className="text-center mb-8">
-              <Wifi size={48} className="mx-auto text-[var(--ui-core-periwinkle-periwinkle-6)] mb-4" strokeWidth={1.5} />
-              <h1 className="text-2xl font-bold text-[var(--ui-text-text-primary)]">{APP_NAME}</h1>
-              <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-2">Sign in with your @eero.com email</p>
+              <Wifi size={48} className="mx-auto text-Periwinkle-periwinkle-6 mb-4" strokeWidth={1.5} />
+              <h1 className="text-2xl font-bold text-text-primary">{APP_NAME}</h1>
+              <p className="text-sm text-text-tertiary mt-2">Sign in with your @eero.com email</p>
             </div>
             <form onSubmit={handleLogin} className="space-y-4">
               <Input
@@ -199,15 +199,15 @@ export default function LoginPage() {
               {error && <ErrorBox>{error}</ErrorBox>}
               <Button type="primary" label="Sign In" fullWidth onClick={() => handleLogin({ preventDefault: () => {} } as React.FormEvent)} />
             </form>
-            <div className="mt-6 pt-4 border-t border-[var(--ui-background-layer-border-border-layer-page)] text-center">
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">
+            <div className="mt-6 pt-4 border-t border-border-layer-page text-center">
+              <p className="text-xs text-text-tertiary">
                 Dogfooder?{' '}
-                <button onClick={() => { setMode('register'); setError(''); setStep(1); setFormData(INITIAL_DATA); }} className="text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] font-medium">
+                <button onClick={() => { setMode('register'); setError(''); setStep(1); setFormData(INITIAL_DATA); }} className="text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 font-medium">
                   Register here →
                 </button>
               </p>
             </div>
-            <p className="text-xs text-[var(--ui-text-text-placeholder)] text-center mt-4">Only @eero.com accounts can access this tool.</p>
+            <p className="text-xs text-text-placeholder text-center mt-4">Only @eero.com accounts can access this tool.</p>
           </div>
         </div>
       </div>
@@ -216,14 +216,14 @@ export default function LoginPage() {
 
   // ─── REGISTRATION VIEW (Multi-step) ────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[var(--ui-background-layer-background-page)] flex items-center justify-center py-12">
+    <div className="min-h-screen bg-background-page flex items-center justify-center py-12">
       <div className="w-full max-w-lg">
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-md border border-[var(--ui-background-layer-border-border-layer-page)] p-8">
+        <div className="bg-layer-page rounded-xl shadow-md border border-border-layer-page p-8">
           {/* Header */}
           <div className="text-center mb-6">
-            <Wifi size={36} className="mx-auto text-[var(--ui-core-periwinkle-periwinkle-6)] mb-3" strokeWidth={1.5} />
-            <h1 className="text-xl font-bold text-[var(--ui-text-text-primary)]">{APP_NAME} — Dogfood Registration</h1>
-            <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-1">Step {step} of 4</p>
+            <Wifi size={36} className="mx-auto text-Periwinkle-periwinkle-6 mb-3" strokeWidth={1.5} />
+            <h1 className="text-xl font-bold text-text-primary">{APP_NAME} — Dogfood Registration</h1>
+            <p className="text-sm text-text-tertiary mt-1">Step {step} of 4</p>
           </div>
 
           {/* Progress bar */}
@@ -236,7 +236,7 @@ export default function LoginPage() {
           {/* Step 1: Name + Email */}
           {step === 1 && (
             <div className="space-y-4">
-              <h2 className="text-sm font-semibold text-[var(--ui-text-text-secondary)]">Your Info</h2>
+              <h2 className="text-sm font-semibold text-text-secondary">Your Info</h2>
               <div className="grid grid-cols-2 gap-3">
                 <Input id="reg-first-name" label="First Name" value={formData.firstName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('firstName', e.target.value)} placeholder="Josh" layout="vertical" />
                 <Input id="reg-last-name" label="Last Name" value={formData.lastName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('lastName', e.target.value)} placeholder="Thornbrugh" layout="vertical" />
@@ -248,9 +248,9 @@ export default function LoginPage() {
           {/* Step 2: Device & Network Preferences */}
           {step === 2 && (
             <div className="space-y-4">
-              <h2 className="text-sm font-semibold text-[var(--ui-text-text-secondary)]">Device & Network</h2>
+              <h2 className="text-sm font-semibold text-text-secondary">Device & Network</h2>
               <div>
-                <label className="block text-xs font-medium text-[var(--ui-text-text-tertiary)] mb-1">Phone OS</label>
+                <label className="block text-xs font-medium text-text-tertiary mb-1">Phone OS</label>
                 <Segmented
                   items={[{ label: 'iOS', value: 'iOS' }, { label: 'Android', value: 'Android' }]}
                   value={formData.phoneOS}
@@ -258,7 +258,7 @@ export default function LoginPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[var(--ui-text-text-tertiary)] mb-1">Do you have an eero network?</label>
+                <label className="block text-xs font-medium text-text-tertiary mb-1">Do you have an eero network?</label>
                 <Segmented
                   items={[{ label: 'No', value: 'No' }, { label: 'Yes', value: 'Yes' }, { label: 'Yes, multiple', value: 'Yes, multiple' }]}
                   value={formData.hasEeroNetwork}
@@ -269,7 +269,7 @@ export default function LoginPage() {
                 <Input id="reg-network-email" label="Network email (if applicable)" value={formData.networkEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('networkEmail', e.target.value)} placeholder="personal@gmail.com" layout="vertical" />
               )}
               <div>
-                <label className="block text-xs font-medium text-[var(--ui-text-text-tertiary)] mb-1">Test group preference</label>
+                <label className="block text-xs font-medium text-text-tertiary mb-1">Test group preference</label>
                 <Segmented
                   items={[
                     { label: '🚀 Latest & greatest', value: 'Latest and greatest firmware' },
@@ -285,7 +285,7 @@ export default function LoginPage() {
           {/* Step 3: Shipping Address */}
           {step === 3 && (
             <div className="space-y-4">
-              <h2 className="text-sm font-semibold text-[var(--ui-text-text-secondary)]">Shipping Address</h2>
+              <h2 className="text-sm font-semibold text-text-secondary">Shipping Address</h2>
               <Input id="reg-street" label="Street Address" value={formData.streetAddress} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('streetAddress', e.target.value)} placeholder="123 Main St" layout="vertical" />
               <Input id="reg-apt" label="Apt / Unit Number (optional)" value={formData.aptUnit} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('aptUnit', e.target.value)} placeholder="Apt 4B" layout="vertical" />
               <div className="grid grid-cols-3 gap-3">
@@ -295,12 +295,12 @@ export default function LoginPage() {
               </div>
               <div className="pt-2">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={formData.preferWorkAddress} onChange={(e) => updateField('preferWorkAddress', e.target.checked)} className="rounded border-[var(--ui-input-border-input-rest)]" />
-                  <span className="text-sm text-[var(--ui-text-text-secondary)]">Prefer shipping to a work address?</span>
+                  <input type="checkbox" checked={formData.preferWorkAddress} onChange={(e) => updateField('preferWorkAddress', e.target.checked)} className="rounded border-border-input-rest" />
+                  <span className="text-sm text-text-secondary">Prefer shipping to a work address?</span>
                 </label>
               </div>
               {formData.preferWorkAddress && (
-                <div className="pl-4 border-l-2 border-[var(--ui-core-periwinkle-periwinkle-3)] space-y-3">
+                <div className="pl-4 border-l-2 border-Periwinkle-periwinkle-3 space-y-3">
                   <Input id="reg-work-street" label="Work Street" value={formData.workStreet} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('workStreet', e.target.value)} placeholder="660 3rd St" layout="vertical" />
                   <Input id="reg-work-floor" label="Floor / Suite (optional)" value={formData.workFloor} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('workFloor', e.target.value)} placeholder="4th Floor" layout="vertical" />
                   <div className="grid grid-cols-3 gap-3">
@@ -316,11 +316,11 @@ export default function LoginPage() {
           {/* Step 4: Contact & Final Details */}
           {step === 4 && (
             <div className="space-y-4">
-              <h2 className="text-sm font-semibold text-[var(--ui-text-text-secondary)]">Contact & Final Details</h2>
+              <h2 className="text-sm font-semibold text-text-secondary">Contact & Final Details</h2>
               <Input id="reg-phone" label="Phone Number (incl. country code)" value={formData.phoneNumber} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('phoneNumber', e.target.value)} placeholder="+1 555-123-4567" layout="vertical" />
               <Input id="reg-prod-email" label="Email used for production eero account (personal email)" value={formData.productionEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('productionEmail', e.target.value)} placeholder="personal@gmail.com" layout="vertical" />
               <div>
-                <label className="block text-xs font-medium text-[var(--ui-text-text-tertiary)] mb-1">Approximate sq. footage of home</label>
+                <label className="block text-xs font-medium text-text-tertiary mb-1">Approximate sq. footage of home</label>
                 <Segmented
                   items={[
                     { label: 'Less than 500', value: 'Less than 500' },

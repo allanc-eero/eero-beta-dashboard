@@ -73,8 +73,8 @@ interface RegionData { total: number; online: number; offline: number; deactivat
 // Small live stat tile for the KPI strip.
 function StatTile({ label, value, accent }: { label: string; value: string | number; accent?: string }) {
   return (
-    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-3">
-      <p className="text-xs text-[var(--ui-text-text-tertiary)]">{label}</p>
+    <div className="bg-layer-page rounded-xl border border-border-layer-page p-3">
+      <p className="text-xs text-text-tertiary">{label}</p>
       <p className="text-xl font-bold" style={{ color: accent || 'var(--ui-text-text-primary)' }}>{value}</p>
     </div>
   );
@@ -151,8 +151,8 @@ export default function LocationsTab() {
 
   const colorScale = scaleLinear<string>()
     .domain([0, maxDevices / 2, maxDevices])
-    // d3 color ramp — hexes map to periwinkle-2/5/9; kept as raw hex because d3 interpolates them
-    .range(['#dbeafe', '#3b82f6', '#1e3a8a']);
+    // d3 color ramp — EDS periwinkle-2/5/8 token hexes; kept as literal hex because d3 interpolates them
+    .range(['#d3e3ff', '#5c92ff', '#113588']);
 
   const sizeScale = scaleLinear()
     .domain([0, maxDevices])
@@ -218,7 +218,7 @@ export default function LocationsTab() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-[var(--ui-text-text-primary)]">Device Map</h2>
+        <h2 className="text-lg font-bold text-text-primary">Device Map</h2>
         <div className="flex items-center gap-3">
           {/* Status filter */}
           <div className="w-40">
@@ -263,24 +263,24 @@ export default function LocationsTab() {
       </div>
 
       {/* Map */}
-      <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-4 overflow-hidden relative">
+      <div className="bg-layer-page rounded-xl border border-border-layer-page p-4 overflow-hidden relative">
         {/* Zoom controls (plain icon-only map controls — token-mapped colors only) */}
         <div className="absolute top-6 right-6 z-10 flex flex-col gap-1">
           <button
             onClick={() => setZoom((z) => Math.min(z * 1.5, 20))}
-            className="w-8 h-8 bg-[var(--ui-background-layer-layer-page)] border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg shadow-sm flex items-center justify-center text-[var(--ui-text-text-secondary)] hover:bg-[var(--ui-background-layer-layer-page-hover)] text-lg font-bold"
+            className="w-8 h-8 bg-layer-page border border-border-layer-page rounded-lg shadow-sm flex items-center justify-center text-text-secondary hover:bg-layer-page-hover text-lg font-bold"
           >
             +
           </button>
           <button
             onClick={() => setZoom((z) => Math.max(z / 1.5, 1))}
-            className="w-8 h-8 bg-[var(--ui-background-layer-layer-page)] border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg shadow-sm flex items-center justify-center text-[var(--ui-text-text-secondary)] hover:bg-[var(--ui-background-layer-layer-page-hover)] text-lg font-bold"
+            className="w-8 h-8 bg-layer-page border border-border-layer-page rounded-lg shadow-sm flex items-center justify-center text-text-secondary hover:bg-layer-page-hover text-lg font-bold"
           >
             −
           </button>
           <button
             onClick={() => { setZoom(1); setCenter([20, 20]); }}
-            className="w-8 h-8 bg-[var(--ui-background-layer-layer-page)] border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg shadow-sm flex items-center justify-center text-[var(--ui-text-text-secondary)] hover:bg-[var(--ui-background-layer-layer-page-hover)] text-xs"
+            className="w-8 h-8 bg-layer-page border border-border-layer-page rounded-lg shadow-sm flex items-center justify-center text-text-secondary hover:bg-layer-page-hover text-xs"
           >
             ⟲
           </button>
@@ -312,12 +312,12 @@ export default function LocationsTab() {
                   <Geography
                     key={geo.rpiKey || geo.properties.name}
                     geography={geo}
-                    fill="#f1f5f9"
-                    stroke="#e2e8f0"
+                    fill="var(--ui-core-gray-gray-2)"
+                    stroke="var(--ui-core-gray-gray-3)"
                     strokeWidth={0.5}
                     style={{
                       default: { outline: 'none' },
-                      hover: { fill: '#e2e8f0', outline: 'none' },
+                      hover: { fill: 'var(--ui-core-gray-gray-3)', outline: 'none' },
                       pressed: { outline: 'none' },
                     }}
                   />
@@ -344,21 +344,21 @@ export default function LocationsTab() {
                     r={size / zoom}
                     fill={color}
                     fillOpacity={0.8}
-                    stroke={isSelected ? '#16a34a' : '#1e40af'}
+                    stroke={isSelected ? 'var(--ui-core-green-green-6)' : 'var(--ui-core-periwinkle-periwinkle-7)'}
                     strokeWidth={(isSelected ? 3.5 : 2) / zoom}
                     style={{ cursor: 'pointer' }}
                   />
                   <text
                     textAnchor="middle"
                     y={(size / zoom) + (16 / zoom)}
-                    style={{ fontSize: `${12 / zoom}px`, fill: '#000000', fontWeight: 700 }}
+                    style={{ fontSize: `${12 / zoom}px`, fill: 'var(--ui-text-text-primary)', fontWeight: 700 }}
                   >
                     {country}
                   </text>
                   <text
                     textAnchor="middle"
                     y={4 / zoom}
-                    style={{ fontSize: `${Math.max(11, size * 0.55) / zoom}px`, fill: '#000000', fontWeight: 800 }}
+                    style={{ fontSize: `${Math.max(11, size * 0.55) / zoom}px`, fill: 'var(--ui-text-text-primary)', fontWeight: 800 }}
                   >
                     {centerLabel}
                   </text>
@@ -370,14 +370,14 @@ export default function LocationsTab() {
 
         {/* Legend */}
         <div className="flex items-center justify-between mt-3 px-2">
-          <div className="flex items-center gap-4 text-xs text-[var(--ui-text-text-tertiary)]">
+          <div className="flex items-center gap-4 text-xs text-text-tertiary">
             {/* swatches mirror the d3 colorScale ramp (periwinkle-2/5/9) */}
-            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-[var(--ui-core-periwinkle-periwinkle-2)]" /> Low density</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-[var(--ui-core-periwinkle-periwinkle-5)]" /> Medium</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-[var(--ui-core-periwinkle-periwinkle-9)]" /> High density</span>
-            {filter === 'all' && <span className="text-[var(--ui-text-text-placeholder)]">· marker shows online/total</span>}
+            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-Periwinkle-periwinkle-2" /> Low density</span>
+            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-Periwinkle-periwinkle-5" /> Medium</span>
+            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-Periwinkle-periwinkle-9" /> High density</span>
+            {filter === 'all' && <span className="text-text-placeholder">· marker shows online/total</span>}
           </div>
-          <p className="text-xs text-[var(--ui-text-text-placeholder)]">
+          <p className="text-xs text-text-placeholder">
             {filteredDevices.length} devices across {countryData.size} countries · synced {lastSync}
             {unmappedRegions.length > 0 && ` · ${unmappedRegions.length} not mappable`}
           </p>
@@ -394,20 +394,20 @@ export default function LocationsTab() {
               <div
                 key={country}
                 onClick={() => selectRegion(country)}
-                className={`bg-[var(--ui-background-layer-layer-page)] rounded-xl border p-4 cursor-pointer transition-all hover:shadow-sm ${selectedCountry === country ? 'border-[var(--ui-core-periwinkle-periwinkle-5)] ring-1 ring-[var(--ui-core-periwinkle-periwinkle-2)]' : 'border-[var(--ui-background-layer-border-border-layer-page)]'}`}
+                className={`bg-layer-page rounded-xl border p-4 cursor-pointer transition-all hover:shadow-sm ${selectedCountry === country ? 'border-Periwinkle-periwinkle-5 ring-1 ring-Periwinkle-periwinkle-2' : 'border-border-layer-page'}`}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-sm font-semibold text-[var(--ui-text-text-primary)]">{country}</h4>
-                  <span className="text-xs text-[var(--ui-text-text-placeholder)]">{data.total}</span>
+                  <h4 className="text-sm font-semibold text-text-primary">{country}</h4>
+                  <span className="text-xs text-text-placeholder">{data.total}</span>
                 </div>
                 {/* Health bar */}
-                <div className="w-full h-2 bg-[var(--ui-background-layer-layer-page-hover)] rounded-full overflow-hidden mb-2">
-                  <div className="h-full bg-[var(--ui-core-green-green-6)] rounded-full" style={{ width: `${onlinePercent}%` }} />
+                <div className="w-full h-2 bg-layer-page-hover rounded-full overflow-hidden mb-2">
+                  <div className="h-full bg-Green-green-6 rounded-full" style={{ width: `${onlinePercent}%` }} />
                 </div>
-                <div className="flex items-center justify-between text-xs text-[var(--ui-text-text-tertiary)]">
+                <div className="flex items-center justify-between text-xs text-text-tertiary">
                   <span className="flex items-center gap-2">
-                    <span className="text-[var(--ui-core-green-green-6)]">{data.online} online</span>
-                    {data.offline > 0 && <span className="text-[var(--ui-core-orange-orange-5)]">{data.offline} not online</span>}
+                    <span className="text-Green-green-6">{data.online} online</span>
+                    {data.offline > 0 && <span className="text-Orange-orange-5">{data.offline} not online</span>}
                     {data.deactivated > 0 && <span>{data.deactivated} deact.</span>}
                   </span>
                   <span>{onlinePercent}% healthy</span>
@@ -419,13 +419,13 @@ export default function LocationsTab() {
 
       {/* Country detail */}
       {selectedCountry && (
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] overflow-hidden">
-          <div className="p-4 border-b border-[var(--ui-background-layer-border-border-layer-page)]">
+        <div className="bg-layer-page rounded-xl border border-border-layer-page overflow-hidden">
+          <div className="p-4 border-b border-border-layer-page">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-[var(--ui-text-text-primary)]">{selectedCountry} — {countryDevices.length} devices</h3>
+              <h3 className="text-sm font-semibold text-text-primary">{selectedCountry} — {countryDevices.length} devices</h3>
               <div className="flex items-center gap-3">
                 <Button type="text" label="Export CSV" onClick={exportRegionCSV} />
-                <button onClick={() => setSelectedCountry(null)} className="text-xs text-[var(--ui-text-text-tertiary)] hover:text-[var(--ui-text-text-secondary)]">Close ×</button>
+                <button onClick={() => setSelectedCountry(null)} className="text-xs text-text-tertiary hover:text-text-secondary">Close ×</button>
               </div>
             </div>
             {/* Status filter chips */}
@@ -435,8 +435,8 @@ export default function LocationsTab() {
                   key={chip.value}
                   onClick={() => setDetailStatus(chip.value)}
                   className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${detailStatus === chip.value
-                    ? 'bg-[var(--ui-core-periwinkle-periwinkle-1)] border-[var(--ui-core-periwinkle-periwinkle-5)] text-[var(--ui-core-periwinkle-periwinkle-7)]'
-                    : 'bg-[var(--ui-background-layer-layer-page)] border-[var(--ui-background-layer-border-border-layer-page)] text-[var(--ui-text-text-tertiary)] hover:bg-[var(--ui-background-layer-layer-page-hover)]'}`}
+                    ? 'bg-Periwinkle-periwinkle-1 border-Periwinkle-periwinkle-5 text-Periwinkle-periwinkle-7'
+                    : 'bg-layer-page border-border-layer-page text-text-tertiary hover:bg-layer-page-hover'}`}
                 >
                   {chip.label} · {chip.count}
                 </button>
@@ -445,24 +445,24 @@ export default function LocationsTab() {
           </div>
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-[var(--ui-background-layer-layer-page-hover)]">
-                <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Serial</th>
-                <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Model</th>
-                <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Assigned To</th>
-                <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Program</th>
-                <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Status</th>
+              <tr className="bg-layer-page-hover">
+                <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Serial</th>
+                <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Model</th>
+                <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Assigned To</th>
+                <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Program</th>
+                <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+            <tbody className="divide-y divide-border-layer-page">
               {pagedCountryDevices.map((d) => (
                 <tr
                   key={d.id}
                   onClick={() => setOpenDevice(d)}
-                  className="hover:bg-[var(--ui-background-layer-layer-page-hover)] cursor-pointer"
+                  className="hover:bg-layer-page-hover cursor-pointer"
                 >
-                  <td className="px-4 py-2 font-mono text-xs text-[var(--ui-core-periwinkle-periwinkle-6)]">{d.serialNumber}</td>
-                  <td className="px-4 py-2 text-[var(--ui-text-text-tertiary)]">{d.model}</td>
-                  <td className="px-4 py-2 text-[var(--ui-text-text-tertiary)]">{d.assignedTo || d.assignedEmail || '—'}</td>
+                  <td className="px-4 py-2 font-mono text-xs text-Periwinkle-periwinkle-6">{d.serialNumber}</td>
+                  <td className="px-4 py-2 text-text-tertiary">{d.model}</td>
+                  <td className="px-4 py-2 text-text-tertiary">{d.assignedTo || d.assignedEmail || '—'}</td>
                   <td className="px-4 py-2"><Tag color="periwinkle" size="regular">{d.program}</Tag></td>
                   <td className="px-4 py-2">
                     <Tag color={d.status === 'online' ? 'green' : d.status === 'deactivated' ? 'grey' : 'orange'} size="regular">
@@ -472,12 +472,12 @@ export default function LocationsTab() {
                 </tr>
               ))}
               {pagedCountryDevices.length === 0 && (
-                <tr><td colSpan={5} className="px-4 py-8 text-center text-xs text-[var(--ui-text-text-placeholder)]">No devices match this filter.</td></tr>
+                <tr><td colSpan={5} className="px-4 py-8 text-center text-xs text-text-placeholder">No devices match this filter.</td></tr>
               )}
             </tbody>
           </table>
           {detailDevices.length > pageSize && (
-            <div className="border-t border-[var(--ui-background-layer-border-border-layer-page)] px-4 py-2">
+            <div className="border-t border-border-layer-page px-4 py-2">
               <Pagination
                 pagination={{ totalItems: detailDevices.length, totalPages: countryTotalPages, hasPreviousPage: countryPage > 1, hasNextPage: countryPage < countryTotalPages }}
                 currentPage={countryPage}

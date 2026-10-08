@@ -234,43 +234,43 @@ Device Management Team`
   if (processResults) {
     return (
       <div className="space-y-6">
-        <h2 className="text-xl font-bold text-[var(--ui-text-text-primary)]">✓ Program Closed Successfully</h2>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)]">{PROGRAM_LABELS[selectedProgram!] || 'Program'} — {processResults.totalProcessed} devices processed</p>
+        <h2 className="text-xl font-bold text-text-primary">✓ Program Closed Successfully</h2>
+        <p className="text-sm text-text-tertiary">{PROGRAM_LABELS[selectedProgram!] || 'Program'} — {processResults.totalProcessed} devices processed</p>
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Card size={3}>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--ui-text-text-primary)]">{processResults.totalProcessed}</p>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Total Processed</p>
+              <p className="text-2xl font-bold text-text-primary">{processResults.totalProcessed}</p>
+              <p className="text-xs text-text-tertiary">Total Processed</p>
             </div>
           </Card>
-          <div className="bg-[var(--ui-support-fill-support-error)] rounded-xl border border-[var(--ui-support-border-support-error)] p-4 text-center">
-            <p className="text-2xl font-bold text-[var(--ui-support-text-support-error)]">{processResults.devicesBricked.length}</p>
-            <p className="text-xs text-[var(--ui-core-red-red-6)]">Devices Bricked</p>
+          <div className="bg-fill-support-error rounded-xl border border-border-support-error p-4 text-center">
+            <p className="text-2xl font-bold text-text-support-error">{processResults.devicesBricked.length}</p>
+            <p className="text-xs text-Red-red-6">Devices Bricked</p>
           </div>
-          <div className="bg-[var(--ui-support-fill-support-info)] rounded-xl border border-[var(--ui-support-border-support-info)] p-4 text-center">
-            <p className="text-2xl font-bold text-[var(--ui-support-text-icon-support-info)]">{processResults.emailsSent.length}</p>
-            <p className="text-xs text-[var(--ui-core-periwinkle-periwinkle-6)]">Emails Sent</p>
+          <div className="bg-fill-support-info rounded-xl border border-border-support-info p-4 text-center">
+            <p className="text-2xl font-bold text-text+icon-support-info">{processResults.emailsSent.length}</p>
+            <p className="text-xs text-Periwinkle-periwinkle-6">Emails Sent</p>
           </div>
           <Card size={3}>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--ui-text-text-secondary)]">{processResults.devicesArchived}</p>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Archived</p>
+              <p className="text-2xl font-bold text-text-secondary">{processResults.devicesArchived}</p>
+              <p className="text-xs text-text-tertiary">Archived</p>
             </div>
           </Card>
         </div>
 
         {/* Bricked devices confirmation */}
         {processResults.devicesBricked.length > 0 && (
-          <div className="bg-[var(--ui-support-fill-support-error)] rounded-xl border border-[var(--ui-support-border-support-error)] p-5">
-            <h3 className="text-sm font-semibold text-[var(--ui-support-text-support-error)] mb-3">⚠️ Devices Bricked via Partner API ({processResults.devicesBricked.length})</h3>
+          <div className="bg-fill-support-error rounded-xl border border-border-support-error p-5">
+            <h3 className="text-sm font-semibold text-text-support-error mb-3">⚠️ Devices Bricked via Partner API ({processResults.devicesBricked.length})</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {processResults.devicesBricked.map((serial) => (
                 <div key={serial} className="flex items-center gap-2 text-xs">
-                  <span className="text-[var(--ui-core-red-red-6)]">●</span>
+                  <span className="text-Red-red-6">●</span>
                   <span className="font-mono">{serial}</span>
-                  <span className="text-[var(--ui-core-red-red-6)] font-medium">Bricked</span>
+                  <span className="text-Red-red-6 font-medium">Bricked</span>
                 </div>
               ))}
             </div>
@@ -279,13 +279,13 @@ Device Management Team`
 
         {/* Emails sent confirmation */}
         {processResults.emailsSent.length > 0 && (
-          <div className="bg-[var(--ui-support-fill-support-info)] rounded-xl border border-[var(--ui-support-border-support-info)] p-5">
-            <h3 className="text-sm font-semibold text-[var(--ui-support-text-icon-support-info)] mb-3">📧 Return Emails Sent ({processResults.emailsSent.length} testers)</h3>
+          <div className="bg-fill-support-info rounded-xl border border-border-support-info p-5">
+            <h3 className="text-sm font-semibold text-text+icon-support-info mb-3">📧 Return Emails Sent ({processResults.emailsSent.length} testers)</h3>
             <div className="space-y-2">
               {processResults.emailsSent.map(({ email, deviceCount }) => (
-                <div key={email} className="flex items-center justify-between text-sm p-2 bg-[var(--ui-support-fill-support-info)] rounded-lg">
-                  <span className="text-[var(--ui-text-text-secondary)]">{email}</span>
-                  <span className="text-xs text-[var(--ui-core-periwinkle-periwinkle-6)] font-medium">{deviceCount} device(s) · Email sent ✓</span>
+                <div key={email} className="flex items-center justify-between text-sm p-2 bg-fill-support-info rounded-lg">
+                  <span className="text-text-secondary">{email}</span>
+                  <span className="text-xs text-Periwinkle-periwinkle-6 font-medium">{deviceCount} device(s) · Email sent ✓</span>
                 </div>
               ))}
             </div>
@@ -316,13 +316,13 @@ Device Management Team`
         <div className="flex items-center justify-between">
           <div>
             <p
-              className="text-sm text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] cursor-pointer font-medium mb-1"
+              className="text-sm text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 cursor-pointer font-medium mb-1"
               onClick={() => { setClosingProgram(false); setSelectedProgram(null); }}
             >
               ← Back to programs
             </p>
-            <h2 className="text-xl font-bold text-[var(--ui-text-text-primary)]">Close Program: {PROGRAM_LABELS[selectedProgram]}</h2>
-            <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-1">Decide what happens to each device in this program</p>
+            <h2 className="text-xl font-bold text-text-primary">Close Program: {PROGRAM_LABELS[selectedProgram]}</h2>
+            <p className="text-sm text-text-tertiary mt-1">Decide what happens to each device in this program</p>
           </div>
         </div>
 
@@ -332,23 +332,23 @@ Device Management Team`
           if (!programRecord || programRecord.actions.length === 0) return null;
           const processed = programRecord.actions;
           return (
-            <div className="bg-[var(--ui-support-fill-support-success)] border border-[var(--ui-support-border-support-success)] rounded-xl p-4">
+            <div className="bg-fill-support-success border border-border-support-success rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-semibold text-[var(--ui-support-text-support-success)]">✓ Devices Already Processed</h3>
-                <span className="text-xs text-[var(--ui-core-green-green-6)] font-medium">{processed.length} device(s) done</span>
+                <h3 className="text-sm font-semibold text-text-support-success">✓ Devices Already Processed</h3>
+                <span className="text-xs text-Green-green-6 font-medium">{processed.length} device(s) done</span>
               </div>
-              <div className="flex items-center gap-4 text-xs text-[var(--ui-support-text-support-success)] mb-2">
+              <div className="flex items-center gap-4 text-xs text-text-support-success mb-2">
                 <span>{processed.filter((d) => d.action === 'brick_and_return').length} bricked</span>
                 <span>{processed.filter((d) => d.action === 'return').length} returned</span>
                 <span>{processed.filter((d) => d.action === 'archive').length} archived</span>
               </div>
               <details className="text-xs">
-                <summary className="cursor-pointer text-[var(--ui-support-text-support-success)] font-medium hover:text-[var(--ui-core-green-green-6)]">View processed devices</summary>
+                <summary className="cursor-pointer text-text-support-success font-medium hover:text-Green-green-6">View processed devices</summary>
                 <div className="mt-2 max-h-32 overflow-y-auto space-y-1">
                   {processed.map((d, i) => (
-                    <div key={i} className="flex items-center justify-between p-1.5 bg-[var(--ui-background-layer-layer-page)] rounded">
+                    <div key={i} className="flex items-center justify-between p-1.5 bg-layer-page rounded">
                       <span className="font-mono">{d.serial}</span>
-                      <span className="text-[var(--ui-text-text-tertiary)]">{d.assignee} · {d.region}</span>
+                      <span className="text-text-tertiary">{d.assignee} · {d.region}</span>
                       <Tag color={ACTION_TAG_COLOR[d.action as DeviceAction]} size="regular">{d.action.replace(/_/g, ' ')}</Tag>
                     </div>
                   ))}
@@ -361,8 +361,8 @@ Device Management Team`
         {/* Program-wide actions — admin only */}
         {canEdit() && (
         <Card size={3}>
-          <h3 className="text-sm font-semibold text-[var(--ui-text-text-primary)] mb-1">Program-Wide Actions</h3>
-          <p className="text-xs text-[var(--ui-text-text-tertiary)] mb-4">
+          <h3 className="text-sm font-semibold text-text-primary mb-1">Program-Wide Actions</h3>
+          <p className="text-xs text-text-tertiary mb-4">
             Use these buttons to apply the same action to <strong>every device</strong> in this program across all regions. If you need different actions per region, skip this and use the per-region buttons below instead.
           </p>
           <div className="flex items-center gap-3 flex-wrap">
@@ -385,12 +385,12 @@ Device Management Team`
           </div>
 
           {/* Status bar */}
-          <div className="flex items-center gap-4 mt-4 pt-4 border-t border-[var(--ui-background-layer-border-border-layer-page)]">
+          <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border-layer-page">
             <div className="flex items-center gap-3 text-xs">
-              <span className="text-[var(--ui-support-text-support-error)] font-medium">{actionCounts.return} return</span>
-              <span className="text-[var(--ui-support-text-support-error)] font-medium">{actionCounts.brick_and_return} brick & return</span>
-              <span className="text-[var(--ui-text-text-tertiary)] font-medium">{actionCounts.archive} archive</span>
-              {Object.keys(deviceActions).length === 0 && <span className="text-[var(--ui-core-orange-orange-6)] font-medium">No actions selected yet</span>}
+              <span className="text-text-support-error font-medium">{actionCounts.return} return</span>
+              <span className="text-text-support-error font-medium">{actionCounts.brick_and_return} brick & return</span>
+              <span className="text-text-tertiary font-medium">{actionCounts.archive} archive</span>
+              {Object.keys(deviceActions).length === 0 && <span className="text-Orange-orange-6 font-medium">No actions selected yet</span>}
             </div>
             <div className="ml-auto">
               <Button
@@ -441,19 +441,19 @@ Device Management Team`
                   onClick={exportPreviewCSV}
                 />
               </div>
-              <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-1">Review exactly what will happen before executing. Nothing has been changed yet.</p>
-              <p className="text-xs text-[var(--ui-text-text-placeholder)] mb-6">Preview generated: {previewTime}</p>
+              <p className="text-sm text-text-tertiary mb-1">Review exactly what will happen before executing. Nothing has been changed yet.</p>
+              <p className="text-xs text-text-placeholder mb-6">Preview generated: {previewTime}</p>
 
               {/* Brick & Return section */}
               {brickDevices.length > 0 && (
-                <div className="mb-5 p-4 bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-lg">
-                  <h3 className="text-sm font-semibold text-[var(--ui-support-text-support-error)] mb-2">🚨 BRICK & RETURN — {brickDevices.length} device(s)</h3>
-                  <p className="text-xs text-[var(--ui-core-red-red-6)] mb-3">These devices will be permanently deactivated via the Partner API. They will never connect to a network again. Return emails will be sent.</p>
+                <div className="mb-5 p-4 bg-fill-support-error border border-border-support-error rounded-lg">
+                  <h3 className="text-sm font-semibold text-text-support-error mb-2">🚨 BRICK & RETURN — {brickDevices.length} device(s)</h3>
+                  <p className="text-xs text-Red-red-6 mb-3">These devices will be permanently deactivated via the Partner API. They will never connect to a network again. Return emails will be sent.</p>
                   {Object.entries(brickByRegion).map(([region, devices]) => (
                     <div key={region} className="mb-2">
-                      <p className="text-xs font-medium text-[var(--ui-support-text-support-error)]">📍 {region} ({devices.length})</p>
+                      <p className="text-xs font-medium text-text-support-error">📍 {region} ({devices.length})</p>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {devices.map((d) => <span key={d.id} className="text-xs font-mono bg-[var(--ui-support-fill-support-error)] text-[var(--ui-support-text-support-error)] px-1.5 py-0.5 rounded">{d.serialNumber}</span>)}
+                        {devices.map((d) => <span key={d.id} className="text-xs font-mono bg-fill-support-error text-text-support-error px-1.5 py-0.5 rounded">{d.serialNumber}</span>)}
                       </div>
                     </div>
                   ))}
@@ -462,14 +462,14 @@ Device Management Team`
 
               {/* Return section */}
               {returnDevices.length > 0 && (
-                <div className="mb-5 p-4 bg-[var(--ui-support-fill-support-warning)] border border-[var(--ui-support-border-support-warning)] rounded-lg">
-                  <h3 className="text-sm font-semibold text-[var(--ui-support-text-icon-support-warning)] mb-2">📦 RETURN TO EERO — {returnDevices.length} device(s)</h3>
-                  <p className="text-xs text-[var(--ui-core-orange-orange-6)] mb-3">These devices will be marked as "Pending Return." Return emails will be sent. Devices stay active until you confirm receipt.</p>
+                <div className="mb-5 p-4 bg-fill-support-warning border border-border-support-warning rounded-lg">
+                  <h3 className="text-sm font-semibold text-text+icon-support-warning mb-2">📦 RETURN TO EERO — {returnDevices.length} device(s)</h3>
+                  <p className="text-xs text-Orange-orange-6 mb-3">These devices will be marked as "Pending Return." Return emails will be sent. Devices stay active until you confirm receipt.</p>
                   {Object.entries(returnByRegion).map(([region, devices]) => (
                     <div key={region} className="mb-2">
-                      <p className="text-xs font-medium text-[var(--ui-support-text-icon-support-warning)]">📍 {region} ({devices.length})</p>
+                      <p className="text-xs font-medium text-text+icon-support-warning">📍 {region} ({devices.length})</p>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {devices.map((d) => <span key={d.id} className="text-xs font-mono bg-[var(--ui-support-fill-support-warning)] text-[var(--ui-support-text-icon-support-warning)] px-1.5 py-0.5 rounded">{d.serialNumber}</span>)}
+                        {devices.map((d) => <span key={d.id} className="text-xs font-mono bg-fill-support-warning text-text+icon-support-warning px-1.5 py-0.5 rounded">{d.serialNumber}</span>)}
                       </div>
                     </div>
                   ))}
@@ -478,14 +478,14 @@ Device Management Team`
 
               {/* Archive section */}
               {archiveDevices.length > 0 && (
-                <div className="mb-5 p-4 bg-[var(--ui-background-layer-layer-page-hover)] border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg">
-                  <h3 className="text-sm font-semibold text-[var(--ui-text-text-secondary)] mb-2">📁 ARCHIVE — {archiveDevices.length} device(s)</h3>
-                  <p className="text-xs text-[var(--ui-text-text-tertiary)] mb-3">These devices will be marked as deactivated. Data is preserved. No emails sent.</p>
+                <div className="mb-5 p-4 bg-layer-page-hover border border-border-layer-page rounded-lg">
+                  <h3 className="text-sm font-semibold text-text-secondary mb-2">📁 ARCHIVE — {archiveDevices.length} device(s)</h3>
+                  <p className="text-xs text-text-tertiary mb-3">These devices will be marked as deactivated. Data is preserved. No emails sent.</p>
                   {Object.entries(archiveByRegion).map(([region, devices]) => (
                     <div key={region} className="mb-2">
-                      <p className="text-xs font-medium text-[var(--ui-text-text-tertiary)]">📍 {region} ({devices.length})</p>
+                      <p className="text-xs font-medium text-text-tertiary">📍 {region} ({devices.length})</p>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {devices.map((d) => <span key={d.id} className="text-xs font-mono bg-[var(--ui-background-layer-layer-page-hover)] text-[var(--ui-text-text-tertiary)] px-1.5 py-0.5 rounded">{d.serialNumber}</span>)}
+                        {devices.map((d) => <span key={d.id} className="text-xs font-mono bg-layer-page-hover text-text-tertiary px-1.5 py-0.5 rounded">{d.serialNumber}</span>)}
                       </div>
                     </div>
                   ))}
@@ -493,29 +493,29 @@ Device Management Team`
               )}
 
               {/* Summary */}
-              <div className="p-4 bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] rounded-lg mb-6">
-                <h3 className="text-sm font-semibold text-[var(--ui-support-text-icon-support-info)] mb-2">Summary</h3>
+              <div className="p-4 bg-fill-support-info border border-border-support-info rounded-lg mb-6">
+                <h3 className="text-sm font-semibold text-text+icon-support-info mb-2">Summary</h3>
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <p className="text-xl font-bold text-[var(--ui-support-text-support-error)]">{brickDevices.length}</p>
-                    <p className="text-xs text-[var(--ui-text-text-tertiary)]">Bricked</p>
+                    <p className="text-xl font-bold text-text-support-error">{brickDevices.length}</p>
+                    <p className="text-xs text-text-tertiary">Bricked</p>
                   </div>
                   <div>
-                    <p className="text-xl font-bold text-[var(--ui-core-orange-orange-6)]">{returnDevices.length}</p>
-                    <p className="text-xs text-[var(--ui-text-text-tertiary)]">Pending Return</p>
+                    <p className="text-xl font-bold text-Orange-orange-6">{returnDevices.length}</p>
+                    <p className="text-xs text-text-tertiary">Pending Return</p>
                   </div>
                   <div>
-                    <p className="text-xl font-bold text-[var(--ui-text-text-tertiary)]">{archiveDevices.length}</p>
-                    <p className="text-xs text-[var(--ui-text-text-tertiary)]">Archived</p>
+                    <p className="text-xl font-bold text-text-tertiary">{archiveDevices.length}</p>
+                    <p className="text-xs text-text-tertiary">Archived</p>
                   </div>
                 </div>
               </div>
 
               {/* Batch processing option for bricking */}
               {brickDevices.length > 10 && (
-                <div className="p-4 bg-[var(--ui-support-fill-support-warning)] border border-[var(--ui-support-border-support-warning)] rounded-lg mb-6">
-                  <h3 className="text-xs font-semibold text-[var(--ui-support-text-icon-support-warning)] mb-1">⚡ Large batch detected — consider processing in stages</h3>
-                  <p className="text-xs text-[var(--ui-support-text-icon-support-warning)] mb-3">You're about to brick {brickDevices.length} devices. We recommend processing by region using the per-region buttons instead, so you can verify each batch before continuing.</p>
+                <div className="p-4 bg-fill-support-warning border border-border-support-warning rounded-lg mb-6">
+                  <h3 className="text-xs font-semibold text-text+icon-support-warning mb-1">⚡ Large batch detected — consider processing in stages</h3>
+                  <p className="text-xs text-text+icon-support-warning mb-3">You're about to brick {brickDevices.length} devices. We recommend processing by region using the per-region buttons instead, so you can verify each batch before continuing.</p>
                   <Button
                     type="default"
                     label="← Go back and process by region instead"
@@ -558,15 +558,15 @@ Device Management Team`
             <div className="space-y-4">
               {/* Warning for devices missing region data */}
               {missingRegion.length > 0 && (
-                <div className="bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-xl p-4">
+                <div className="bg-fill-support-error border border-border-support-error rounded-xl p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[var(--ui-core-red-red-6)]">⚠️</span>
-                    <span className="text-sm font-semibold text-[var(--ui-support-text-support-error)]">{missingRegion.length} device(s) missing region/country data</span>
+                    <span className="text-Red-red-6">⚠️</span>
+                    <span className="text-sm font-semibold text-text-support-error">{missingRegion.length} device(s) missing region/country data</span>
                   </div>
-                  <p className="text-xs text-[var(--ui-support-text-support-error)] mb-2">These devices have no country assigned. Update them in the device detail or re-import with the Country column filled in.</p>
+                  <p className="text-xs text-text-support-error mb-2">These devices have no country assigned. Update them in the device detail or re-import with the Country column filled in.</p>
                   <div className="flex flex-wrap gap-2">
                     {missingRegion.map((d) => (
-                      <span key={d.id} className="text-xs font-mono bg-[var(--ui-support-fill-support-error)] text-[var(--ui-support-text-support-error)] px-2 py-0.5 rounded">
+                      <span key={d.id} className="text-xs font-mono bg-fill-support-error text-text-support-error px-2 py-0.5 rounded">
                         {d.serialNumber} ({d.assignedTo || d.assignedEmail || 'unassigned'})
                       </span>
                     ))}
@@ -574,15 +574,15 @@ Device Management Team`
                 </div>
               )}
               {regions.map((region) => (
-                <div key={region} className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] overflow-hidden">
-                  <div className="px-4 py-3 bg-[var(--ui-background-layer-layer-page-hover)] border-b border-[var(--ui-background-layer-border-border-layer-page)] flex items-center justify-between">
+                <div key={region} className="bg-layer-page rounded-xl border border-border-layer-page overflow-hidden">
+                  <div className="px-4 py-3 bg-layer-page-hover border-b border-border-layer-page flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-[var(--ui-text-text-secondary)]">📍 {region}</span>
-                      <span className="text-xs text-[var(--ui-text-text-placeholder)]">{grouped[region].length} device(s)</span>
+                      <span className="text-sm font-semibold text-text-secondary">📍 {region}</span>
+                      <span className="text-xs text-text-placeholder">{grouped[region].length} device(s)</span>
                     </div>
                     {canEdit() && (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-[var(--ui-text-text-tertiary)]">Set region to:</span>
+                      <span className="text-xs text-text-tertiary">Set region to:</span>
                       <Button
                         type="default"
                         danger
@@ -607,25 +607,25 @@ Device Management Team`
                   </div>
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-[var(--ui-background-layer-border-border-layer-page)]">
-                        <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Serial</th>
-                        <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Assigned To</th>
-                        <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Status</th>
-                        <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Action</th>
+                      <tr className="border-b border-border-layer-page">
+                        <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Serial</th>
+                        <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Assigned To</th>
+                        <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Status</th>
+                        <th className="px-4 py-2 text-left text-xs font-semibold text-text-tertiary uppercase">Action</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+                    <tbody className="divide-y divide-border-layer-page">
                       {grouped[region].map((device) => (
-                        <tr key={device.id} className="hover:bg-[var(--ui-background-layer-layer-page-hover)]">
+                        <tr key={device.id} className="hover:bg-layer-page-hover">
                           <td className="px-4 py-2.5 font-mono text-xs">
                             <button
                               onClick={() => setDetailDevice(device)}
-                              className="text-[var(--ui-core-periwinkle-periwinkle-6)] font-medium hover:underline cursor-pointer"
+                              className="text-Periwinkle-periwinkle-6 font-medium hover:underline cursor-pointer"
                             >
                               {device.serialNumber}
                             </button>
                           </td>
-                          <td className="px-4 py-2.5 text-[var(--ui-text-text-tertiary)]">{device.assignedTo || device.assignedEmail || '—'}</td>
+                          <td className="px-4 py-2.5 text-text-tertiary">{device.assignedTo || device.assignedEmail || '—'}</td>
                           <td className="px-4 py-2.5">
                             <Tag color={device.status === 'online' ? 'green' : 'orange'} size="regular">
                               {device.status.replace(/_/g, ' ')}
@@ -648,7 +648,7 @@ Device Management Team`
                               />
                             </div>
                             ) : (
-                              <span className="text-xs text-[var(--ui-text-text-placeholder)]">—</span>
+                              <span className="text-xs text-text-placeholder">—</span>
                             )}
                           </td>
                         </tr>
@@ -657,8 +657,8 @@ Device Management Team`
                   </table>
                   {/* Per-region process button — admin only */}
                   {canEdit() && (
-                    <div className="px-4 py-3 bg-[var(--ui-background-layer-layer-page-hover)] border-t border-[var(--ui-background-layer-border-border-layer-page)] flex items-center justify-between">
-                      <div className="text-xs text-[var(--ui-text-text-tertiary)]">
+                    <div className="px-4 py-3 bg-layer-page-hover border-t border-border-layer-page flex items-center justify-between">
+                      <div className="text-xs text-text-tertiary">
                         {grouped[region].filter((d) => deviceActions[d.id] === 'brick_and_return').length} brick & return · {grouped[region].filter((d) => deviceActions[d.id] === 'return').length} return · {grouped[region].filter((d) => deviceActions[d.id] === 'archive').length} archive · {grouped[region].filter((d) => !deviceActions[d.id]).length} unset
                       </div>
                       <Button
@@ -721,7 +721,7 @@ Device Management Team`
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-[var(--ui-text-text-primary)]">Programs</h2>
+        <h2 className="text-lg font-bold text-text-primary">Programs</h2>
       </div>
 
       {/* Active program cards — includes programs with partial processing */}
@@ -734,7 +734,7 @@ Device Management Team`
           return (
           <Card key={prog.name} size={3}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-semibold text-[var(--ui-text-text-primary)]">{prog.label}</h3>
+              <h3 className="text-base font-semibold text-text-primary">{prog.label}</h3>
               {hasProgress ? (
                 <Tag color="orange" size="regular">In Progress</Tag>
               ) : (
@@ -744,23 +744,23 @@ Device Management Team`
 
             <div className="grid grid-cols-3 gap-3 mb-4">
               <div className="text-center">
-                <p className="text-lg font-bold text-[var(--ui-text-text-primary)]">{prog.deviceCount}</p>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)]">Total Devices</p>
+                <p className="text-lg font-bold text-text-primary">{prog.deviceCount}</p>
+                <p className="text-xs text-text-tertiary">Total Devices</p>
               </div>
               <div className="text-center">
-                <p className="text-lg font-bold text-[var(--ui-core-green-green-6)]">{prog.onlineCount}</p>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)]">Online Devices</p>
+                <p className="text-lg font-bold text-Green-green-6">{prog.onlineCount}</p>
+                <p className="text-xs text-text-tertiary">Online Devices</p>
               </div>
               <div className="text-center">
-                <p className="text-lg font-bold text-[var(--ui-core-orange-orange-6)]">{prog.offlineCount}</p>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)]">Offline Devices</p>
+                <p className="text-lg font-bold text-Orange-orange-6">{prog.offlineCount}</p>
+                <p className="text-xs text-text-tertiary">Offline Devices</p>
               </div>
             </div>
 
             {/* Progress indicator when partially processed */}
             {hasProgress && (
-              <div className="mb-3 p-2 bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg">
-                <div className="flex items-center gap-3 text-xs text-[var(--ui-text-text-tertiary)]">
+              <div className="mb-3 p-2 bg-layer-page-hover rounded-lg">
+                <div className="flex items-center gap-3 text-xs text-text-tertiary">
                   <span className="font-medium">{processedCount} processed</span>
                   <span>{programRecord!.actions.filter((a) => a.action === 'brick_and_return').length} bricked</span>
                   <span>{programRecord!.actions.filter((a) => a.action === 'archive').length} archived</span>
@@ -770,7 +770,7 @@ Device Management Team`
             )}
 
             {prog.deactivatedCount > 0 && !hasProgress && (
-              <p className="text-xs text-[var(--ui-text-text-placeholder)] mb-3">{prog.deactivatedCount} deactivated</p>
+              <p className="text-xs text-text-placeholder mb-3">{prog.deactivatedCount} deactivated</p>
             )}
 
             <Button
@@ -787,7 +787,7 @@ Device Management Team`
       {programs.filter((p) => !fullyArchivedPrograms.has(p.name)).length === 0 && closedPrograms.length === 0 && (
         <Card size={3}>
           <div className="p-12 text-center">
-            <p className="text-[var(--ui-text-text-placeholder)] text-sm">No active programs with devices</p>
+            <p className="text-text-placeholder text-sm">No active programs with devices</p>
           </div>
         </Card>
       )}
@@ -796,19 +796,19 @@ Device Management Team`
       {/* Archived/Closed programs — only fully processed ones */}
       {closedPrograms.filter((cp) => fullyArchivedPrograms.has(cp.program)).length > 0 && (
         <div>
-          <h3 className="text-sm font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3">Archived Programs</h3>
+          <h3 className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-3">Archived Programs</h3>
           <div className="space-y-3">
             {closedPrograms.filter((cp) => fullyArchivedPrograms.has(cp.program)).map((cp) => (
               <Card key={cp.id} size={3}>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <h4 className="text-base font-semibold text-[var(--ui-text-text-primary)]">{PROGRAM_LABELS[cp.program as Program] || cp.program}</h4>
+                    <h4 className="text-base font-semibold text-text-primary">{PROGRAM_LABELS[cp.program as Program] || cp.program}</h4>
                     <Tag color="grey" size="regular">Archived</Tag>
                   </div>
-                  <span className="text-xs text-[var(--ui-text-text-placeholder)]">Closed {new Date(cp.closedAt).toLocaleDateString()}</span>
+                  <span className="text-xs text-text-placeholder">Closed {new Date(cp.closedAt).toLocaleDateString()}</span>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs text-[var(--ui-text-text-tertiary)] mb-3">
+                <div className="flex items-center gap-4 text-xs text-text-tertiary mb-3">
                   <span>Closed by {cp.closedBy}</span>
                   <span>·</span>
                   <span>{cp.totalDevices} devices processed</span>
@@ -819,19 +819,19 @@ Device Management Team`
 
                 {/* Expandable device list */}
                 <details className="text-xs">
-                  <summary className="cursor-pointer text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] font-medium">
+                  <summary className="cursor-pointer text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 font-medium">
                     View {cp.actions.length} devices
                   </summary>
-                  <div className="mt-2 max-h-48 overflow-y-auto border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg">
+                  <div className="mt-2 max-h-48 overflow-y-auto border border-border-layer-page rounded-lg">
                     <table className="w-full">
-                      <thead className="bg-[var(--ui-background-layer-layer-page-hover)] sticky top-0">
+                      <thead className="bg-layer-page-hover sticky top-0">
                         <tr>
-                          <th className="px-3 py-2 text-left text-xs font-medium text-[var(--ui-text-text-tertiary)]">Serial</th>
-                          <th className="px-3 py-2 text-left text-xs font-medium text-[var(--ui-text-text-tertiary)]">Assignee</th>
-                          <th className="px-3 py-2 text-left text-xs font-medium text-[var(--ui-text-text-tertiary)]">Action</th>
+                          <th className="px-3 py-2 text-left text-xs font-medium text-text-tertiary">Serial</th>
+                          <th className="px-3 py-2 text-left text-xs font-medium text-text-tertiary">Assignee</th>
+                          <th className="px-3 py-2 text-left text-xs font-medium text-text-tertiary">Action</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+                      <tbody className="divide-y divide-border-layer-page">
                         {cp.actions.map((a, i) => {
                           const device = devices.find((d) => d.serialNumber === a.serial);
                           return (
@@ -840,7 +840,7 @@ Device Management Team`
                               {device ? (
                                 <button
                                   onClick={() => setDetailDevice(device)}
-                                  className="text-[var(--ui-core-periwinkle-periwinkle-6)] font-medium hover:underline cursor-pointer"
+                                  className="text-Periwinkle-periwinkle-6 font-medium hover:underline cursor-pointer"
                                 >
                                   {a.serial}
                                 </button>
@@ -848,7 +848,7 @@ Device Management Team`
                                 <span>{a.serial}</span>
                               )}
                             </td>
-                            <td className="px-3 py-1.5 text-[var(--ui-text-text-tertiary)]">{a.assignee}</td>
+                            <td className="px-3 py-1.5 text-text-tertiary">{a.assignee}</td>
                             <td className="px-3 py-1.5">
                               <Tag color={ACTION_TAG_COLOR[a.action as DeviceAction]} size="regular">
                                 {a.action.replace(/_/g, ' ')}

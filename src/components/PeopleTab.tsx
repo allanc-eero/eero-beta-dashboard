@@ -297,7 +297,7 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
     <>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-[var(--ui-text-text-primary)]">People</h2>
+          <h2 className="text-lg font-bold text-text-primary">People</h2>
           <div className="flex items-center gap-3">
             <Segmented
               value={activeView}
@@ -331,7 +331,7 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
 
         {/* Add Person Form */}
         {showAdd && (
-          <div className="bg-[var(--ui-background-layer-layer-page)] p-4 rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)]">
+          <div className="bg-layer-page p-4 rounded-xl shadow-sm border border-border-layer-page">
             <div className="grid grid-cols-3 gap-3">
               <Input id="add-person-name" layout="vertical" placeholder="Full name" value={newPerson.name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPerson({ ...newPerson, name: e.target.value })} />
               <Input id="add-person-email" layout="vertical" placeholder="Email" value={newPerson.email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPerson({ ...newPerson, email: e.target.value })} />
@@ -356,7 +356,7 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
               const pagePeople = activePeople.slice(pageStart, pageStart + pageSize);
               return (
                 <div className="flex flex-col gap-3">
-                  <p className="text-sm font-medium text-[var(--ui-text-text-secondary)]">{activePeople.length} {activePeople.length === 1 ? 'person' : 'people'}</p>
+                  <p className="text-sm font-medium text-text-secondary">{activePeople.length} {activePeople.length === 1 ? 'person' : 'people'}</p>
                   <div className="flex flex-col gap-3">
                     {pagePeople.map((person) => {
                       const online = person.devices.filter((d) => d.status === 'online').length;
@@ -365,35 +365,35 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                       return (
                         <div
                           key={person.email || person.name}
-                          className="flex items-center gap-x-4 rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] bg-[var(--ui-background-layer-layer-page)] px-6 py-6 cursor-pointer hover:bg-[var(--ui-background-layer-layer-page-hover)] transition-colors"
+                          className="flex items-center gap-x-4 rounded-xl border border-border-layer-page bg-layer-page px-6 py-6 cursor-pointer hover:bg-layer-page-hover transition-colors"
                           onClick={() => setSelectedPerson(person.email || person.name)}
                         >
                           <div className="flex min-w-0 flex-[2] items-center gap-2.5">
-                            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[var(--ui-support-fill-support-success)]">
-                              <span className="text-xs font-semibold text-[var(--ui-support-text-support-success)]">{initials(person.name)}</span>
+                            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-fill-support-success">
+                              <span className="text-xs font-semibold text-text-support-success">{initials(person.name)}</span>
                             </div>
                             <div className="min-w-0 leading-tight">
-                              <p className="truncate text-sm font-medium text-[var(--ui-text-text-primary)]">{person.name}</p>
-                              <p className="truncate text-xs text-[var(--ui-text-text-tertiary)]">{person.email}</p>
+                              <p className="truncate text-sm font-medium text-text-primary">{person.name}</p>
+                              <p className="truncate text-xs text-text-tertiary">{person.email}</p>
                             </div>
                           </div>
                           <div className="flex-1 leading-tight">
-                            <p className="text-xs text-[var(--ui-text-text-tertiary)]">Programs</p>
-                            <p className="truncate text-sm font-medium text-[var(--ui-text-text-primary)]">{programCount}</p>
+                            <p className="text-xs text-text-tertiary">Programs</p>
+                            <p className="truncate text-sm font-medium text-text-primary">{programCount}</p>
                           </div>
                           <div className="flex-1 leading-tight">
-                            <p className="text-xs text-[var(--ui-text-text-tertiary)]">Devices</p>
-                            <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">{person.devices.length} <span className="text-xs font-normal text-[var(--ui-text-text-tertiary)]">{archived > 0 ? `· ${archived} archived` : ''}</span></p>
+                            <p className="text-xs text-text-tertiary">Devices</p>
+                            <p className="text-sm font-medium text-text-primary">{person.devices.length} <span className="text-xs font-normal text-text-tertiary">{archived > 0 ? `· ${archived} archived` : ''}</span></p>
                           </div>
                           <div className="flex-1 leading-tight">
-                            <p className="text-xs text-[var(--ui-text-text-tertiary)]">Online</p>
-                            <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">{online}</p>
+                            <p className="text-xs text-text-tertiary">Online</p>
+                            <p className="text-sm font-medium text-text-primary">{online}</p>
                           </div>
                         </div>
                       );
                     })}
                     {activePeople.length === 0 && (
-                      <div className="rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] bg-[var(--ui-background-layer-layer-page)] p-8 text-center text-sm text-[var(--ui-text-text-placeholder)]">No people found</div>
+                      <div className="rounded-xl border border-border-layer-page bg-layer-page p-8 text-center text-sm text-text-placeholder">No people found</div>
                     )}
                   </div>
                   {activePeople.length > pageSize && (
@@ -418,34 +418,34 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
             {activeView === 'opted_out' && (
               <div className="space-y-3">
                 {optOuts.length > 0 ? optOuts.map((record) => (
-                  <div key={record.id} className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] p-5">
+                  <div key={record.id} className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page p-5">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[var(--ui-background-layer-layer-page-hover)] rounded-full flex items-center justify-center">
-                          <span className="text-[var(--ui-text-text-tertiary)] font-semibold text-sm">
+                        <div className="w-10 h-10 bg-layer-page-hover rounded-full flex items-center justify-center">
+                          <span className="text-text-tertiary font-semibold text-sm">
                             {initials(record.personName)}
                           </span>
                         </div>
                         <div>
-                          <h3 className="font-semibold text-[var(--ui-text-text-primary)]">{record.personName}</h3>
-                          <p className="text-xs text-[var(--ui-text-text-tertiary)]">{record.personEmail}</p>
+                          <h3 className="font-semibold text-text-primary">{record.personName}</h3>
+                          <p className="text-xs text-text-tertiary">{record.personEmail}</p>
                         </div>
                       </div>
                       <Tag color="grey" size="regular">Opted Out</Tag>
                     </div>
                     {record.selfInitiated && (
-                      <div className="mb-2 inline-flex items-center gap-1.5 text-xs font-medium text-[var(--ui-support-text-icon-support-warning)] bg-[var(--ui-support-fill-support-warning)] border border-[var(--ui-support-border-support-warning)] px-2 py-1 rounded-md">
+                      <div className="mb-2 inline-flex items-center gap-1.5 text-xs font-medium text-text+icon-support-warning bg-fill-support-warning border border-border-support-warning px-2 py-1 rounded-md">
                         🙋 Self-requested from portal — needs offboarding
                       </div>
                     )}
-                    <div className="mt-3 space-y-1 text-xs text-[var(--ui-text-text-tertiary)]">
-                      <p><span className="font-medium text-[var(--ui-text-text-secondary)]">Reason:</span> {OPT_OUT_REASONS.find((r) => r.value === record.reason)?.label || record.reason}</p>
-                      {record.notes && <p><span className="font-medium text-[var(--ui-text-text-secondary)]">Notes:</span> {record.notes}</p>}
-                      <p><span className="font-medium text-[var(--ui-text-text-secondary)]">Date:</span> {new Date(record.optOutDate).toLocaleDateString()}</p>
-                      <p><span className="font-medium text-[var(--ui-text-text-secondary)]">Recorded by:</span> {record.recordedBy}</p>
-                      <p><span className="font-medium text-[var(--ui-text-text-secondary)]">Program:</span> {record.program}</p>
+                    <div className="mt-3 space-y-1 text-xs text-text-tertiary">
+                      <p><span className="font-medium text-text-secondary">Reason:</span> {OPT_OUT_REASONS.find((r) => r.value === record.reason)?.label || record.reason}</p>
+                      {record.notes && <p><span className="font-medium text-text-secondary">Notes:</span> {record.notes}</p>}
+                      <p><span className="font-medium text-text-secondary">Date:</span> {new Date(record.optOutDate).toLocaleDateString()}</p>
+                      <p><span className="font-medium text-text-secondary">Recorded by:</span> {record.recordedBy}</p>
+                      <p><span className="font-medium text-text-secondary">Program:</span> {record.program}</p>
                       {record.devicesAtOptOut.length > 0 && (
-                        <p><span className="font-medium text-[var(--ui-text-text-secondary)]">Devices at opt-out:</span> {record.devicesAtOptOut.join(', ')}</p>
+                        <p><span className="font-medium text-text-secondary">Devices at opt-out:</span> {record.devicesAtOptOut.join(', ')}</p>
                       )}
                     </div>
 
@@ -459,8 +459,8 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                     )}
                   </div>
                 )) : (
-                  <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-12 text-center">
-                    <p className="text-[var(--ui-text-text-placeholder)] text-sm">No testers have opted out</p>
+                  <div className="bg-layer-page rounded-xl border border-border-layer-page p-12 text-center">
+                    <p className="text-text-placeholder text-sm">No testers have opted out</p>
                   </div>
                 )}
               </div>
@@ -469,24 +469,24 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
             {/* Possible Duplicates — same person on two cards, pending review */}
             {activeView === 'possible_duplicates' && (
               <div className="space-y-3">
-                <p className="text-xs text-[var(--ui-text-text-tertiary)]">
+                <p className="text-xs text-text-tertiary">
                   Likely the same person on separate cards. Confirming a merge links their emails so it collapses to one card and stays that way. Exact-identity matches are merged automatically — these need your OK because they match on name plus location/network, which isn&apos;t proof on its own.
                 </p>
                 {duplicateCandidates.length > 0 ? duplicateCandidates.map(({ a, b, reasons, confidence }) => (
-                  <div key={dupePairKey(a.email || a.name, b.email || b.name)} className="rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] bg-[var(--ui-background-layer-layer-page)] p-5">
+                  <div key={dupePairKey(a.email || a.name, b.email || b.name)} className="rounded-xl border border-border-layer-page bg-layer-page p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-[var(--ui-text-text-primary)]">Possible duplicate</span>
+                        <span className="text-sm font-semibold text-text-primary">Possible duplicate</span>
                         <Tag color={confidence === 'high' ? 'orange' : 'yellow'} size="regular">{confidence === 'high' ? 'High confidence' : 'Needs review'}</Tag>
                       </div>
-                      <span className="text-xs text-[var(--ui-text-text-tertiary)]">{reasons.join(' · ')}</span>
+                      <span className="text-xs text-text-tertiary">{reasons.join(' · ')}</span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {[a, b].map((p, idx) => (
-                        <div key={idx} className="rounded-lg border border-[var(--ui-background-layer-border-border-layer-page)] p-3">
-                          <p className="truncate text-sm font-medium text-[var(--ui-text-text-primary)]">{p.name}{idx === 0 && <span className="ml-1.5 text-xs font-normal text-[var(--ui-text-text-tertiary)]">(kept)</span>}</p>
-                          <p className="truncate text-xs text-[var(--ui-text-text-tertiary)]">{p.email || '—'}</p>
-                          <p className="mt-1 text-xs text-[var(--ui-text-text-tertiary)]">{p.devices.length} device(s)</p>
+                        <div key={idx} className="rounded-lg border border-border-layer-page p-3">
+                          <p className="truncate text-sm font-medium text-text-primary">{p.name}{idx === 0 && <span className="ml-1.5 text-xs font-normal text-text-tertiary">(kept)</span>}</p>
+                          <p className="truncate text-xs text-text-tertiary">{p.email || '—'}</p>
+                          <p className="mt-1 text-xs text-text-tertiary">{p.devices.length} device(s)</p>
                         </div>
                       ))}
                     </div>
@@ -498,8 +498,8 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                     )}
                   </div>
                 )) : (
-                  <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-12 text-center">
-                    <p className="text-[var(--ui-text-text-placeholder)] text-sm">No possible duplicates found</p>
+                  <div className="bg-layer-page rounded-xl border border-border-layer-page p-12 text-center">
+                    <p className="text-text-placeholder text-sm">No possible duplicates found</p>
                   </div>
                 )}
               </div>
@@ -510,7 +510,7 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
           <div className="space-y-4">
             <button
               onClick={() => { setSelectedPerson(null); setEditingProfile(false); }}
-              className="text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] text-sm font-medium"
+              className="text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 text-sm font-medium"
             >
               ← All people
             </button>
@@ -529,22 +529,22 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
               return (
                 <>
                   {/* Profile Header */}
-                  <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] p-6">
+                  <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page p-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-[var(--ui-support-fill-support-success)] rounded-full flex items-center justify-center">
-                          <span className="text-[var(--ui-support-text-support-success)] font-bold text-lg">
+                        <div className="w-14 h-14 bg-fill-support-success rounded-full flex items-center justify-center">
+                          <span className="text-text-support-success font-bold text-lg">
                             {initials(personName)}
                           </span>
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h2 className="text-xl font-bold text-[var(--ui-text-text-primary)]">{personName}</h2>
+                            <h2 className="text-xl font-bold text-text-primary">{personName}</h2>
                             {profile?.testerId && (
                               <span className="font-mono"><Tag color="grey" size="regular">{profile.testerId}</Tag></span>
                             )}
                           </div>
-                          <p className="text-sm text-[var(--ui-text-text-tertiary)] mt-1">
+                          <p className="text-sm text-text-tertiary mt-1">
                             {selectedPersonDevices.length} device(s) · {selectedPersonDevices.filter((d) => d.status === 'online').length} online · {selectedPersonDevices.filter((d) => d.status === 'deactivated').length} archived
                           </p>
                         </div>
@@ -570,8 +570,8 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                   {/* Profile Details — Two Column */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {/* Contact & Identity */}
-                    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] p-5">
-                      <h4 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3 border-b border-[var(--ui-background-layer-border-border-layer-page)] pb-2">Contact & Identity</h4>
+                    <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page p-5">
+                      <h4 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3 border-b border-border-layer-page pb-2">Contact & Identity</h4>
                       <div className="space-y-2.5">
                         {editingProfile ? (
                           <>
@@ -589,7 +589,7 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                             <ProfileField label="ALTERNATE EMAIL" value={profile?.alternateEmail || ''} />
                             {(profile?.additionalEmails || []).length > 0 && (
                               <div className="flex items-baseline gap-3">
-                                <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">OTHER EMAILS</span>
+                                <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">OTHER EMAILS</span>
                                 <div className="flex flex-wrap gap-1">
                                   {profile!.additionalEmails.map((e) => (
                                     <Tag key={e} color="grey" size="regular">{e}</Tag>
@@ -605,19 +605,19 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                     </div>
 
                     {/* Programs & Network */}
-                    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] p-5">
-                      <h4 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3 border-b border-[var(--ui-background-layer-border-border-layer-page)] pb-2">Programs & Network</h4>
+                    <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page p-5">
+                      <h4 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3 border-b border-border-layer-page pb-2">Programs & Network</h4>
                       <div className="space-y-2.5">
                         <div className="flex items-baseline gap-3">
-                          <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">ACTIVE PROGRAMS</span>
+                          <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">ACTIVE PROGRAMS</span>
                           <div className="flex flex-wrap gap-1">
                             {activePrograms.length > 0 ? activePrograms.map((p) => (
                               <Tag key={p} color="periwinkle" size="regular">{p}</Tag>
-                            )) : <span className="text-sm text-[var(--ui-text-text-placeholder)]">None</span>}
+                            )) : <span className="text-sm text-text-placeholder">None</span>}
                           </div>
                         </div>
                         <div className="flex items-baseline gap-3">
-                          <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">ALL PROGRAMS</span>
+                          <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">ALL PROGRAMS</span>
                           <div className="flex flex-wrap gap-1">
                             {(profile?.programs || []).map((p) => (
                               <Tag key={p} color="grey" size="regular">{p}</Tag>
@@ -634,20 +634,20 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                           <>
                             {profile?.networkId ? (
                               <div className="flex items-baseline gap-3">
-                                <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">INSIGHT NETWORK</span>
+                                <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">INSIGHT NETWORK</span>
                                 {personInsightUrl
-                                  ? <a href={personInsightUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] hover:underline font-medium" title={`Open in Insight (${personEnv})`}>{profile.networkId} ↗</a>
-                                  : <span className="text-sm text-[var(--ui-text-text-secondary)]" title="Stage Insight URL not configured yet">{profile.networkId}</span>}
+                                  ? <a href={personInsightUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 hover:underline font-medium" title={`Open in Insight (${personEnv})`}>{profile.networkId} ↗</a>
+                                  : <span className="text-sm text-text-secondary" title="Stage Insight URL not configured yet">{profile.networkId}</span>}
                               </div>
                             ) : (
                               <ProfileField label="INSIGHT NETWORK" value="" />
                             )}
                             {profile?.adminId ? (
                               <div className="flex items-baseline gap-3">
-                                <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">ADMIN ID</span>
+                                <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">ADMIN ID</span>
                                 {personAdminUrl
-                                  ? <a href={personAdminUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] hover:underline font-medium" title={`Open in Admin (${personEnv})`}>{profile.adminId} ↗</a>
-                                  : <span className="text-sm text-[var(--ui-text-text-secondary)]" title="Stage Admin URL not configured yet">{profile.adminId}</span>}
+                                  ? <a href={personAdminUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 hover:underline font-medium" title={`Open in Admin (${personEnv})`}>{profile.adminId} ↗</a>
+                                  : <span className="text-sm text-text-secondary" title="Stage Admin URL not configured yet">{profile.adminId}</span>}
                               </div>
                             ) : (
                               <ProfileField label="ADMIN ID" value="" />
@@ -664,12 +664,12 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
             })()}
 
             {/* Program History — every program this tester has been part of, past + active */}
-            <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] p-5">
-              <h4 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3 border-b border-[var(--ui-background-layer-border-border-layer-page)] pb-2">
+            <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page p-5">
+              <h4 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3 border-b border-border-layer-page pb-2">
                 Program History ({personProgramGroups.length})
               </h4>
               {personProgramGroups.length === 0 ? (
-                <p className="text-sm text-[var(--ui-text-text-placeholder)]">No program history yet.</p>
+                <p className="text-sm text-text-placeholder">No program history yet.</p>
               ) : (
                 <div className="space-y-2">
                   {personProgramGroups.map((g) => {
@@ -677,19 +677,19 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                     const label = g.devices.length === 0 ? 'Roster only' : active ? 'Active' : 'Closed';
                     const color = label === 'Active' ? 'green' : label === 'Closed' ? 'grey' : 'periwinkle';
                     return (
-                      <div key={g.name} className="rounded-lg border border-[var(--ui-background-layer-border-border-layer-page)] p-3">
+                      <div key={g.name} className="rounded-lg border border-border-layer-page p-3">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-sm font-medium text-[var(--ui-text-text-primary)]">{g.name}</span>
+                          <span className="text-sm font-medium text-text-primary">{g.name}</span>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-[var(--ui-text-text-tertiary)]">{g.devices.length} device{g.devices.length !== 1 ? 's' : ''}</span>
+                            <span className="text-xs text-text-tertiary">{g.devices.length} device{g.devices.length !== 1 ? 's' : ''}</span>
                             <Tag color={color} size="regular">{label}</Tag>
                           </div>
                         </div>
                         {g.devices.length > 0 && (
                           <div className="mt-2 flex flex-wrap gap-1.5">
                             {g.devices.map((d) => (
-                              <button key={d.id} onClick={() => setViewDevice(d)} className="inline-flex items-center gap-1.5 rounded-md border border-[var(--ui-background-layer-border-border-layer-page)] px-2 py-1 hover:bg-[var(--ui-background-layer-layer-page-hover)]">
-                                <span className="font-mono text-xs text-[var(--ui-core-periwinkle-periwinkle-6)]">{d.serialNumber}</span>
+                              <button key={d.id} onClick={() => setViewDevice(d)} className="inline-flex items-center gap-1.5 rounded-md border border-border-layer-page px-2 py-1 hover:bg-layer-page-hover">
+                                <span className="font-mono text-xs text-Periwinkle-periwinkle-6">{d.serialNumber}</span>
                                 <Tag color={getStatusTagColor(d.status)} size="regular">{d.status.replace(/_/g, ' ')}</Tag>
                               </button>
                             ))}
@@ -704,12 +704,12 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
 
             {/* Opt-Out Form */}
             {showOptOut && (
-              <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-support-border-support-warning)] p-5">
-                <h4 className="text-sm font-semibold text-[var(--ui-text-text-primary)] mb-3">Record Tester Opt-Out</h4>
-                <p className="text-xs text-[var(--ui-text-text-tertiary)] mb-4">Complete all offboarding steps below, then confirm. This person will be moved to the "Opted Out" list.</p>
+              <div className="bg-layer-page rounded-xl shadow-sm border border-border-support-warning p-5">
+                <h4 className="text-sm font-semibold text-text-primary mb-3">Record Tester Opt-Out</h4>
+                <p className="text-xs text-text-tertiary mb-4">Complete all offboarding steps below, then confirm. This person will be moved to the "Opted Out" list.</p>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs font-medium text-[var(--ui-text-text-tertiary)] mb-1">Reason</label>
+                    <label className="block text-xs font-medium text-text-tertiary mb-1">Reason</label>
                     <Select
                       id="opt-reason"
                       value={optOutReason}
@@ -718,38 +718,38 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-[var(--ui-text-text-tertiary)] mb-1">Notes</label>
+                    <label className="block text-xs font-medium text-text-tertiary mb-1">Notes</label>
                     <TextArea id="opt-notes" value={optOutNotes} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setOptOutNotes(e.target.value)} placeholder="Additional context..." rows={3} />
                   </div>
 
                   {/* Offboarding checklist — manual steps only */}
-                  <div className="border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg p-4 bg-[var(--ui-background-layer-layer-page-hover)]">
-                    <h5 className="text-xs font-semibold text-[var(--ui-text-text-secondary)] uppercase tracking-wider mb-3">Offboarding Steps (required)</h5>
+                  <div className="border border-border-layer-page rounded-lg p-4 bg-layer-page-hover">
+                    <h5 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">Offboarding Steps (required)</h5>
                     <div className="space-y-2.5">
-                      <label className="flex items-start gap-3 p-2 rounded-lg hover:bg-[var(--ui-background-layer-layer-page)] cursor-pointer">
+                      <label className="flex items-start gap-3 p-2 rounded-lg hover:bg-layer-page cursor-pointer">
                         <Checkbox checked={optOutAdminDone} onChange={(e: CheckboxChangeEvent) => setOptOutAdminDone(e.target.checked)} className="mt-0.5" />
                         <div className="flex-1">
-                          <span className="text-sm text-[var(--ui-text-text-primary)] font-medium">Removed from eero Admin</span>
-                          <p className="text-xs text-[var(--ui-text-text-tertiary)]">Reverted to default user role in admin panel</p>
+                          <span className="text-sm text-text-primary font-medium">Removed from eero Admin</span>
+                          <p className="text-xs text-text-tertiary">Reverted to default user role in admin panel</p>
                         </div>
-                        {(() => { const p = getTesterProfile(selectedPerson || ''); const aid = p?.adminId || ''; const nid = p?.networkId || ''; const df = selectedPersonDevices.find((d) => d.environment === 'stage' || (d.program || '').toLowerCase().includes('dogfood')); const env = df ? resolveEnv(df.environment, df.program) : 'prod'; const link = aid ? adminUserUrl(aid, env) : nid ? insightNetworkUrl(nid, env) : ''; return link ? <a href={link} target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--ui-core-periwinkle-periwinkle-6)] hover:underline flex items-center gap-1 shrink-0">Open Admin ↗</a> : null; })()}
+                        {(() => { const p = getTesterProfile(selectedPerson || ''); const aid = p?.adminId || ''; const nid = p?.networkId || ''; const df = selectedPersonDevices.find((d) => d.environment === 'stage' || (d.program || '').toLowerCase().includes('dogfood')); const env = df ? resolveEnv(df.environment, df.program) : 'prod'; const link = aid ? adminUserUrl(aid, env) : nid ? insightNetworkUrl(nid, env) : ''; return link ? <a href={link} target="_blank" rel="noopener noreferrer" className="text-xs text-Periwinkle-periwinkle-6 hover:underline flex items-center gap-1 shrink-0">Open Admin ↗</a> : null; })()}
                       </label>
-                      <label className="flex items-start gap-3 p-2 rounded-lg hover:bg-[var(--ui-background-layer-layer-page)] cursor-pointer">
+                      <label className="flex items-start gap-3 p-2 rounded-lg hover:bg-layer-page cursor-pointer">
                         <Checkbox checked={optOutDevicesDone} onChange={(e: CheckboxChangeEvent) => setOptOutDevicesDone(e.target.checked)} className="mt-0.5" />
                         <div className="flex-1">
-                          <span className="text-sm text-[var(--ui-text-text-primary)] font-medium">Devices offboarded</span>
-                          <p className="text-xs text-[var(--ui-text-text-tertiary)]">All devices returned, deactivated, or reassigned</p>
+                          <span className="text-sm text-text-primary font-medium">Devices offboarded</span>
+                          <p className="text-xs text-text-tertiary">All devices returned, deactivated, or reassigned</p>
                         </div>
                       </label>
                       {/* Qualtrics — automated, shown as status */}
-                      <div className="flex items-start gap-3 p-2 rounded-lg bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)]">
-                        <div className="flex-shrink-0 mt-0.5 text-[var(--ui-support-text-icon-support-info)]">
+                      <div className="flex items-start gap-3 p-2 rounded-lg bg-fill-support-info border border-border-support-info">
+                        <div className="flex-shrink-0 mt-0.5 text-text+icon-support-info">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                         </div>
                         <div className="flex-1">
-                          <span className="text-sm text-[var(--ui-support-text-icon-support-info)] font-medium">Qualtrics opt-out</span>
-                          <p className="text-xs text-[var(--ui-support-text-icon-support-info)]">Handled automatically when you confirm — no action needed</p>
-                          {optOutQualtricsStatus && <p className={`text-xs mt-1 font-medium ${optOutQualtricsStatus.startsWith('✓') ? 'text-[var(--ui-core-green-green-6)]' : 'text-[var(--ui-core-orange-orange-6)]'}`}>{optOutQualtricsStatus}</p>}
+                          <span className="text-sm text-text+icon-support-info font-medium">Qualtrics opt-out</span>
+                          <p className="text-xs text-text+icon-support-info">Handled automatically when you confirm — no action needed</p>
+                          {optOutQualtricsStatus && <p className={`text-xs mt-1 font-medium ${optOutQualtricsStatus.startsWith('✓') ? 'text-Green-green-6' : 'text-Orange-orange-6'}`}>{optOutQualtricsStatus}</p>}
                         </div>
                       </div>
                     </div>
@@ -789,32 +789,32 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
             )}
 
             {/* Person's Devices Table */}
-            <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] overflow-hidden">
-              <h4 className="px-4 py-3 text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider border-b border-[var(--ui-background-layer-border-border-layer-page)] bg-[var(--ui-background-layer-layer-page-hover)]">
+            <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page overflow-hidden">
+              <h4 className="px-4 py-3 text-xs font-semibold text-text-tertiary uppercase tracking-wider border-b border-border-layer-page bg-layer-page-hover">
                 Devices ({selectedPersonDevices.length})
               </h4>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-[var(--ui-background-layer-layer-page-hover)] border-b border-[var(--ui-background-layer-border-border-layer-page)]">
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Serial</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Model</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Program</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase">Country</th>
+                  <tr className="bg-layer-page-hover border-b border-border-layer-page">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-text-tertiary uppercase">Serial</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-text-tertiary uppercase">Model</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-text-tertiary uppercase">Program</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-text-tertiary uppercase">Status</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-text-tertiary uppercase">Country</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+                <tbody className="divide-y divide-border-layer-page">
                   {selectedPersonDevices.map((d) => (
-                    <tr key={d.id} className="hover:bg-[var(--ui-background-layer-layer-page-hover)] cursor-pointer" onClick={() => setViewDevice(d)}>
-                      <td className="px-4 py-2 font-mono text-xs text-[var(--ui-core-periwinkle-periwinkle-6)]">{d.serialNumber}</td>
-                      <td className="px-4 py-2 text-[var(--ui-text-text-secondary)]">{d.model}</td>
+                    <tr key={d.id} className="hover:bg-layer-page-hover cursor-pointer" onClick={() => setViewDevice(d)}>
+                      <td className="px-4 py-2 font-mono text-xs text-Periwinkle-periwinkle-6">{d.serialNumber}</td>
+                      <td className="px-4 py-2 text-text-secondary">{d.model}</td>
                       <td className="px-4 py-2">
                         <Tag color="periwinkle" size="regular">{d.program}</Tag>
                       </td>
                       <td className="px-4 py-2">
                         <Tag color={getStatusTagColor(d.status)} size="regular">{d.status.replace(/_/g, ' ')}</Tag>
                       </td>
-                      <td className="px-4 py-2 text-[var(--ui-text-text-tertiary)]">{d.country || '—'}</td>
+                      <td className="px-4 py-2 text-text-tertiary">{d.country || '—'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -832,15 +832,15 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
           onCancel={() => { setDuplicateMatches([]); setPendingNewPerson(null); }}
           hideFooter
         >
-          <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-4">
+          <p className="text-sm text-text-tertiary mb-4">
             We found existing profiles that might be the same person as "<strong>{pendingNewPerson.name}</strong>" ({pendingNewPerson.email}). Would you like to merge into an existing profile or create a new one?
           </p>
           <div className="space-y-3 mb-6 max-h-48 overflow-y-auto">
             {duplicateMatches.map((match) => (
-              <div key={match.id} className="flex items-center justify-between p-3 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg">
+              <div key={match.id} className="flex items-center justify-between p-3 border border-border-layer-page rounded-lg">
                 <div>
-                  <p className="text-sm font-medium text-[var(--ui-text-text-primary)]">{match.name}</p>
-                  <p className="text-xs text-[var(--ui-text-text-tertiary)]">{match.email} {match.testerId && `· ${match.testerId}`}</p>
+                  <p className="text-sm font-medium text-text-primary">{match.name}</p>
+                  <p className="text-xs text-text-tertiary">{match.email} {match.testerId && `· ${match.testerId}`}</p>
                 </div>
                 <Button type="default" label="Merge Into This Profile" onClick={() => handleMergeIntoExisting(match.id)} />
               </div>
@@ -871,8 +871,8 @@ export default function PeopleTab({ initialSelectedPerson, onClearSelection }: {
 function ProfileField({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline gap-3">
-      <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">{label}</span>
-      <span className="text-sm text-[var(--ui-text-text-primary)]">{value || '—'}</span>
+      <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">{label}</span>
+      <span className="text-sm text-text-primary">{value || '—'}</span>
     </div>
   );
 }
@@ -882,7 +882,7 @@ function EditableRow({ label, field, value, onChange }: {
 }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">{label}</span>
+      <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">{label}</span>
       <div className="flex-1">
         <Input id={`edit-profile-${String(field)}`} value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(field, e.target.value)} />
       </div>

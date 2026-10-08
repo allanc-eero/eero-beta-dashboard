@@ -126,7 +126,7 @@ export default function AddDeviceModal({ onClose }: AddDeviceModalProps) {
       cancelText="Cancel"
       okButtonProps={{ disabled: !formData.serialNumber }}
     >
-      <p className="text-xs text-[var(--ui-text-text-tertiary)] mb-4">
+      <p className="text-xs text-text-tertiary mb-4">
         MAC, firmware, and location will auto-populate on next API sync.
       </p>
 
@@ -200,7 +200,7 @@ export default function AddDeviceModal({ onClose }: AddDeviceModalProps) {
               layout="vertical"
             />
             {profileApplied && (
-              <p className="text-xs text-[var(--ui-core-green-green-6)] mt-1">✓ Known tester — profile data will be applied</p>
+              <p className="text-xs text-Green-green-6 mt-1">✓ Known tester — profile data will be applied</p>
             )}
           </div>
         </div>
@@ -216,8 +216,8 @@ export default function AddDeviceModal({ onClose }: AddDeviceModalProps) {
         />
 
         {/* Info box */}
-        <div className="p-3 bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] rounded-lg">
-          <p className="text-xs text-[var(--ui-support-text-icon-support-info)]">
+        <div className="p-3 bg-fill-support-info border border-border-support-info rounded-lg">
+          <p className="text-xs text-text+icon-support-info">
             Once added, the next daily API sync will fetch the full device details (MAC address, firmware version, network status, location) from the Partner API automatically.
           </p>
         </div>

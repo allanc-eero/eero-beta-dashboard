@@ -77,17 +77,17 @@ export default function NetworkSyncButton() {
   }, [stale, autoTriggered, ready, checkableDevices.length, handleSync]);
 
   return (
-    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] p-4">
+    <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page p-4">
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <h4 className="text-sm font-semibold text-[var(--ui-text-text-primary)]">Device Sync</h4>
+            <h4 className="text-sm font-semibold text-text-primary">Device Sync</h4>
             <Tag color="periwinkle" size="regular">{DEVICE_SYNC_SOURCE === 'insight' ? 'Insight' : 'Databricks'}</Tag>
             {ready === true && <Tag color="green" size="regular">Connected</Tag>}
             {ready === false && <Tag color="orange" size="regular">Not connected</Tag>}
             {stale && ready && !syncing && <Tag color="orange" size="regular">Stale</Tag>}
           </div>
-          <p className="text-xs text-[var(--ui-text-text-tertiary)] mt-0.5">
+          <p className="text-xs text-text-tertiary mt-0.5">
             One click pulls real online status <em>and</em> current tester info from {DEVICE_SYNC_SOURCE === 'insight' ? 'Insight (the eero API)' : 'Databricks'}. Online = online, everything else = not online. Auto-syncs weekly and right after an upload.
           </p>
         </div>
@@ -109,7 +109,7 @@ export default function NetworkSyncButton() {
       </div>
 
       {/* Status row */}
-      <div className="flex items-center gap-4 mt-3 text-xs text-[var(--ui-text-text-placeholder)]">
+      <div className="flex items-center gap-4 mt-3 text-xs text-text-placeholder">
         <span>Last synced: {timeAgo(syncMetadata.lastFullSync)}</span>
         {syncMetadata.lastSyncOnlineCount > 0 && <span>·  {syncMetadata.lastSyncOnlineCount} online at last check</span>}
         {ready && identity && <span>·  {identity}</span>}
@@ -117,16 +117,16 @@ export default function NetworkSyncButton() {
 
       {/* Results */}
       {result && (
-        <div className="mt-3 p-2 bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] rounded-lg text-xs text-[var(--ui-support-text-icon-support-info)]">
+        <div className="mt-3 p-2 bg-fill-support-info border border-border-support-info rounded-lg text-xs text-text+icon-support-info">
           Checked {result.checked} device(s) — <span className="font-semibold">{result.online} online</span>,
           {' '}{result.statusChanges} status change(s), {result.testerUpdates} tester record(s) updated.
-          {result.notFound > 0 && <span className="block mt-1 text-[var(--ui-support-text-icon-support-info)]">{result.notFound} serial(s) had no tester match in Databricks.</span>}
+          {result.notFound > 0 && <span className="block mt-1 text-text+icon-support-info">{result.notFound} serial(s) had no tester match in Databricks.</span>}
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <div className="mt-3 p-2 bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-lg text-xs text-[var(--ui-support-text-support-error)]">{error}</div>
+        <div className="mt-3 p-2 bg-fill-support-error border border-border-support-error rounded-lg text-xs text-text-support-error">{error}</div>
       )}
     </div>
   );

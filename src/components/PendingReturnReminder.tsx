@@ -43,27 +43,27 @@ export default function PendingReturnReminder({ onNavigateToReturns }: PendingRe
       <div className="text-center mb-4">
         <span className="text-4xl">⏰</span>
       </div>
-      <p className="text-sm text-[var(--ui-text-text-tertiary)] text-center mb-6">
+      <p className="text-sm text-text-tertiary text-center mb-6">
         Have they been returned? If so, make sure to archive program/devices or brick them if necessary.
       </p>
 
       {/* Breakdown */}
       <div className="space-y-3 mb-6">
         {week2.length > 0 && (
-          <div className="flex items-center gap-3 p-3 bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-lg">
-            <span className="text-[var(--ui-core-red-red-6)] font-bold text-lg">🚨</span>
+          <div className="flex items-center gap-3 p-3 bg-fill-support-error border border-border-support-error rounded-lg">
+            <span className="text-Red-red-6 font-bold text-lg">🚨</span>
             <div>
-              <p className="text-sm font-medium text-[var(--ui-support-text-support-error)]">{week2.length} device(s) overdue 2+ weeks</p>
-              <p className="text-xs text-[var(--ui-core-red-red-6)]">Consider bricking or escalating directly with the tester</p>
+              <p className="text-sm font-medium text-text-support-error">{week2.length} device(s) overdue 2+ weeks</p>
+              <p className="text-xs text-Red-red-6">Consider bricking or escalating directly with the tester</p>
             </div>
           </div>
         )}
         {week1.length > 0 && (
-          <div className="flex items-center gap-3 p-3 bg-[var(--ui-support-fill-support-warning)] border border-[var(--ui-support-border-support-warning)] rounded-lg">
-            <span className="text-[var(--ui-support-text-icon-support-warning)] font-bold text-lg">⏰</span>
+          <div className="flex items-center gap-3 p-3 bg-fill-support-warning border border-border-support-warning rounded-lg">
+            <span className="text-text+icon-support-warning font-bold text-lg">⏰</span>
             <div>
-              <p className="text-sm font-medium text-[var(--ui-support-text-icon-support-warning)]">{week1.length} device(s) waiting 1–2 weeks</p>
-              <p className="text-xs text-[var(--ui-support-text-icon-support-warning)]">Send a follow-up reminder email</p>
+              <p className="text-sm font-medium text-text+icon-support-warning">{week1.length} device(s) waiting 1–2 weeks</p>
+              <p className="text-xs text-text+icon-support-warning">Send a follow-up reminder email</p>
             </div>
           </div>
         )}

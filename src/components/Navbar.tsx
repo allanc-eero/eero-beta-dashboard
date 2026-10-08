@@ -81,8 +81,8 @@ export default function Navbar({ activeTab, setActiveTab, children }: NavbarProp
     <div className="flex w-full items-center gap-3 px-4 py-2">
       {/* Left zone: brand (flex-1 so the center search stays truly centered) */}
       <div className="flex flex-1 items-center gap-3 min-w-0">
-        <span className="flex shrink-0 items-center gap-1.5 font-semibold text-[var(--ui-core-midnight-midnight-1)]" title={APP_NAME}>
-          <Wifi size={16} className="text-[var(--ui-core-periwinkle-periwinkle-4)]" strokeWidth={2} />
+        <span className="flex shrink-0 items-center gap-1.5 font-semibold text-Midnight-midnight-1" title={APP_NAME}>
+          <Wifi size={16} className="text-Periwinkle-periwinkle-4" strokeWidth={2} />
           {APP_NAME}
         </span>
         {/* Cohort/environment lens — filters every menu to Beta (prod), Dogfood (stage), or All */}
@@ -103,7 +103,7 @@ export default function Navbar({ activeTab, setActiveTab, children }: NavbarProp
       <div className="flex flex-1 justify-center">
         <button
           onClick={() => setSearchOpen(true)}
-          className="flex w-full max-w-md items-center gap-2 rounded-lg bg-[var(--ui-core-midnight-midnight-8)] px-3 py-2 text-sm text-[var(--ui-core-midnight-midnight-6)] transition-all hover:bg-[var(--ui-core-midnight-midnight-7)]"
+          className="flex w-full max-w-md items-center gap-2 rounded-lg bg-Midnight-midnight-8 px-3 py-2 text-sm text-Midnight-midnight-6 transition-all hover:bg-Midnight-midnight-7"
         >
           <Search size={16} className="shrink-0" />
           <span className="flex-1 truncate text-left">Search devices, testers, programs, locations…</span>
@@ -115,12 +115,12 @@ export default function Navbar({ activeTab, setActiveTab, children }: NavbarProp
         {currentUser && (
           <>
             {!canEdit() && (
-              <span className="text-xs px-1.5 py-0.5 bg-[var(--ui-core-orange-orange-2)] text-[var(--ui-core-orange-orange-7)] rounded font-medium">VIEW ONLY</span>
+              <span className="text-xs px-1.5 py-0.5 bg-Orange-orange-2 text-Orange-orange-7 rounded font-medium">VIEW ONLY</span>
             )}
-            <span className="text-xs text-[var(--ui-core-midnight-midnight-3)]">{currentUser.name}</span>
+            <span className="text-xs text-Midnight-midnight-3">{currentUser.name}</span>
             <button
               onClick={handleSignOut}
-              className="text-xs text-[var(--ui-core-red-red-5)] hover:text-[var(--ui-core-red-red-4)] font-medium"
+              className="text-xs text-Red-red-5 hover:text-Red-red-4 font-medium"
             >
               Sign out
             </button>

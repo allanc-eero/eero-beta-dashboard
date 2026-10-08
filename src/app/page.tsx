@@ -61,12 +61,12 @@ export default function Home() {
   // the guest sign-in effect to run, so the login page never flashes.
   if (!mounted || (DEMO_OPEN_ACCESS && !currentUser)) {
     return (
-      <div className="min-h-screen bg-[var(--ui-background-layer-background-page)]">
+      <div className="min-h-screen bg-background-page">
         <div className="max-w-7xl mx-auto px-6 py-6 mt-12">
           <div className="animate-pulse space-y-4">
-            <div className="h-24 bg-[var(--ui-background-layer-layer-page-backplate)] rounded-xl" />
-            <div className="h-12 bg-[var(--ui-background-layer-layer-page-backplate)] rounded-xl" />
-            <div className="h-96 bg-[var(--ui-background-layer-layer-page-backplate)] rounded-xl" />
+            <div className="h-24 bg-layer-page-backplate rounded-xl" />
+            <div className="h-12 bg-layer-page-backplate rounded-xl" />
+            <div className="h-96 bg-layer-page-backplate rounded-xl" />
           </div>
         </div>
       </div>

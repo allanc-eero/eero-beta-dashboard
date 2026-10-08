@@ -53,7 +53,7 @@ export default function DevicesTab({ onNavigateToPerson }: { onNavigateToPerson?
   return (
     <div className="space-y-4 pb-10">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-3 bg-[var(--ui-background-layer-layer-page)] p-4 rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)]">
+      <div className="flex flex-wrap items-center gap-3 bg-layer-page p-4 rounded-xl shadow-sm border border-border-layer-page">
         <AgentChat />
 
         <div className="w-40">
@@ -95,8 +95,8 @@ export default function DevicesTab({ onNavigateToPerson }: { onNavigateToPerson?
 
       {/* Device actions — hidden for viewers */}
       {canEdit() && selectedDevices.size === 1 && (
-        <div className="flex items-center gap-3 bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] p-3 rounded-lg sticky top-14 z-20">
-          <span className="text-sm font-medium text-[var(--ui-support-text-icon-support-info)]">
+        <div className="flex items-center gap-3 bg-fill-support-info border border-border-support-info p-3 rounded-lg sticky top-14 z-20">
+          <span className="text-sm font-medium text-text+icon-support-info">
             1 device selected
           </span>
           <Button type="default" label="Clear" onClick={() => setSelectedDevices(new Set())} />
@@ -128,8 +128,8 @@ export default function DevicesTab({ onNavigateToPerson }: { onNavigateToPerson?
         </div>
       )}
       {canEdit() && selectedDevices.size > 1 && (
-        <div className="flex items-center gap-3 bg-[var(--ui-support-fill-support-info)] border border-[var(--ui-support-border-support-info)] p-3 rounded-lg sticky top-14 z-20">
-          <span className="text-sm font-medium text-[var(--ui-support-text-icon-support-info)]">
+        <div className="flex items-center gap-3 bg-fill-support-info border border-border-support-info p-3 rounded-lg sticky top-14 z-20">
+          <span className="text-sm font-medium text-text+icon-support-info">
             {selectedDevices.size} device(s) selected
           </span>
           <Button type="default" label="Clear" onClick={() => setSelectedDevices(new Set())} />
@@ -165,12 +165,12 @@ export default function DevicesTab({ onNavigateToPerson }: { onNavigateToPerson?
           <>
             {/* Warning for devices missing program */}
             {missingProgram.length > 0 && (
-              <div className="bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-xl p-3 mb-4">
+              <div className="bg-fill-support-error border border-border-support-error rounded-xl p-3 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-[var(--ui-core-red-red-6)]">⚠️</span>
-                  <span className="text-xs font-semibold text-[var(--ui-support-text-support-error)]">{missingProgram.length} device(s) have no program assigned</span>
+                  <span className="text-Red-red-6">⚠️</span>
+                  <span className="text-xs font-semibold text-text-support-error">{missingProgram.length} device(s) have no program assigned</span>
                 </div>
-                <p className="text-xs text-[var(--ui-support-text-support-error)] mt-1">Update them in the device detail or re-import with the Program column.</p>
+                <p className="text-xs text-text-support-error mt-1">Update them in the device detail or re-import with the Program column.</p>
               </div>
             )}
 
@@ -187,14 +187,14 @@ export default function DevicesTab({ onNavigateToPerson }: { onNavigateToPerson?
             ))}
 
             {filteredDevices.length === 0 && (
-              <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] p-12 text-center text-[var(--ui-text-text-tertiary)]">
-                <Monitor size={48} className="mx-auto mb-3 text-[var(--ui-text-text-disabled)]" />
+              <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page p-12 text-center text-text-tertiary">
+                <Monitor size={48} className="mx-auto mb-3 text-text-disabled" />
                 <p className="font-medium">No devices found</p>
                 <p className="text-sm mt-1">Try adjusting your filters or add devices via Import</p>
               </div>
             )}
 
-            <div className="px-4 py-3 bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg text-sm text-[var(--ui-text-text-tertiary)]">
+            <div className="px-4 py-3 bg-layer-page-hover rounded-lg text-sm text-text-tertiary">
               Showing {filteredDevices.length} of {devices.length} devices
             </div>
           </>
@@ -238,67 +238,67 @@ function ProgramDeviceGroup({ prog, rows, selectedDevices, setSelectedDevices, t
   const label = prog === 'unassigned' ? '⚠️ No Program' : `${rows[0]?.product ? rows[0].product + ' ' : ''}${prog.toUpperCase()}`;
 
   return (
-    <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-sm border border-[var(--ui-background-layer-border-border-layer-page)] overflow-hidden mb-4">
-      <div className="px-4 py-4 bg-[var(--ui-background-layer-layer-page-hover)] border-b border-[var(--ui-background-layer-border-border-layer-page)] flex items-center gap-3">
+    <div className="bg-layer-page rounded-xl shadow-sm border border-border-layer-page overflow-hidden mb-4">
+      <div className="px-4 py-4 bg-layer-page-hover border-b border-border-layer-page flex items-center gap-3">
         <Tag color={prog === 'unassigned' ? 'red' : 'periwinkle'} size="regular">{label}</Tag>
         {prog !== 'unassigned' && (
           <Tag color={cohortOf(rows[0]) === 'dogfood' ? 'purple' : 'navy'} size="regular">
             {cohortOf(rows[0]) === 'dogfood' ? 'Dogfood · stage' : 'Beta · prod'}
           </Tag>
         )}
-        <span className="text-xs text-[var(--ui-text-text-placeholder)]">{rows.length} device(s)</span>
+        <span className="text-xs text-text-placeholder">{rows.length} device(s)</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-[var(--ui-background-layer-border-border-layer-page)]">
+            <tr className="border-b border-border-layer-page">
               <th className="px-4 py-2 text-left w-8">
                 <Checkbox
                   checked={rows.every((d) => selectedDevices.has(d.id))}
                   onChange={() => { const ids = rows.map((d) => d.id); const allSelected = ids.every((id) => selectedDevices.has(id)); const next = new Set(selectedDevices); if (allSelected) { ids.forEach((id) => next.delete(id)); } else { ids.forEach((id) => next.add(id)); } setSelectedDevices(next); }}
                 />
               </th>
-              <th className="px-4 py-2 text-left font-semibold text-[var(--ui-text-text-tertiary)] uppercase text-xs">Serial Number</th>
-              <th className="px-4 py-2 text-left font-semibold text-[var(--ui-text-text-tertiary)] uppercase text-xs">Internal Name</th>
-              <th className="px-4 py-2 text-left font-semibold text-[var(--ui-text-text-tertiary)] uppercase text-xs">Phase</th>
-              <th className="px-4 py-2 text-left font-semibold text-[var(--ui-text-text-tertiary)] uppercase text-xs">Firmware</th>
-              <th className="px-4 py-2 text-left font-semibold text-[var(--ui-text-text-tertiary)] uppercase text-xs">Group</th>
-              <th className="px-4 py-2 text-left font-semibold text-[var(--ui-text-text-tertiary)] uppercase text-xs">Assigned To</th>
-              <th className="px-4 py-2 text-left font-semibold text-[var(--ui-text-text-tertiary)] uppercase text-xs">Status</th>
+              <th className="px-4 py-2 text-left font-semibold text-text-tertiary uppercase text-xs">Serial Number</th>
+              <th className="px-4 py-2 text-left font-semibold text-text-tertiary uppercase text-xs">Internal Name</th>
+              <th className="px-4 py-2 text-left font-semibold text-text-tertiary uppercase text-xs">Phase</th>
+              <th className="px-4 py-2 text-left font-semibold text-text-tertiary uppercase text-xs">Firmware</th>
+              <th className="px-4 py-2 text-left font-semibold text-text-tertiary uppercase text-xs">Group</th>
+              <th className="px-4 py-2 text-left font-semibold text-text-tertiary uppercase text-xs">Assigned To</th>
+              <th className="px-4 py-2 text-left font-semibold text-text-tertiary uppercase text-xs">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[var(--ui-background-layer-border-border-layer-page)]">
+          <tbody className="divide-y divide-border-layer-page">
             {paged.map((device) => {
               // Route deep-links to the right cloud: beta → prod, dogfood → stage.
               const env = resolveEnv(device.environment, device.program);
               const networkUrl = device.network ? insightNetworkUrl(device.network, env) : '';
               const adminUrl = device.network ? adminNetworkUrl(device.network, env) : '';
               return (
-              <tr key={device.id} className="hover:bg-[var(--ui-background-layer-layer-page-hover)] transition-colors cursor-pointer" onClick={() => onSelectDevice(device)}>
+              <tr key={device.id} className="hover:bg-layer-page-hover transition-colors cursor-pointer" onClick={() => onSelectDevice(device)}>
                 <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
                   <Checkbox checked={selectedDevices.has(device.id)} onChange={() => toggleSelect(device.id)} />
                 </td>
                 <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
                   {networkUrl ? (
-                    <a href={networkUrl} target="_blank" rel="noopener noreferrer" className="font-mono text-xs font-medium text-[var(--ui-core-periwinkle-periwinkle-7)] hover:underline" title={`Open this device's network in Insight (${env})`}>{device.serialNumber} ↗</a>
+                    <a href={networkUrl} target="_blank" rel="noopener noreferrer" className="font-mono text-xs font-medium text-Periwinkle-periwinkle-7 hover:underline" title={`Open this device's network in Insight (${env})`}>{device.serialNumber} ↗</a>
                   ) : (
-                    <span className="font-mono text-xs font-medium text-[var(--ui-core-periwinkle-periwinkle-7)]" title={device.network ? 'Stage Insight URL not configured yet' : 'No network yet — device not online in Insight'}>{device.serialNumber}</span>
+                    <span className="font-mono text-xs font-medium text-Periwinkle-periwinkle-7" title={device.network ? 'Stage Insight URL not configured yet' : 'No network yet — device not online in Insight'}>{device.serialNumber}</span>
                   )}
                   {adminUrl && (
                     <div>
-                      <a href={adminUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--ui-text-text-tertiary)] hover:underline hover:text-[var(--ui-core-periwinkle-periwinkle-6)]" title={`Open this network in Admin (${env})`}>Admin ↗</a>
+                      <a href={adminUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-text-tertiary hover:underline hover:text-Periwinkle-periwinkle-6" title={`Open this network in Admin (${env})`}>Admin ↗</a>
                     </div>
                   )}
                 </td>
-                <td className="px-4 py-4 text-[var(--ui-text-text-secondary)]">{device.internalName}</td>
-                <td className="px-4 py-4 text-[var(--ui-text-text-secondary)]">{device.program?.toUpperCase() || '—'}</td>
+                <td className="px-4 py-4 text-text-secondary">{device.internalName}</td>
+                <td className="px-4 py-4 text-text-secondary">{device.program?.toUpperCase() || '—'}</td>
                 <td className="px-4 py-4 font-mono text-xs">{device.firmwareVersion || '—'}</td>
                 <td className="px-4 py-4">
                   {device.networkGroup
-                    ? <span className="inline-block rounded px-1.5 py-0.5 text-xs font-medium bg-[var(--ui-support-fill-support-info)] text-[var(--ui-support-text-icon-support-info)]">{device.networkGroup}</span>
-                    : <span className="text-xs text-[var(--ui-core-orange-orange-6)]" title="No OS-update group assigned on this device's network">unassigned</span>}
+                    ? <span className="inline-block rounded px-1.5 py-0.5 text-xs font-medium bg-fill-support-info text-text+icon-support-info">{device.networkGroup}</span>
+                    : <span className="text-xs text-Orange-orange-6" title="No OS-update group assigned on this device's network">unassigned</span>}
                 </td>
-                <td className="px-4 py-4 text-[var(--ui-text-text-secondary)]">{device.assignedTo || device.checkedOutTo || '—'}</td>
+                <td className="px-4 py-4 text-text-secondary">{device.assignedTo || device.checkedOutTo || '—'}</td>
                 <td className="px-4 py-4"><StatusBadge status={device.status} /></td>
               </tr>
               );
@@ -307,7 +307,7 @@ function ProgramDeviceGroup({ prog, rows, selectedDevices, setSelectedDevices, t
         </table>
       </div>
       {rows.length > 10 && (
-        <div className="border-t border-[var(--ui-background-layer-border-border-layer-page)] px-4 py-2">
+        <div className="border-t border-border-layer-page px-4 py-2">
           <Pagination
             pagination={{ totalItems: rows.length, totalPages, hasPreviousPage: current > 1, hasNextPage: current < totalPages }}
             currentPage={current}

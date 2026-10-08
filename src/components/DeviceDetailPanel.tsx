@@ -117,12 +117,12 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
     ));
 
   return (
-    <div className="fixed inset-0 top-12 z-40 bg-gray-50 overflow-y-auto">
+    <div className="fixed inset-0 top-12 z-40 bg-layer-page-hover overflow-y-auto">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <p className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer font-medium mb-2" onClick={onClose}>
+        <p className="text-sm text-Periwinkle-periwinkle-6 hover:text-text+icon-support-info cursor-pointer font-medium mb-2" onClick={onClose}>
           ← Back to devices
         </p>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{device.serialNumber}</h1>
+        <h1 className="text-3xl font-bold text-text-primary mb-4">{device.serialNumber}</h1>
 
         {/* Status bar + actions */}
         <div className="flex items-center justify-between mb-8">
@@ -130,7 +130,7 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
             <Tag color={statusInfo.color} size="regular" showIcon>
               {statusInfo.label}
             </Tag>
-            {device.country && <span className="text-sm text-[var(--ui-core-red-red-6)] font-medium">📍 {device.country}</span>}
+            {device.country && <span className="text-sm text-Red-red-6 font-medium">📍 {device.country}</span>}
           </div>
           <div className="flex items-center gap-2">
             <Button type="default" label={<span className="flex items-center gap-1.5"><Download size={14} /> Export</span>} ariaLabel="Export device CSV" onClick={() => exportDeviceCSV(device)} />
@@ -160,19 +160,19 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                 <DetailField label="ASSIGNED TO" value={device.assignedTo || device.checkedOutTo || ''} editing={true} field="assignedTo" editData={editData} setEditData={setEditData} />
               ) : (
                 <div className="flex items-baseline gap-3">
-                  <span className="text-xs text-gray-500 uppercase w-36 shrink-0 font-medium">ASSIGNED TO</span>
+                  <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">ASSIGNED TO</span>
                   {(device.assignedTo || device.checkedOutTo) && onNavigateToPerson ? (
                     <span className="flex items-center gap-2">
                       <button
                         onClick={() => onNavigateToPerson(device.assignedEmail || device.assignedTo || '')}
-                        className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                        className="text-sm text-Periwinkle-periwinkle-6 hover:text-text+icon-support-info hover:underline font-medium"
                       >
                         {device.assignedTo || device.checkedOutTo} →
                       </button>
-                      {(() => { const p = getTesterProfile(device.assignedEmail || ''); return p?.testerId ? <span className="text-xs font-mono text-gray-400">{p.testerId}</span> : null; })()}
+                      {(() => { const p = getTesterProfile(device.assignedEmail || ''); return p?.testerId ? <span className="text-xs font-mono text-text-placeholder">{p.testerId}</span> : null; })()}
                     </span>
                   ) : (
-                    <span className="text-sm text-gray-900">{device.assignedTo || device.checkedOutTo || '—'}</span>
+                    <span className="text-sm text-text-primary">{device.assignedTo || device.checkedOutTo || '—'}</span>
                   )}
                 </div>
               )}
@@ -184,12 +184,12 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
           <div className="space-y-6">
             <SectionBlock title="NOTES">
               {isEditing ? (
-                <textarea value={editData.notes} onChange={(e) => setEditData({ ...editData, notes: e.target.value })} className="w-full p-3 border border-gray-200 rounded-lg text-sm resize-none h-32 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <textarea value={editData.notes} onChange={(e) => setEditData({ ...editData, notes: e.target.value })} className="w-full p-3 border border-border-layer-page rounded-lg text-sm resize-none h-32 focus:outline-none focus:ring-2 focus:ring-Periwinkle-periwinkle-6" />
               ) : (
-                <p className="text-sm text-gray-700 whitespace-pre-wrap">{device.notes || '—'}</p>
+                <p className="text-sm text-text-secondary whitespace-pre-wrap">{device.notes || '—'}</p>
               )}
             </SectionBlock>
-            {device.testbedName && <SectionBlock title="TESTBED"><p className="text-sm text-gray-900">{device.testbedName}</p></SectionBlock>}
+            {device.testbedName && <SectionBlock title="TESTBED"><p className="text-sm text-text-primary">{device.testbedName}</p></SectionBlock>}
             {device.assignedEmail && (
               <SectionBlock title="CONTACT">
                 {renderFields(CONTACT_FIELDS)}
@@ -207,19 +207,19 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                   return (
                     <>
                       <div className="flex items-baseline gap-3">
-                        <span className="text-xs text-gray-500 uppercase w-36 shrink-0 font-medium">EMAIL SENT</span>
-                        <span className="text-sm text-green-700">{new Date(device.returnEmailSentAt).toLocaleDateString()} ({device.returnEmailCount || 1}× sent) · {daysSinceSent} day(s) ago</span>
+                        <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">EMAIL SENT</span>
+                        <span className="text-sm text-text-support-success">{new Date(device.returnEmailSentAt).toLocaleDateString()} ({device.returnEmailCount || 1}× sent) · {daysSinceSent} day(s) ago</span>
                       </div>
                       {device.returnReminderSentAt && (
                         <div className="flex items-baseline gap-3">
-                          <span className="text-xs text-gray-500 uppercase w-36 shrink-0 font-medium">REMINDER SENT</span>
-                          <span className="text-sm text-orange-600">{new Date(device.returnReminderSentAt).toLocaleDateString()}</span>
+                          <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">REMINDER SENT</span>
+                          <span className="text-sm text-Orange-orange-6">{new Date(device.returnReminderSentAt).toLocaleDateString()}</span>
                         </div>
                       )}
                       {/* Week 1 escalation: send follow-up */}
                       {isWeek1 && device.status === 'pending_return' && (
-                        <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                          <p className="text-xs font-medium text-yellow-800 mb-2">⏰ 1 week since return request — send a follow-up reminder</p>
+                        <div className="mt-3 p-3 bg-fill-support-warning border border-border-support-warning rounded-lg">
+                          <p className="text-xs font-medium text-text+icon-support-warning mb-2">⏰ 1 week since return request — send a follow-up reminder</p>
                           <button
                             onClick={() => {
                               const testerName = device.assignedTo || 'Team Member';
@@ -229,7 +229,7 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                               updateDevice(device.id, { returnReminderSentAt: new Date().toISOString(), returnEmailCount: (device.returnEmailCount || 1) + 1 });
                               addHistoryEntry({ id: crypto.randomUUID(), deviceId: device.id, timestamp: new Date().toISOString(), action: 'reminder_sent', user: 'Admin', description: `Week 1 follow-up reminder sent to ${device.assignedEmail}` });
                             }}
-                            className="px-4 py-1.5 text-xs font-medium text-yellow-800 border border-yellow-300 rounded-md hover:bg-yellow-100"
+                            className="px-4 py-1.5 text-xs font-medium text-text+icon-support-warning border border-Yellow-yellow-3 rounded-md hover:bg-fill-tag-yellow"
                           >
                             Send Follow-up Reminder
                           </button>
@@ -237,8 +237,8 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                       )}
                       {/* Week 2 escalation: contact directly or brick */}
                       {isWeek2 && device.status === 'pending_return' && (
-                        <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                          <p className="text-xs font-medium text-red-800 mb-2">🚨 2+ weeks since return request — escalate: contact tester directly or brick the device</p>
+                        <div className="mt-3 p-3 bg-fill-support-error border border-border-support-error rounded-lg">
+                          <p className="text-xs font-medium text-text-support-error mb-2">🚨 2+ weeks since return request — escalate: contact tester directly or brick the device</p>
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => {
@@ -249,7 +249,7 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                                 updateDevice(device.id, { returnReminderSentAt: new Date().toISOString(), returnEmailCount: (device.returnEmailCount || 1) + 1 });
                                 addHistoryEntry({ id: crypto.randomUUID(), deviceId: device.id, timestamp: new Date().toISOString(), action: 'reminder_sent', user: 'Admin', description: `Week 2 URGENT reminder sent to ${device.assignedEmail}` });
                               }}
-                              className="px-4 py-1.5 text-xs font-medium text-red-700 border border-red-300 rounded-md hover:bg-red-100"
+                              className="px-4 py-1.5 text-xs font-medium text-text-support-error border border-Red-red-3 rounded-md hover:bg-fill-tag-red"
                             >
                               Send Urgent Reminder
                             </button>
@@ -260,7 +260,7 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                                   addHistoryEntry({ id: crypto.randomUUID(), deviceId: device.id, timestamp: new Date().toISOString(), action: 'bricked', user: 'Admin', description: `Device bricked after 2+ weeks with no return. Previously assigned to ${device.assignedEmail}` });
                                 }
                               }}
-                              className="px-4 py-1.5 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                              className="px-4 py-1.5 text-xs font-medium text-text-on-color bg-Red-red-6 rounded-md hover:bg-Red-red-7"
                             >
                               Brick Device
                             </button>
@@ -274,7 +274,7 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                             updateDevice(device.id, { status: 'deactivated' as DeviceStatus, deactivated: true });
                             addHistoryEntry({ id: crypto.randomUUID(), deviceId: device.id, timestamp: new Date().toISOString(), action: 'return_confirmed', user: 'Admin', description: `Device return confirmed. Marked as deactivated.` });
                           }}
-                          className="mt-3 px-4 py-2 text-sm font-medium text-green-700 border border-green-300 rounded-lg hover:bg-green-50 w-full text-center"
+                          className="mt-3 px-4 py-2 text-sm font-medium text-text-support-success border border-Green-green-3 rounded-lg hover:bg-fill-support-success w-full text-center"
                         >
                           ✓ Confirm Device Received — Mark as Deactivated
                         </button>
@@ -284,8 +284,8 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
                 })()}
                 {!device.returnEmailSentAt && device.status === 'pending_return' && (
                   <div className="flex items-baseline gap-3">
-                    <span className="text-xs text-gray-500 uppercase w-36 shrink-0 font-medium">STATUS</span>
-                    <span className="text-sm text-orange-600">Pending return — no email sent yet</span>
+                    <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">STATUS</span>
+                    <span className="text-sm text-Orange-orange-6">Pending return — no email sent yet</span>
                   </div>
                 )}
               </SectionBlock>
@@ -311,10 +311,10 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
         </div>
 
         {/* Timeline */}
-        <div className="mt-10 border-t border-[var(--ui-background-layer-border-border-layer-page)] pt-8 pb-12">
+        <div className="mt-10 border-t border-border-layer-page pt-8 pb-12">
           <div className="flex items-center gap-2 mb-4">
-            <Clock size={18} className="text-[var(--ui-text-text-tertiary)]" />
-            <h3 className="text-lg font-semibold text-[var(--ui-text-text-primary)]">Device Timeline</h3>
+            <Clock size={18} className="text-text-tertiary" />
+            <h3 className="text-lg font-semibold text-text-primary">Device Timeline</h3>
           </div>
           <DeviceTimeline deviceId={device.id} />
         </div>
@@ -329,7 +329,7 @@ export default function DeviceDetailPanel({ device: initialDevice, onClose, onNa
 function SectionBlock({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3 border-b border-[var(--ui-background-layer-border-border-layer-page)] pb-2">{title}</h3>
+      <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3 border-b border-border-layer-page pb-2">{title}</h3>
       <div className="space-y-2">{children}</div>
     </div>
   );
@@ -342,7 +342,7 @@ function DetailField({ label, value, editing, field, editData, setEditData, link
   if (editing) {
     return (
       <div className="flex items-center gap-3">
-        <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">{label}</span>
+        <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">{label}</span>
         <div className="flex-1">
           {options ? (
             <Select
@@ -364,11 +364,11 @@ function DetailField({ label, value, editing, field, editData, setEditData, link
   }
   return (
     <div className="flex items-baseline gap-3">
-      <span className="text-xs text-[var(--ui-text-text-tertiary)] uppercase w-36 shrink-0 font-medium">{label}</span>
+      <span className="text-xs text-text-tertiary uppercase w-36 shrink-0 font-medium">{label}</span>
       {linkUrl && value ? (
-        <a href={linkUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] hover:underline font-medium">{value} ↗</a>
+        <a href={linkUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 hover:underline font-medium">{value} ↗</a>
       ) : (
-        <span className="text-sm text-[var(--ui-text-text-primary)]">{value || '—'}</span>
+        <span className="text-sm text-text-primary">{value || '—'}</span>
       )}
     </div>
   );

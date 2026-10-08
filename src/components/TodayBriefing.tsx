@@ -67,9 +67,9 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
     <div className="mb-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">{greeting}.</h1>
+        <h1 className="text-2xl font-bold text-text-primary">{greeting}.</h1>
         {briefing.totalActions > 0 && (
-          <p className="text-sm text-gray-600 mt-1">{briefing.totalActions} item{briefing.totalActions !== 1 ? 's' : ''} need your attention today.</p>
+          <p className="text-sm text-text-tertiary mt-1">{briefing.totalActions} item{briefing.totalActions !== 1 ? 's' : ''} need your attention today.</p>
         )}
       </div>
 
@@ -77,12 +77,12 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
       <div className="space-y-3">
         {/* Overdue returns — highest priority */}
         {briefing.overdueReturns.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-fill-support-error border border-border-support-error rounded-xl p-4 flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-red-800">🚨 {briefing.overdueReturns.length} device(s) overdue for return (2+ weeks)</p>
-              <p className="text-xs text-red-600 mt-0.5">These testers haven't returned their devices. Send urgent reminders or brick.</p>
+              <p className="text-sm font-semibold text-text-support-error">🚨 {briefing.overdueReturns.length} device(s) overdue for return (2+ weeks)</p>
+              <p className="text-xs text-Red-red-6 mt-0.5">These testers haven't returned their devices. Send urgent reminders or brick.</p>
             </div>
-            <button onClick={() => onNavigate('shipments')} className="px-4 py-2 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">
+            <button onClick={() => onNavigate('shipments')} className="px-4 py-2 text-xs font-medium text-text-on-color bg-Red-red-6 rounded-lg hover:bg-Red-red-7">
               View Overdue →
             </button>
           </div>
@@ -90,12 +90,12 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
 
         {/* Follow-up needed */}
         {briefing.needsFollowUp.length > 0 && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-fill-support-warning border border-border-support-warning rounded-xl p-4 flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-yellow-800">⏰ {briefing.needsFollowUp.length} device(s) need follow-up reminders (1 week)</p>
-              <p className="text-xs text-yellow-600 mt-0.5">Return emails were sent over a week ago with no response.</p>
+              <p className="text-sm font-semibold text-text+icon-support-warning">⏰ {briefing.needsFollowUp.length} device(s) need follow-up reminders (1 week)</p>
+              <p className="text-xs text-Yellow-yellow-6 mt-0.5">Return emails were sent over a week ago with no response.</p>
             </div>
-            <button onClick={() => onNavigate('shipments')} className="px-4 py-2 text-xs font-medium text-yellow-800 border border-yellow-300 rounded-lg hover:bg-yellow-100">
+            <button onClick={() => onNavigate('shipments')} className="px-4 py-2 text-xs font-medium text-text+icon-support-warning border border-Yellow-yellow-3 rounded-lg hover:bg-fill-tag-yellow">
               Send Reminders →
             </button>
           </div>
@@ -103,12 +103,12 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
 
         {/* Pending returns (informational) */}
         {briefing.pendingReturns.length > 0 && briefing.overdueReturns.length === 0 && briefing.needsFollowUp.length === 0 && (
-          <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-Orange-orange-1 border border-Orange-orange-2 rounded-xl p-4 flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-orange-800">📦 {briefing.pendingReturns.length} device(s) pending return</p>
-              <p className="text-xs text-orange-600 mt-0.5">Return emails sent. Waiting for devices to come back.</p>
+              <p className="text-sm font-semibold text-Orange-orange-8">📦 {briefing.pendingReturns.length} device(s) pending return</p>
+              <p className="text-xs text-Orange-orange-6 mt-0.5">Return emails sent. Waiting for devices to come back.</p>
             </div>
-            <button onClick={() => onNavigate('shipments')} className="px-4 py-2 text-xs font-medium text-orange-700 border border-orange-300 rounded-lg hover:bg-orange-100">
+            <button onClick={() => onNavigate('shipments')} className="px-4 py-2 text-xs font-medium text-Orange-orange-7 border border-Orange-orange-3 rounded-lg hover:bg-fill-tag-orange">
               View →
             </button>
           </div>
@@ -116,12 +116,12 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
 
         {/* Recent opt-outs */}
         {briefing.recentOptOuts.length > 0 && (
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-layer-page-hover border border-border-layer-page rounded-xl p-4 flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-gray-800">👋 {briefing.recentOptOuts.length} tester(s) opted out this week</p>
-              <p className="text-xs text-gray-500 mt-0.5">{briefing.recentOptOuts.map((o) => o.personName).join(', ')}</p>
+              <p className="text-sm font-semibold text-text-secondary">👋 {briefing.recentOptOuts.length} tester(s) opted out this week</p>
+              <p className="text-xs text-text-tertiary mt-0.5">{briefing.recentOptOuts.map((o) => o.personName).join(', ')}</p>
             </div>
-            <button onClick={() => onNavigate('people')} className="px-4 py-2 text-xs font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100">
+            <button onClick={() => onNavigate('people')} className="px-4 py-2 text-xs font-medium text-text-tertiary border border-border-layer-page rounded-lg hover:bg-layer-page-hover">
               View →
             </button>
           </div>
@@ -129,12 +129,12 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
 
         {/* Devices came online */}
         {briefing.recentlyOnline.length > 0 && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-fill-support-success border border-border-support-success rounded-xl p-4 flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-green-800">✓ {briefing.recentlyOnline.length} device(s) came online recently</p>
-              <p className="text-xs text-green-600 mt-0.5">Network sync detected new connections.</p>
+              <p className="text-sm font-semibold text-text-support-success">✓ {briefing.recentlyOnline.length} device(s) came online recently</p>
+              <p className="text-xs text-Green-green-6 mt-0.5">Network sync detected new connections.</p>
             </div>
-            <button onClick={() => onNavigate('devices')} className="px-4 py-2 text-xs font-medium text-green-700 border border-green-300 rounded-lg hover:bg-green-100">
+            <button onClick={() => onNavigate('devices')} className="px-4 py-2 text-xs font-medium text-text-support-success border border-Green-green-3 rounded-lg hover:bg-fill-tag-green">
               View →
             </button>
           </div>
@@ -142,7 +142,7 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
       </div>
 
       {/* Quick stats — compact, secondary */}
-      <div className="mt-6 flex items-center gap-6 text-xs text-gray-500">
+      <div className="mt-6 flex items-center gap-6 text-xs text-text-tertiary">
         <span>{devices.length} total devices</span>
         <span>{devices.filter((d) => d.status === 'online').length} online</span>
         <span>{devices.filter((d) => d.status === 'not_online').length} offline</span>
@@ -167,16 +167,16 @@ export default function TodayBriefing({ onNavigate }: TodayBriefingProps) {
 
         return (
           <div className="mt-6">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3">Recent Activity</h3>
-            <div className="bg-white rounded-xl border border-gray-100 divide-y divide-gray-50 max-h-64 overflow-y-auto">
+            <h3 className="text-sm font-semibold text-text-secondary mb-3">Recent Activity</h3>
+            <div className="bg-layer-page rounded-xl border border-border-layer-page divide-y divide-border-layer-page max-h-64 overflow-y-auto">
               {recentActivity.map((entry) => {
                 const device = devices.find((d) => d.id === entry.deviceId);
                 return (
                   <div key={entry.id} className="px-4 py-2.5 flex items-start gap-3">
                     <span className="text-sm mt-0.5">{actionIcons[entry.action] || '•'}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-gray-700 truncate">{entry.description}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">
+                      <p className="text-xs text-text-secondary truncate">{entry.description}</p>
+                      <p className="text-xs text-text-placeholder mt-0.5">
                         {device?.serialNumber && <span className="font-mono">{device.serialNumber} · </span>}
                         {new Date(entry.timestamp).toLocaleDateString()} {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         {entry.user !== 'System' && <span> · {entry.user}</span>}

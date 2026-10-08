@@ -92,70 +92,70 @@ export default function DeactivateDeviceModal({ device, onClose }: DeactivateDev
   };
 
   return (
-    <div className="fixed inset-0 top-12 z-40 bg-[var(--ui-background-layer-background-page)] overflow-y-auto">
+    <div className="fixed inset-0 top-12 z-40 bg-background-page overflow-y-auto">
       <div className="max-w-[900px] mx-auto px-6 py-8">
         {/* Back link */}
         <p
-          className="text-sm text-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-7)] cursor-pointer font-medium mb-2"
+          className="text-sm text-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-7 cursor-pointer font-medium mb-2"
           onClick={onClose}
         >
           ← Back to device
         </p>
 
         {/* Title */}
-        <h1 className="text-2xl font-bold text-[var(--ui-text-text-primary)] mb-1">Return to eero</h1>
-        <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-8">
+        <h1 className="text-2xl font-bold text-text-primary mb-1">Return to eero</h1>
+        <p className="text-sm text-text-tertiary mb-8">
           Process a device return, recall, or deactivation. A JIRA ticket will be created for tracking.
         </p>
 
         {/* Device summary card */}
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-5 mb-8">
-          <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-3">Device Being Returned</h3>
+        <div className="bg-layer-page rounded-xl border border-border-layer-page p-5 mb-8">
+          <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3">Device Being Returned</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Serial Number</p>
-              <p className="text-sm font-mono font-medium text-[var(--ui-text-text-primary)]">{device.serialNumber}</p>
+              <p className="text-xs text-text-tertiary">Serial Number</p>
+              <p className="text-sm font-mono font-medium text-text-primary">{device.serialNumber}</p>
             </div>
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Model</p>
-              <p className="text-sm text-[var(--ui-text-text-primary)]">{device.model}</p>
+              <p className="text-xs text-text-tertiary">Model</p>
+              <p className="text-sm text-text-primary">{device.model}</p>
             </div>
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Assigned To</p>
-              <p className="text-sm text-[var(--ui-text-text-primary)]">{device.assignedTo || device.checkedOutTo || '—'}</p>
+              <p className="text-xs text-text-tertiary">Assigned To</p>
+              <p className="text-sm text-text-primary">{device.assignedTo || device.checkedOutTo || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Email</p>
-              <p className="text-sm text-[var(--ui-text-text-primary)]">{device.assignedEmail || '—'}</p>
+              <p className="text-xs text-text-tertiary">Email</p>
+              <p className="text-sm text-text-primary">{device.assignedEmail || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Program</p>
-              <p className="text-sm text-[var(--ui-text-text-primary)]">{device.program}</p>
+              <p className="text-xs text-text-tertiary">Program</p>
+              <p className="text-sm text-text-primary">{device.program}</p>
             </div>
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Current Status</p>
-              <p className="text-sm text-[var(--ui-text-text-primary)]">{device.status.replace(/_/g, ' ')}</p>
+              <p className="text-xs text-text-tertiary">Current Status</p>
+              <p className="text-sm text-text-primary">{device.status.replace(/_/g, ' ')}</p>
             </div>
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Firmware</p>
-              <p className="text-sm font-mono text-[var(--ui-text-text-primary)]">{device.firmwareVersion || '—'}</p>
+              <p className="text-xs text-text-tertiary">Firmware</p>
+              <p className="text-sm font-mono text-text-primary">{device.firmwareVersion || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-[var(--ui-text-text-tertiary)]">Location</p>
-              <p className="text-sm text-[var(--ui-text-text-primary)]">{device.location || '—'}</p>
+              <p className="text-xs text-text-tertiary">Location</p>
+              <p className="text-sm text-text-primary">{device.location || '—'}</p>
             </div>
           </div>
         </div>
 
         {/* Form */}
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6 mb-8">
-          <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-5">Return Details</h3>
+        <div className="bg-layer-page rounded-xl border border-border-layer-page p-6 mb-8">
+          <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-5">Return Details</h3>
 
           <div className="space-y-5">
             {/* Reason */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-medium text-[var(--ui-text-text-secondary)] mb-1">Reason for return</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Reason for return</label>
                 <Select
                   id="deactivate-reason"
                   value={reason}
@@ -169,12 +169,12 @@ export default function DeactivateDeviceModal({ device, onClose }: DeactivateDev
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[var(--ui-text-text-secondary)] mb-1">JIRA Epic</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">JIRA Epic</label>
                 <input
                   type="text"
                   readOnly
                   value={`${device.program.toUpperCase()}-RETURNS`}
-                  className="w-full px-3 py-2.5 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg text-sm bg-[var(--ui-background-layer-layer-page-hover)] text-[var(--ui-text-text-tertiary)]"
+                  className="w-full px-3 py-2.5 border border-border-layer-page rounded-lg text-sm bg-layer-page-hover text-text-tertiary"
                 />
               </div>
             </div>
@@ -190,11 +190,11 @@ export default function DeactivateDeviceModal({ device, onClose }: DeactivateDev
 
             {/* Notes */}
             <div>
-              <label className="block text-sm font-medium text-[var(--ui-text-text-secondary)] mb-1">Notes</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full px-3 py-2.5 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--ui-core-periwinkle-periwinkle-6)] resize-none h-24"
+                className="w-full px-3 py-2.5 border border-border-layer-page rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-Periwinkle-periwinkle-6 resize-none h-24"
                 placeholder="Additional context about this return..."
               />
             </div>
@@ -202,41 +202,41 @@ export default function DeactivateDeviceModal({ device, onClose }: DeactivateDev
         </div>
 
         {/* What will happen section */}
-        <div className="bg-[var(--ui-background-layer-layer-page)] rounded-xl border border-[var(--ui-background-layer-border-border-layer-page)] p-6 mb-8">
-          <h3 className="text-xs font-semibold text-[var(--ui-text-text-tertiary)] uppercase tracking-wider mb-4">What will happen</h3>
+        <div className="bg-layer-page rounded-xl border border-border-layer-page p-6 mb-8">
+          <h3 className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-4">What will happen</h3>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <span className="text-[var(--ui-core-green-green-6)] mt-0.5">✓</span>
-              <p className="text-sm text-[var(--ui-text-text-secondary)]">Device will be marked as <span className="font-medium">deactivated</span> in the system</p>
+              <span className="text-Green-green-6 mt-0.5">✓</span>
+              <p className="text-sm text-text-secondary">Device will be marked as <span className="font-medium">deactivated</span> in the system</p>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-[var(--ui-core-green-green-6)] mt-0.5">✓</span>
-              <p className="text-sm text-[var(--ui-text-text-secondary)]">JIRA ticket created under your name in epic <span className="font-mono text-xs bg-[var(--ui-background-layer-layer-page-hover)] px-1.5 py-0.5 rounded">{device.program.toUpperCase()}-RETURNS</span></p>
+              <span className="text-Green-green-6 mt-0.5">✓</span>
+              <p className="text-sm text-text-secondary">JIRA ticket created under your name in epic <span className="font-mono text-xs bg-layer-page-hover px-1.5 py-0.5 rounded">{device.program.toUpperCase()}-RETURNS</span></p>
             </div>
             {requiresReturn && (
               <>
                 <div className="flex items-start gap-3">
-                  <span className="text-[var(--ui-core-green-green-6)] mt-0.5">✓</span>
-                  <p className="text-sm text-[var(--ui-text-text-secondary)]">Return email drafted to <span className="font-medium">{device.assignedEmail || 'assignee'}</span> with instructions</p>
+                  <span className="text-Green-green-6 mt-0.5">✓</span>
+                  <p className="text-sm text-text-secondary">Return email drafted to <span className="font-medium">{device.assignedEmail || 'assignee'}</span> with instructions</p>
                 </div>
               </>
             )}
             {reason === 'lost' && (
               <div className="flex items-start gap-3">
-                <span className="text-[var(--ui-core-red-red-6)] mt-0.5">⚠️</span>
-                <p className="text-sm text-[var(--ui-support-text-support-error)] font-medium">Device will be remotely bricked via the Partner API — it will never connect to a network again</p>
+                <span className="text-Red-red-6 mt-0.5">⚠️</span>
+                <p className="text-sm text-text-support-error font-medium">Device will be remotely bricked via the Partner API — it will never connect to a network again</p>
               </div>
             )}
             <div className="flex items-start gap-3">
-              <span className="text-[var(--ui-core-green-green-6)] mt-0.5">✓</span>
-              <p className="text-sm text-[var(--ui-text-text-secondary)]">All actions logged to device audit trail</p>
+              <span className="text-Green-green-6 mt-0.5">✓</span>
+              <p className="text-sm text-text-secondary">All actions logged to device audit trail</p>
             </div>
           </div>
         </div>
 
         {/* Brick confirmation — only for lost */}
         {reason === 'lost' && (
-          <div className="bg-[var(--ui-support-fill-support-error)] border border-[var(--ui-support-border-support-error)] rounded-xl p-5 mb-8">
+          <div className="bg-fill-support-error border border-border-support-error rounded-xl p-5 mb-8">
             <Checkbox
               checked={confirmed}
               onChange={(e: { target: { checked: boolean } }) => setConfirmed(e.target.checked)}

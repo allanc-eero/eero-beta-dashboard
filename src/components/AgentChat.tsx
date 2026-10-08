@@ -154,11 +154,11 @@ export default function AgentChat() {
       <div className="relative flex-1 min-w-[250px]">
         <button
           onClick={() => setIsOpen(true)}
-          className="w-full flex items-center gap-2 px-4 py-2 border border-[var(--ui-background-layer-border-border-layer-page)] rounded-lg text-sm text-[var(--ui-text-text-tertiary)] hover:border-[var(--ui-core-periwinkle-periwinkle-6)] hover:text-[var(--ui-core-periwinkle-periwinkle-6)] transition-all bg-[var(--ui-background-layer-layer-page)]"
+          className="w-full flex items-center gap-2 px-4 py-2 border border-border-layer-page rounded-lg text-sm text-text-tertiary hover:border-Periwinkle-periwinkle-6 hover:text-Periwinkle-periwinkle-6 transition-all bg-layer-page"
         >
-          <Sparkles size={16} className="text-[var(--ui-core-periwinkle-periwinkle-6)]" />
+          <Sparkles size={16} className="text-Periwinkle-periwinkle-6" />
           Ask the AI agent anything...
-          <kbd className="ml-auto hidden sm:inline-flex items-center px-1.5 py-0.5 bg-[var(--ui-background-layer-layer-page-hover)] rounded text-xs text-[var(--ui-text-text-placeholder)]">⌘K</kbd>
+          <kbd className="ml-auto hidden sm:inline-flex items-center px-1.5 py-0.5 bg-layer-page-hover rounded text-xs text-text-placeholder">⌘K</kbd>
         </button>
       </div>
     );
@@ -167,15 +167,15 @@ export default function AgentChat() {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[8vh]">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-      <div className="relative w-full max-w-2xl bg-[var(--ui-background-layer-layer-page)] rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[75vh]">
+      <div className="relative w-full max-w-2xl bg-layer-page rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[75vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--ui-background-layer-border-border-layer-page)] bg-gradient-to-r from-[var(--ui-core-periwinkle-periwinkle-6)] to-[var(--ui-core-periwinkle-periwinkle-7)]">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border-layer-page bg-gradient-to-r from-Periwinkle-periwinkle-6 to-Periwinkle-periwinkle-7">
           <div className="flex items-center gap-2">
-            <Sparkles size={18} className="text-white" />
-            <span className="text-sm font-medium text-white">AI Agent</span>
+            <Sparkles size={18} className="text-text-on-color" />
+            <span className="text-sm font-medium text-text-on-color">AI Agent</span>
             <span className="text-xs text-white/60">powered by Claude</span>
           </div>
-          <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white p-1">
+          <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-text-on-color p-1">
             <X size={18} />
           </button>
         </div>
@@ -184,8 +184,8 @@ export default function AgentChat() {
         <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-[200px]">
           {messages.length === 0 && (
             <div className="text-center py-8">
-              <Sparkles size={32} className="mx-auto mb-3 text-[var(--ui-core-periwinkle-periwinkle-6)]" />
-              <p className="text-sm text-[var(--ui-text-text-tertiary)] mb-4">Ask me anything about your devices, testers, programs, or processes.</p>
+              <Sparkles size={32} className="mx-auto mb-3 text-Periwinkle-periwinkle-6" />
+              <p className="text-sm text-text-tertiary mb-4">Ask me anything about your devices, testers, programs, or processes.</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {[
                   'How many devices are online?',
@@ -196,7 +196,7 @@ export default function AgentChat() {
                   <button
                     key={q}
                     onClick={() => { setInput(q); inputRef.current?.focus(); }}
-                    className="px-3 py-1.5 text-xs bg-[var(--ui-background-layer-layer-page-hover)] text-[var(--ui-text-text-tertiary)] rounded-full hover:bg-[var(--ui-support-fill-support-info)] hover:text-[var(--ui-core-periwinkle-periwinkle-6)] transition-colors"
+                    className="px-3 py-1.5 text-xs bg-layer-page-hover text-text-tertiary rounded-full hover:bg-fill-support-info hover:text-Periwinkle-periwinkle-6 transition-colors"
                   >
                     {q}
                   </button>
@@ -209,8 +209,8 @@ export default function AgentChat() {
             <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
                 msg.role === 'user'
-                  ? 'bg-[var(--ui-core-periwinkle-periwinkle-6)] text-white'
-                  : 'bg-[var(--ui-background-layer-layer-page-hover)] text-[var(--ui-text-text-secondary)]'
+                  ? 'bg-Periwinkle-periwinkle-6 text-text-on-color'
+                  : 'bg-layer-page-hover text-text-secondary'
               }`}>
                 <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
               </div>
@@ -219,7 +219,7 @@ export default function AgentChat() {
 
           {loading && (
             <div className="flex justify-start">
-              <div className="bg-[var(--ui-background-layer-layer-page-hover)] rounded-lg px-3 py-2 text-sm text-[var(--ui-text-text-tertiary)]">
+              <div className="bg-layer-page-hover rounded-lg px-3 py-2 text-sm text-text-tertiary">
                 <span className="inline-flex gap-1">
                   <span className="animate-bounce">●</span>
                   <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>●</span>
@@ -233,7 +233,7 @@ export default function AgentChat() {
         </div>
 
         {/* Input */}
-        <div className="border-t border-[var(--ui-background-layer-border-border-layer-page)] px-4 py-3">
+        <div className="border-t border-border-layer-page px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="flex-1">
               <Input

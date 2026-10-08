@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 // EDS CSS import order (per eds-installer.md): project CSS first, EDS last —
 // EDS styles are the source of truth and override project styles.
 import './globals.css'
@@ -11,8 +10,6 @@ import '@amzn/eero-web-design-foundation/tokens/tw-styles/light-variables.css'
 import '@amzn/eero-web-design-components/library/styles.css'
 import { APP_NAME } from '@/constants'
 import Providers from '@/components/Providers'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: APP_NAME,
@@ -26,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} data-theme="light" suppressHydrationWarning>
+      <body data-theme="light" suppressHydrationWarning>
         <Providers>{children}</Providers>
       </body>
     </html>
