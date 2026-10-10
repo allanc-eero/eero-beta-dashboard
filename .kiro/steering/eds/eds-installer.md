@@ -59,34 +59,54 @@ volta install npm@11.6.2
 
 The installer sets up everything AI tools need: steering files, reference repos, Claude Code CLI, and IDE integration.
 
-Run from the root of any eero project:
+Pick a platform (`web` or `mobile`). The base (steering + AI tooling) always installs; the platform adds its steering, reference repos, and toolchain.
 
 ```bash
-git clone --depth 1 https://github.com/eero-inc/ux-design-systems.git /tmp/eds-steering && bash /tmp/eds-steering/scripts/install-eds-steering.sh && rm -rf /tmp/eds-steering
+# Web — WDS + Insight, Node/Vite
+git clone --depth 1 https://github.com/eero-inc/ux-design-systems.git /tmp/eds && bash /tmp/eds/scripts/install-eds-steering.sh web && rm -rf /tmp/eds
+
+# Mobile — real eero iOS + Android apps, native toolchain
+git clone --depth 1 https://github.com/eero-inc/ux-design-systems.git /tmp/eds && bash /tmp/eds/scripts/install-eds-steering.sh mobile && rm -rf /tmp/eds
 ```
+
+### Updating
+
+Re-run the same one-liner. You can also drop the platform: a re-run with no platform refreshes whichever platforms are already installed. Each run brings you up to date:
+
+- **Steering** — every installed file is replaced with the latest from `main`.
+- **Reference repos** — `.reference/` clones are pulled to the latest. If you're on another branch or have local changes in a clone, it's fetched but left alone, and the installer tells you.
+- **WDS** (web) — if your project uses `@amzn/eero-web-design-system`, the installer offers to upgrade it to the latest release in your current major version (needs CodeArtifact auth).
+- **Mobile** — the iOS and Android app clones and their submodules are updated, and the toolchain is re-checked.
+
+The auto-update check tells you in Claude Code when a new EDS version is out.
 
 ### What it installs
 
-**1. Steering files** → `.kiro/steering/eds/` and `.kiro/steering/insight/`
+**1. Steering files** → `.kiro/steering/eds/` (shared core + platform folders)
 
-| File                        | What it does                                                           |
-| --------------------------- | ---------------------------------------------------------------------- |
-| `eds-development.md`        | Rules for building — components, tokens, styling, Figma, enforcement   |
-| `eds-linter.md`             | Flags drift — checks code against EDS components, tokens, and patterns |
-| `eds-guidelines.md`         | Offline design reference — full component/pattern/foundation guidance  |
-| `eds-installer.md`          | This file — installation and configuration guide                       |
-| `insight-components.md`     | Insight component interfaces and usage                                 |
-| `insight-patterns.md`       | Insight page compositions and layout patterns                          |
-| `insight-coverage-audit.md` | Gap analysis between Insight and WDS                                   |
+| File                                    | Scope  | What it does                                                          |
+| --------------------------------------- | ------ | --------------------------------------------------------------------- |
+| `eds-guidelines.md`                     | shared | Offline design reference — full component/pattern/foundation guidance |
+| `eds-installer.md`                      | shared | This file — installation and configuration guide                      |
+| `VERSION`                               | shared | Installed EDS version (used by the auto-update check)                 |
+| `web/eds-web-development.md`            | web    | Rules for building on web — components, tokens, styling, Figma        |
+| `web/eds-web-linter.md`                 | web    | Flags drift — checks code against EDS web components/tokens/patterns  |
+| `web/insight/insight-components.md`     | web    | Insight component interfaces and usage                                |
+| `web/insight/insight-patterns.md`       | web    | Insight page compositions and layout patterns                         |
+| `web/insight/insight-coverage-audit.md` | web    | Gap analysis between Insight and WDS                                  |
+| `mobile/eds-mobile-development.md`      | mobile | Running the real eero iOS + Android apps locally                      |
+| `mobile/eds-mobile-linter.md`           | mobile | Flags drift — checks native code against in-app eero foundations      |
+
+Shared files install on every run; `web/*` install with `web`, `mobile/*` with `mobile`.
 
 **2. Reference repo clones** → `.reference/`
 
-| Clone                          | What it provides                                                        |
-| ------------------------------ | ----------------------------------------------------------------------- |
-| `.reference/web-design-system` | WDS Storybook stories — variant examples showing how to configure props |
-| `.reference/web-eero-insight`  | Insight source — components, page compositions, layouts, patterns       |
+| Clone                          | What it provides                                                    |
+| ------------------------------ | ------------------------------------------------------------------- |
+| `.reference/web-design-system` | WDS repo clone — variant examples (stories) for every WDS component |
+| `.reference/web-eero-insight`  | Insight source — components, page compositions, layouts, patterns   |
 
-These are what AI reads to understand _how_ to use components (not just what exists). The npm packages provide the piano keys (props, types, exports). The reference clones provide the sheet music (which prop combinations produce which variants, how components compose into full pages).
+These are what AI reads to understand _how_ to use components (not just what exists). The npm packages provide the piano keys (props, types, exports). The reference clones provide the sheet music (which prop combinations produce which variants, how components compose into full pages). Re-running the installer pulls both to the latest.
 
 **3. Claude Code CLI + IDE integration**
 
@@ -111,18 +131,19 @@ Then re-run the installer.
 If you prefer not to use the script:
 
 ```bash
-mkdir -p .kiro/steering/eds .kiro/steering/insight .reference
+mkdir -p .kiro/steering/eds .reference
 
-# Steering files
+# Steering files (one sparse path covers shared + web/ + mobile/ + web/insight/)
 git clone --depth 1 --filter=blob:none --sparse https://github.com/eero-inc/ux-design-systems.git /tmp/eds-repo
-cd /tmp/eds-repo && git sparse-checkout set ".kiro/steering/eds" ".kiro/steering/insight"
-cp /tmp/eds-repo/.kiro/steering/eds/* .kiro/steering/eds/
-cp /tmp/eds-repo/.kiro/steering/insight/* .kiro/steering/insight/
+cd /tmp/eds-repo && git sparse-checkout set ".kiro/steering/eds"
+cp -R /tmp/eds-repo/.kiro/steering/eds/. .kiro/steering/eds/
 rm -rf /tmp/eds-repo
 
-# Reference repos (requires eds-adopters team membership)
+# Web reference repos (requires eds-adopters team membership)
 git clone --depth 1 https://github.com/eero-inc/web-design-system .reference/web-design-system
 git clone --depth 1 https://github.com/eero-inc/web-eero-insight .reference/web-eero-insight
+
+# (Mobile instead: see .kiro/steering/eds/mobile/eds-mobile-development.md)
 
 # Add to .gitignore
 echo ".reference/" >> .gitignore
@@ -134,12 +155,38 @@ After installing, start a new Kiro or Claude Code chat to pick up the context.
 
 ## What Gets Installed (npm packages)
 
-### Core EDS packages
+> **Packaging (WDS v3.0.0 — unified package is the default).** WDS merged its
+> two former packages into one unified package, `@amzn/eero-web-design-system`
+> (v3.x), which now contains BOTH components and foundation/tokens. **This repo
+> now installs the unified v3 package, and the commands and config below use it
+> as the default.**
+>
+> ```bash
+> npm install @amzn/eero-web-design-system@^3.0.0 react@^18.2.0 react-dom@^18.2.0
+> ```
+>
+> - Components: `import { Button } from "@amzn/eero-web-design-system"` (or the subpath `"@amzn/eero-web-design-system/Button"`)
+> - Tailwind preset: `require("@amzn/eero-web-design-system/tokens/tw-styles/tw-custom-preset")` (no `.js` extension)
+> - Content path: `"./node_modules/@amzn/eero-web-design-system/library/**/*.{js,css}"`
+> - Styles: `import "@amzn/eero-web-design-system/styles.css"`
+> - Fonts: `@amzn/eero-web-design-system/fonts/fonts.css` — Tokens: `@amzn/eero-web-design-system/tokens/tw-styles/*` (e.g. `color-variables.css`, `light-variables.css`)
+>
+> **Legacy (pre-v3, two packages).** The old `@amzn/eero-web-design-components`
+> (2.21.x) + `@amzn/eero-web-design-foundation` (0.6.x) are still published, so
+> adopters not yet migrated can keep using them. In that setup, swap the unified
+> package name back to `@amzn/eero-web-design-components` for components/styles
+> and `@amzn/eero-web-design-foundation` for tokens/fonts (foundation paths add
+> the extra `tokens/` segment, e.g. `@amzn/eero-web-design-foundation/tokens/fonts/fonts.css`).
+> Always check `node_modules/@amzn/` to see which is installed before writing
+> imports — do not assume.
 
-| Package                                  | Version | What it is                                                                                                                                                                             |
-| ---------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@amzn/eero-web-design-components` (WDS) | 2.18.0  | 40+ production React components — Button, Card, Input, Select, Switch, Tabs, Tag, Icon, Modal, Table, Search, Loader, Tooltip, and more. Built on Ant Design, styled with eero tokens. |
-| `@amzn/eero-web-design-foundation`       | 0.5.1   | Design tokens (colors, spacing, typography, radius, elevation), Tailwind CSS preset, Centra No2 font files, CSS variables for theming.                                                 |
+### Core EDS package
+
+| Package                              | Version            | What it is                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@amzn/eero-web-design-system` (WDS) | 3.x (latest 3.5.0) | Unified package — 40+ production React components (Button, Card, Input, Select, Switch, Tabs, Tag, Icon, Modal, Table, Search, Loader, Tooltip, and more) **plus** the foundation: design tokens (colors, spacing, typography, radius, elevation), Tailwind CSS preset, Centra No2 font files, and CSS variables for theming. Built on Ant Design, styled with eero tokens. |
+
+> **Legacy (pre-v3):** the two separate packages `@amzn/eero-web-design-components` (2.21.x, components) and `@amzn/eero-web-design-foundation` (0.6.x, tokens/foundation) are still published for adopters not yet on v3.
 
 ### Runtime dependencies
 
@@ -164,12 +211,15 @@ After installing, start a new Kiro or Claude Code chat to pick up the context.
 Run these from the project directory:
 
 ```bash
-# Core EDS packages + React
-npm install @amzn/eero-web-design-components@^2.18.0 @amzn/eero-web-design-foundation@^0.5.1 react@^18.2.0 react-dom@^18.2.0
+# Core EDS package (unified v3) + React
+npm install @amzn/eero-web-design-system@^3.0.0 react@^18.2.0 react-dom@^18.2.0
 
 # Build toolchain
 npm install -D vite@^6.4.1 @vitejs/plugin-react-swc@^3.11.0 tailwindcss@^3.4.0 postcss@^8.4.0
 ```
+
+> **Legacy (pre-v3):** if an adopter is still on the two-package setup, install
+> `@amzn/eero-web-design-components@^2.21.0 @amzn/eero-web-design-foundation@^0.6.0` instead.
 
 If the project is a workspace in this monorepo, add it to the root `package.json` `workspaces` array and run `npm install` from the repo root instead.
 
@@ -187,12 +237,12 @@ The EDS foundation ships a Tailwind preset that maps all design tokens to utilit
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [
-    require("@amzn/eero-web-design-foundation/tokens/tw-styles/tw-custom-preset.js"),
+    require("@amzn/eero-web-design-system/tokens/tw-styles/tw-custom-preset"),
   ],
   content: [
     "./src/**/*.{js,tsx,ts}",
     "./index.html",
-    "./node_modules/@amzn/eero-web-design-components/library/**/*.{js,css}",
+    "./node_modules/@amzn/eero-web-design-system/library/**/*.{js,css}",
   ],
 };
 ```
@@ -256,6 +306,88 @@ export default defineConfig({
 
 ---
 
+## Next.js / SSR Adopters (Read This First)
+
+The config above is written for **Vite**. If you are adopting EDS in a **Next.js**
+app (especially the App Router), the components work — but there are SSR-specific
+rules you MUST follow, or components render fine in a local prototype and then
+**break at build time when you promote to a server-rendered environment**. This
+is the single most common EDS-on-Next.js failure.
+
+### 1. WDS components are Client Components — wrap them with `"use client"`
+
+WDS components use React hooks (`useState`/`useEffect`/etc.) but **do not ship
+their own `"use client"` directive**. In the Next.js App Router, everything is a
+Server Component by default, so importing a WDS component into a server component
+throws:
+
+> `Error: useState only works in a Client Component. Add the "use client" directive at the top of the file to use it.`
+
+**Fix — pick one:**
+
+- Add `"use client"` to the top of any file that imports WDS components, **or**
+- Create a thin client re-export barrel and import WDS through it:
+
+```tsx
+// components/eds.ts
+"use client";
+export * from "@amzn/eero-web-design-system"; // or eero-web-design-components
+```
+
+```tsx
+// then in server components:
+import { Button, Card } from "@/components/eds";
+```
+
+This is why the same code passes in a Vite prototype (Vite never server-renders)
+but fails in Next.js. Assume every WDS import needs a client boundary.
+
+### 2. CSS import order lives in `app/layout.tsx` (or `pages/_app.tsx`)
+
+Next.js has no `main.tsx`. Put the EDS CSS imports (same order as the Vite CSS
+Setup below — fonts → color-variables → light-variables → component `styles.css`
+last) at the top of `app/layout.tsx` (App Router) or `pages/_app.tsx` (Pages
+Router). Global CSS can only be imported in those entry files.
+
+### 3. `data-theme` goes on `<html>` in the layout
+
+```tsx
+// app/layout.tsx
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" data-theme="light">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### 4. Transpile WDS if you hit ESM/parse errors
+
+If Next fails to parse the WDS package, add it to `transpilePackages`:
+
+```js
+// next.config.js
+module.exports = {
+  transpilePackages: [
+    "@amzn/eero-web-design-system", // or eero-web-design-components + -foundation
+  ],
+};
+```
+
+### 5. Tailwind content path uses `.ts` config, not `.cjs`
+
+Next.js projects typically use `tailwind.config.ts`. The preset + content-path
+requirements are identical to the Vite setup (see Tailwind config above) — only
+the file extension differs.
+
+> **Why this matters:** a prototype built in Vite that never exercises SSR can
+> pass every local check and then fail when contributed to or merged into a
+> Next.js/server-rendered target (e.g. Insight, or WDS itself). Following these
+> rules up front keeps a Vite prototype and its eventual Next.js home 1:1.
+
+---
+
 ## CSS Setup
 
 ### Import order (critical)
@@ -270,16 +402,16 @@ import "./base.css"; // optional — only if you have pre-existing styles
 import "./index.css";
 
 // 3. Fonts — loads Centra No2 (eero's typeface)
-import "@amzn/eero-web-design-foundation/tokens/fonts/fonts.css";
+import "@amzn/eero-web-design-system/fonts/fonts.css";
 
 // 4. Color tokens — the full color ramp values
-import "@amzn/eero-web-design-foundation/tokens/tw-styles/color-variables.css";
+import "@amzn/eero-web-design-system/tokens/tw-styles/color-variables.css";
 
 // 5. Theme variables — semantic color mappings (light mode)
-import "@amzn/eero-web-design-foundation/tokens/tw-styles/light-variables.css";
+import "@amzn/eero-web-design-system/tokens/tw-styles/light-variables.css";
 
 // 6. WDS component styles — loads LAST, EDS overrides everything
-import "@amzn/eero-web-design-components/library/styles.css";
+import "@amzn/eero-web-design-system/styles.css";
 ```
 
 > **Why EDS loads last:** The WDS styles include a Tailwind reset and eero-specific styling. Loading them last ensures the app looks like eero out of the box. If you need to override EDS for a specific bespoke element, add styles _after_ this import and document why.
@@ -289,10 +421,10 @@ import "@amzn/eero-web-design-components/library/styles.css";
 If your project already uses EDS and you need your own CSS to override specific WDS reset behavior (e.g., font-smoothing), reverse the order — load EDS first, your CSS last:
 
 ```tsx
-import "@amzn/eero-web-design-foundation/tokens/tw-styles/color-variables.css";
-import "@amzn/eero-web-design-foundation/tokens/tw-styles/light-variables.css";
-import "@amzn/eero-web-design-foundation/tokens/fonts/fonts.css";
-import "@amzn/eero-web-design-components/library/styles.css";
+import "@amzn/eero-web-design-system/tokens/tw-styles/color-variables.css";
+import "@amzn/eero-web-design-system/tokens/tw-styles/light-variables.css";
+import "@amzn/eero-web-design-system/fonts/fonts.css";
+import "@amzn/eero-web-design-system/styles.css";
 import "./index.css"; // Your overrides load last
 ```
 
@@ -325,17 +457,13 @@ Set `data-theme` on a parent element:
 <body data-theme="light"></body>
 ```
 
-For dark mode, toggle to `data-theme="dark"` and also import:
-
-```tsx
-import "@amzn/eero-web-design-foundation/tokens/tw-styles/dark-variables.css";
-```
+> **Dark mode isn't available in WDS 3.5+.** WDS stopped publishing the dark token set (`dark-variables.css`) pending a contrast pass, so `data-theme="dark"` has nothing to apply. Use `data-theme="light"`. Projects pinned to an older 3.x can still import `dark-variables.css` until they upgrade.
 
 ---
 
 ## WDS Component Reference
 
-All WDS components are named exports from `@amzn/eero-web-design-components` (v2.18.0):
+All WDS components are named exports from the unified `@amzn/eero-web-design-system` (v3.0.0) barrel (latest: 3.5.0). Each component is also available as a subpath export (e.g. `"@amzn/eero-web-design-system/Button"`):
 
 ```tsx
 import {
@@ -363,6 +491,7 @@ import {
   InputNumber,
   InputPassword,
   IntervalSelector,
+  LineChart,
   Loader,
   Menu,
   MiniExpand,
@@ -387,7 +516,7 @@ import {
   SortFilterWidget,
   SupportMessages,
   Switch,
-  Table,
+  Table, // legacy — do NOT use for new work; use TableV2 instead
   TableV2,
   usePaginatedTable,
   Tabs,
@@ -424,37 +553,39 @@ import {
 
   // Constants
   INPUT_MENU_TYPES,
-} from "@amzn/eero-web-design-components";
+} from "@amzn/eero-web-design-system";
 ```
 
 ### Key component APIs
 
-| Component           | Key props                                                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `Button`            | `type` ("primary" / "default" / "text" / "link"), `label`, `leftIcon`, `rightIcon`, `loading`, `danger`, `ghost`, `fullWidth`, `size`                        |
-| `Card`              | `title`, `size` (1-10), `expandable`, `isCollapsed`, `footer`, `extra`                                                                                       |
-| `CardCarousel`      | Horizontal card scrolling container                                                                                                                          |
-| `Input`             | `id` (required), `label`, `caption`, `state` ("default" / "error" / "warning"), `layout` ("horizontal" / "vertical")                                         |
-| `InputMenu`         | `id` (required), `type` (use `INPUT_MENU_TYPES`), searchable dropdown menus                                                                                  |
-| `Select`            | `id` (required), `label`, `options`, `placeholder`, `state`                                                                                                  |
-| `AutoComplete`      | Typeahead input with filtered suggestions                                                                                                                    |
-| `Switch`            | `format` ("small" / "default" / "large"), `checked`, `onChange`                                                                                              |
-| `Tabs`              | `items` (array of `{key, label, children}`), `topIcons`, `tabFillSpace`                                                                                      |
-| `Tag`               | `color` ("grey" / "navy" / "periwinkle" / "green" / "orange" / "red" / "turquoise" / "ocean" / "purple"), `status`, `size` ("regular" / "large"), `showIcon` |
-| `CheckableTag`      | Selectable tag — acts as a filter chip                                                                                                                       |
-| `Icon`              | `icon` (use `ICONS` enum values like `ICONS.FUNCTIONAL_HOME`)                                                                                                |
-| `Search`            | `id` (required), `placeholder`                                                                                                                               |
-| `Modal`             | Standard Ant Design Modal API                                                                                                                                |
-| `OverlayPanel`      | Sliding panel overlay (alternative to Modal for complex content)                                                                                             |
-| `TableV2`           | TanStack-based table with sorting, filtering, pagination                                                                                                     |
-| `MultiFieldTableV2` | Editable table with inline field editing, validation, add/remove rows                                                                                        |
-| `Brush`             | Time-range selection chart (drag to select a range)                                                                                                          |
-| `ProgressBar`       | Determinate/indeterminate progress indicator                                                                                                                 |
-| `SortableList`      | Drag-to-reorder list                                                                                                                                         |
-| `SortFilterWidget`  | Combined sort + filter controls                                                                                                                              |
-| `Pagination`        | Page navigation with `PaginationInfo`                                                                                                                        |
-| `Layout`            | App shell with `Sidebar` — collapsible navigation layout                                                                                                     |
-| `Tree` / `TreeView` | Hierarchical data display with expand/collapse                                                                                                               |
+| Component           | Key props                                                                                                                                                                     |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`            | `type` ("primary" / "default" / "text" / "link"), `label`, `leftIcon`, `rightIcon`, `loading`, `danger`, `ghost`, `fullWidth`, `size`                                         |
+| `Card`              | `title`, `size` (1-10), `expandable`, `isCollapsed`, `footer`, `extra`                                                                                                        |
+| `CardCarousel`      | Horizontal card scrolling container                                                                                                                                           |
+| `Input`             | `id` (required), `label`, `caption`, `state` ("default" / "error" / "warning"), `layout` ("horizontal" / "vertical")                                                          |
+| `InputMenu`         | `id` (required), `type` (use `INPUT_MENU_TYPES`), searchable dropdown menus                                                                                                   |
+| `Select`            | `id` (required), `label`, `options`, `placeholder`, `state`                                                                                                                   |
+| `AutoComplete`      | Typeahead input with filtered suggestions                                                                                                                                     |
+| `Switch`            | `format` ("small" / "default" / "large"), `checked`, `onChange`                                                                                                               |
+| `Tabs`              | `items` (array of `{key, label, children}`), `topIcons`, `tabFillSpace`                                                                                                       |
+| `Tag`               | `color` ("grey" / "navy" / "periwinkle" / "green" / "orange" / "red" / "turquoise" / "ocean" / "purple"), `status`, `size` ("regular" / "large"), `showIcon`                  |
+| `CheckableTag`      | Selectable tag — acts as a filter chip                                                                                                                                        |
+| `Icon`              | `icon` (use `ICONS` enum values like `ICONS.FUNCTIONAL_HOME`)                                                                                                                 |
+| `Search`            | `id` (required), `placeholder`                                                                                                                                                |
+| `Modal`             | Standard Ant Design Modal API                                                                                                                                                 |
+| `OverlayPanel`      | Sliding panel overlay (alternative to Modal for complex content)                                                                                                              |
+| `TableV2`           | TanStack-based table with sorting, filtering, pagination                                                                                                                      |
+| `MultiFieldTableV2` | Editable table with inline field editing, validation, add/remove rows                                                                                                         |
+| `Brush`             | Time-range selection chart (drag to select a range)                                                                                                                           |
+| `ProgressBar`       | Determinate/indeterminate progress indicator                                                                                                                                  |
+| `SortableList`      | Drag-to-reorder list                                                                                                                                                          |
+| `SortFilterWidget`  | Combined sort + filter controls                                                                                                                                               |
+| `Pagination`        | Page navigation with `PaginationInfo`                                                                                                                                         |
+| `Layout`            | App shell with `Sidebar` — collapsible navigation layout                                                                                                                      |
+| `Sidebar`           | Navigation rail; `footerItems` pins rows (e.g. Help, Settings) to the bottom (3.5.0+)                                                                                         |
+| `LineChart`         | `data`, `series` (`{key, label, color?}`), `height` (number or `"fill"`), `rightAxisKeys` (dual axis), `syncId` (3.4.0+). **The only WDS chart today — data viz is WDS-only** |
+| `Tree` / `TreeView` | Hierarchical data display with expand/collapse                                                                                                                                |
 
 ### Where to find variant examples
 
@@ -478,7 +609,7 @@ Tokens are available as CSS variables and through the Tailwind preset:
 | Background | `--background-primary`, `--background-secondary`                             | `style={{ background: "var(--background-primary)" }}` |
 | Border     | `--border-primary`                                                           | `style={{ borderColor: "var(--border-primary)" }}`    |
 
-The Tailwind preset from `@amzn/eero-web-design-foundation` maps all spacing, radius, elevation, and typography scales to utility classes.
+The Tailwind preset from `@amzn/eero-web-design-system` (`./tokens/tw-styles/tw-custom-preset`) maps all spacing, radius, elevation, and typography scales to utility classes.
 
 ---
 
@@ -487,7 +618,7 @@ The Tailwind preset from `@amzn/eero-web-design-foundation` maps all spacing, ra
 After installation and configuration, drop this into any component to verify everything works:
 
 ```tsx
-import { Button, Tag, Card } from "@amzn/eero-web-design-components";
+import { Button, Tag, Card } from "@amzn/eero-web-design-system";
 
 function EDSCheck() {
   return (
@@ -517,7 +648,7 @@ If you hit registry issues in a Peru project, see the [ABT guide for private Cod
 
 ### Brazil Projects (Not Supported for WDS Packages)
 
-**Brazil cannot install the WDS npm packages** (`@amzn/eero-web-design-components`, `@amzn/eero-web-design-foundation`). Brazil resolves dependencies from its own version sets, not from external CodeArtifact registries, so it will 404 on these packages.
+**Brazil cannot install the WDS npm packages** (the unified `@amzn/eero-web-design-system`, or the legacy `@amzn/eero-web-design-components` + `@amzn/eero-web-design-foundation`). Brazil resolves dependencies from its own version sets, not from external CodeArtifact registries, so it will 404 on these packages.
 
 > The constraint is on Brazil's dependency resolution, not on the EDS itself.
 
@@ -534,24 +665,24 @@ If you hit registry issues in a Peru project, see the [ABT guide for private Cod
 
 ### Future: WDS Migration to ABT
 
-The WDS team is planning to migrate the Web Design System packages to ABT after the Next.js migration is complete. Once that lands, Brazil projects will be able to consume `@amzn/eero-web-design-components` and `@amzn/eero-web-design-foundation` natively through version sets.
+The WDS team is planning to migrate the Web Design System package to ABT after the Next.js migration is complete. Once that lands, Brazil projects will be able to consume `@amzn/eero-web-design-system` (and, for unmigrated adopters, the legacy `@amzn/eero-web-design-components` + `@amzn/eero-web-design-foundation`) natively through version sets.
 
 ---
 
 ## Troubleshooting
 
-| Problem                                             | Cause                                                   | Fix                                                                                                               |
-| --------------------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| 401/403 on `npm install`                            | CodeArtifact token expired                              | Run `mwinit -f` then `npm run codeartifact:login`                                                                 |
-| "Invalid hook call"                                 | Duplicate React instances                               | Add React alias in `vite.config.ts` (see config section)                                                          |
-| Components render unstyled                          | Wrong CSS import order                                  | Foundation CSS must load before component CSS before Tailwind                                                     |
-| Centra No2 font not loading                         | Missing font import                                     | Import `@amzn/eero-web-design-foundation/tokens/fonts/fonts.css` in entry file                                    |
-| Tailwind classes not applying to WDS                | Missing content path                                    | Add `./node_modules/@amzn/eero-web-design-components/library/**/*.{js,css}` to `content` in `tailwind.config.cjs` |
-| Dark mode not working                               | Missing theme attribute or CSS                          | Set `data-theme="dark"` on parent element and import `dark-variables.css`                                         |
-| `Cannot find module '@amzn/...'`                    | Not authenticated or wrong registry                     | Check `.npmrc` points to CodeArtifact, re-run `codeartifact:login`                                                |
-| Reference clone fails (404)                         | Not in eds-adopters team                                | Ask Isaac Park to add you to [eds-adopters](https://github.com/orgs/eero-inc/teams/eds-adopters)                  |
-| Installer script 404                                | Using old `curl` command                                | Use the `git clone` one-liner (see Full Installer section above)                                                  |
-| Figma MCP in `~/.claude/mcp.json` but tools missing | Wrong config file — Claude Code doesn't read `mcp.json` | Use `claude mcp add figma -e FIGMA_API_KEY="TOKEN" -s user -- figma-developer-mcp --stdio` instead                |
+| Problem                                             | Cause                                                   | Fix                                                                                                           |
+| --------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| 401/403 on `npm install`                            | CodeArtifact token expired                              | Run `mwinit -f` then `npm run codeartifact:login`                                                             |
+| "Invalid hook call"                                 | Duplicate React instances                               | Add React alias in `vite.config.ts` (see config section)                                                      |
+| Components render unstyled                          | Wrong CSS import order                                  | Foundation CSS must load before component CSS before Tailwind                                                 |
+| Centra No2 font not loading                         | Missing font import                                     | Import `@amzn/eero-web-design-system/fonts/fonts.css` in entry file                                           |
+| Tailwind classes not applying to WDS                | Missing content path                                    | Add `./node_modules/@amzn/eero-web-design-system/library/**/*.{js,css}` to `content` in `tailwind.config.cjs` |
+| Dark mode not working                               | WDS 3.5+ no longer publishes the dark token set         | Expected — dark mode is unavailable until WDS republishes it. Use `data-theme="light"`                        |
+| `Cannot find module '@amzn/...'`                    | Not authenticated or wrong registry                     | Check `.npmrc` points to CodeArtifact, re-run `codeartifact:login`                                            |
+| Reference clone fails (404)                         | Not in eds-adopters team                                | Ask Isaac Park to add you to [eds-adopters](https://github.com/orgs/eero-inc/teams/eds-adopters)              |
+| Installer script 404                                | Using old `curl` command                                | Use the `git clone` one-liner (see Full Installer section above)                                              |
+| Figma MCP in `~/.claude/mcp.json` but tools missing | Wrong config file — Claude Code doesn't read `mcp.json` | Use `claude mcp add figma -e FIGMA_API_KEY="TOKEN" -s user -- figma-developer-mcp --stdio` instead            |
 
 ---
 

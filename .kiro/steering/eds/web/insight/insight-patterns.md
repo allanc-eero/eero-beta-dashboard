@@ -5,7 +5,9 @@ description: "Real-world patterns and page scaffolding templates from eero Insig
 
 # Insight Production Patterns
 
-Real-world usage patterns extracted from `web-eero-insight` — the ISP admin dashboard built on Next.js + Tailwind + EDS (`@amzn/eero-web-design-components` and `@amzn/eero-web-design-foundation`).
+Real-world usage patterns extracted from `web-eero-insight` — the ISP admin dashboard built on Next.js + Tailwind + EDS.
+
+> **Package note:** Insight's own source still imports EDS from the legacy two packages (`@amzn/eero-web-design-components` for components, `@amzn/eero-web-design-foundation` for tokens), so the code snippets below use those import paths. When building in this repo (now on the unified WDS v3 package), import the same components/tokens from `@amzn/eero-web-design-system` instead. Check `node_modules/@amzn/` to confirm which is installed.
 
 Use the reference sections (1–6) to understand existing patterns. Use section 7 (Page Scaffolding Guide) to create new pages.
 

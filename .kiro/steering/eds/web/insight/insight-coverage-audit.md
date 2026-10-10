@@ -10,7 +10,7 @@ Cross-reference of what exists across all five sources. Use this to identify gap
 **Sources:**
 
 1. **Figma** — Design source of truth (⚠️ requires manual verification — Figma MCP available but not queried for full library)
-2. **EDS Package** — `@amzn/eero-web-design-components` (npm)
+2. **EDS Package** — `@amzn/eero-web-design-system` (unified WDS v3, npm; legacy: `@amzn/eero-web-design-components`)
 3. **Storybook** — `apps/docsite/storybook/stories/` (this repo)
 4. **Insight** — `web-eero-insight` production usage
 5. **web-DS** — `web-design-system` engineering fork
@@ -68,7 +68,7 @@ Cross-reference of what exists across all five sources. Use this to identify gap
 
 ### Additional WDS Exports (in package + have Storybook stories)
 
-These are exported from `@amzn/eero-web-design-components` and have their own stories. They're listed separately because they're variants or sub-components that aren't always obvious as standalone exports:
+These are exported from `@amzn/eero-web-design-system` (unified WDS v3; legacy: `@amzn/eero-web-design-components`) and have their own stories. They're listed separately because they're variants or sub-components that aren't always obvious as standalone exports:
 
 | Component             | Storybook | Notes                                            |
 | --------------------- | :-------: | ------------------------------------------------ |
