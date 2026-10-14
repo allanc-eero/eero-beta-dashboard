@@ -23,7 +23,7 @@ Proactively checks code for design system consistency. References `eds-guideline
 
 Before creating a new component:
 
-- Check `@amzn/eero-web-design-components` exports for an existing component that serves the same purpose
+- Check `@amzn/eero-web-design-system` exports (unified v3; legacy repos: `@amzn/eero-web-design-components`) for an existing component that serves the same purpose
 - If one exists, USE IT — do not create a duplicate
 - If one exists but doesn't quite fit, flag it:
 
@@ -38,9 +38,9 @@ Recommendation: Extend existing rather than creating new
 
 Before using any color, spacing, font size, radius, or elevation value:
 
-- Check `@amzn/eero-web-design-foundation/tokens/` for the matching token
+- Check `@amzn/eero-web-design-system/tokens/` (unified v3; legacy repos: `@amzn/eero-web-design-foundation/tokens/`) for the matching token
 - Colors: `tw-styles/color-variables.css`
-- All other scales: `tw-styles/tw-custom-preset.js`
+- All other scales: `tw-styles/tw-custom-preset` (no `.js` extension in v3)
 - If a token exists, it MUST be used
 - If hardcoded, flag it:
 
@@ -75,6 +75,21 @@ Scan for Tailwind arbitrary values that should use tokens:
 - Each one should map to a design token
 - Flag any that don't have a clear token equivalent
 
+### 5. Data Visualization Check
+
+Charts must come from `@amzn/eero-web-design-system` (today: `LineChart`). Flag:
+
+- Direct `recharts` (or any other chart library) imports in product code
+- Copies of Insight's bespoke `Chart` / `MultiCharts` / `CircularGauge`
+- Hand-built stand-ins for chart types or features WDS hasn't shipped yet
+
+```
+⚠️ DATA VIZ NOT FROM WDS
+What: {chart built outside WDS}
+WDS today: LineChart (check the installed typings for anything newer)
+Recommendation: Use the WDS chart. If WDS doesn't have it yet, it isn't ready to consume — raise it with the EDS team.
+```
+
 ---
 
 ## Flagging Format
@@ -95,23 +110,25 @@ Recommendation: [use existing / extend existing / create new with justification]
 
 When checking design compliance, map WDS component names to their guidance section in `eds-guidelines.md`:
 
-| WDS Component                        | See Guidance Under         |
-| ------------------------------------ | -------------------------- |
-| DropdownButton, DropdownIconButton   | Buttons > Dropdown         |
-| SplitButton                          | Buttons > Split dropdown   |
-| IconButton, TinyIconButton           | Buttons > Types            |
-| InputMenu, InputMenuDropdown         | Input Menus                |
-| InputNumber, InputPassword, TextArea | Input > Types              |
-| TableV2, MultiFieldTableV2           | Tables                     |
-| AutoComplete                         | Input Menus > Autocomplete |
-| CardCarousel                         | Card > Types               |
-| ProgressBar                          | Loaders > Progress bar     |
-| SortableList, SortFilterWidget       | Sort and Filter            |
-| Tree, TreeView                       | Navigation                 |
-| OverlayPanel                         | Panel or Modal             |
-| EllipsisText, CopyableText           | Typography utilities       |
+| WDS Component                                                                           | See Guidance Under              |
+| --------------------------------------------------------------------------------------- | ------------------------------- |
+| DropdownButton, DropdownIconButton                                                      | Buttons > Dropdown              |
+| SplitButton                                                                             | Buttons > Split dropdown        |
+| IconButton, TinyIconButton                                                              | Buttons > Types                 |
+| InputMenu, InputMenuDropdown                                                            | Input Menus                     |
+| InputNumber, InputPassword, TextArea                                                    | Input > Types                   |
+| TableV2, MultiFieldTableV2 _(always use V2; legacy `Table` is deprecated for new work)_ | Tables                          |
+| AutoComplete                                                                            | Input Menus > Autocomplete      |
+| CardCarousel                                                                            | Card > Types                    |
+| ProgressBar                                                                             | Loaders > Progress bar          |
+| SortableList, SortFilterWidget                                                          | Sort and Filter                 |
+| Tree, TreeView                                                                          | Navigation                      |
+| OverlayPanel                                                                            | Panel or Modal                  |
+| EllipsisText, CopyableText                                                              | Typography utilities            |
+| LineChart                                                                               | Data visualization > Line chart |
+| Sidebar (incl. `footerItems` for bottom-pinned rows)                                    | Navigation                      |
 
-For code examples, check `.reference/web-design-system/components/src/*/stories/` (primary), query the KB, or check `apps/docsite/storybook/stories/`
+For code examples, check `.reference/web-design-system/components/src/*/stories/` (primary) or query the KB.
 
 ---
 
@@ -121,18 +138,17 @@ Check these sources in order:
 
 1. **EDS Knowledge Base** (if configured) — live, queryable, always current
 2. **`eds-guidelines.md`** — offline reference, full design system knowledge
-3. **`@amzn/eero-web-design-components`** — check actual exports and typings in `node_modules`
-4. **`@amzn/eero-web-design-foundation/tokens/`** — check actual token values
+3. **`@amzn/eero-web-design-system`** (unified v3; legacy: `@amzn/eero-web-design-components`) — check actual exports and typings in `node_modules` (`library/typings/`)
+4. **`@amzn/eero-web-design-system/tokens/`** (unified v3; legacy: `@amzn/eero-web-design-foundation/tokens/`) — check actual token values
 5. **`.reference/web-design-system/components/src/*/stories/`** — WDS variant examples (how to configure props)
 6. **`.reference/web-eero-insight/src/components/`** — Insight components not yet in WDS
 7. **`.reference/web-eero-insight/src/app/`** — page compositions showing how components assemble
 8. **Figma** — design source of truth (via Figma MCP if configured)
-9. **Storybook** — `apps/docsite/storybook/stories/` (local usage examples)
-10. **Existing codebase** — how patterns are currently implemented
+9. **Existing codebase** — how patterns are currently implemented
 
 ### Components in Figma but Not Yet in Code
 
-Some components exist in Figma (design is complete) but haven't been added to `@amzn/eero-web-design-components` yet. When encountering these:
+Some components exist in Figma (design is complete) but haven't been added to `@amzn/eero-web-design-system` (unified v3; legacy: `@amzn/eero-web-design-components`) yet. When encountering these:
 
 - Do NOT flag as "missing from WDS" — the design exists, code hasn't caught up
 - Reference the Figma spec for implementation guidance
@@ -156,5 +172,5 @@ Some components exist in Figma (design is complete) but haven't been added to `@
 ## What This Does NOT Cover
 
 - Docsite-specific layout rules (see `docsite/docsite-steering.md`)
-- How to build new code (see `eds-development.md`)
+- How to build new code (see `eds-web-development.md`)
 - Full design system reference (see `eds-guidelines.md`)

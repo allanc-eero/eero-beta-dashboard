@@ -11,25 +11,44 @@ Rules for building with the eero Design System. Covers component usage, token en
 
 ## What is EDS
 
-- EDS = the full eero design system. It includes the `@amzn` npm packages (current standardized web components + tokens) plus Insight web components being standardized (marked 🟢 in `.kiro/steering/insight/`).
+- EDS = the full eero design system. It includes the `@amzn` npm packages (current standardized web components + tokens) plus Insight web components being standardized (marked 🟢 in `.kiro/steering/eds/web/insight/`).
 - The `@amzn` packages are the current source of truth for what's ready to use today.
-- Insight components that haven't been promoted yet can be referenced via `.kiro/steering/insight/` for project-specific work.
+- Insight components that haven't been promoted yet can be referenced via `.kiro/steering/eds/web/insight/` for project-specific work. Not charts: data viz is WDS-only.
 - App (mobile) components are a separate platform — they share foundations (colors, spacing, typography) but not web components.
 
 **What is NOT EDS:**
 
-- The docsite (`apps/docsite/`) is the documentation website that documents EDS — it is not a product and not a source for components.
-- The docsite Storybook (`apps/docsite/storybook/`) contains usage _examples_ of WDS components — it is NOT the source of truth. The source is the WDS Storybook (from the `web-design-system` repo). The `@amzn` npm package is the code source of truth.
+- The EDS docsite (eds.harmony.a2z.com) documents EDS — it is not a product and not a source for components.
+- Work-in-progress components in the `ux-design-systems` repo (the EDS team's prototypes, e.g. upcoming charts) are not for consumption. A component is ready only once it ships in `@amzn/eero-web-design-system`.
 
 ---
 
 ## Source of Truth
 
-- **Components (imports)** — `node_modules/@amzn/eero-web-design-components/` — what you import and use in code
-- **Design tokens (imports)** — `node_modules/@amzn/eero-web-design-foundation/` — colors, spacing, typography, radius, elevation
-- **Full styles (imports)** — `@amzn/eero-web-design-components/library/styles.css`
-- **Variant examples (reference)** — `.reference/web-design-system/components/src/*/stories/` — how to configure each component for specific use cases
-- **Insight components (reference)** — `.reference/web-eero-insight/src/components/` — components not yet in WDS (Chart, CircularGauge, DataTable, etc.)
+> **WDS packaging is mid-transition (as of WDS v3.0.0).** WDS merged its two
+> packages into ONE unified package. Both worlds are currently published:
+>
+> |                   | Old (two packages)                                                      | New (unified, WDS v3)                                                                                          |
+> | ----------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+> | Components        | `@amzn/eero-web-design-components` (2.21.x)                             | `@amzn/eero-web-design-system` (3.x)                                                                           |
+> | Tokens/foundation | `@amzn/eero-web-design-foundation` (0.6.x)                              | _(folded into the same package)_                                                                               |
+> | Component import  | `import { Button } from "@amzn/eero-web-design-components"`             | `import { Button } from "@amzn/eero-web-design-system"` (also `"@amzn/eero-web-design-system/Button"` subpath) |
+> | Preset            | `@amzn/eero-web-design-foundation/tokens/tw-styles/tw-custom-preset.js` | `@amzn/eero-web-design-system/tokens/tw-styles/tw-custom-preset`                                               |
+> | Styles            | `@amzn/eero-web-design-components/library/styles.css`                   | `@amzn/eero-web-design-system/styles.css`                                                                      |
+>
+> This repo now installs the **unified v3 package** (`@amzn/eero-web-design-system@^3.0.0`)
+> — use the New column here and in adopter repos on WDS v3. The old two-package
+> setup (Old column) still works for adopters not yet migrated. Always check
+> which is installed (`node_modules/@amzn/`) before writing imports — do not
+> assume. The unified package exposes each component as a subpath export
+> (`./Button`, `./Card`, `./DataTable`, …) plus `./tokens/*`, `./fonts/*`, and
+> `./styles.css`.
+
+- **Components (imports)** — `node_modules/@amzn/eero-web-design-system/` (unified v3, default) or `node_modules/@amzn/eero-web-design-components/` (legacy) — what you import and use in code
+- **Design tokens (imports)** — the unified package's `./tokens/*` (v3, default) or `node_modules/@amzn/eero-web-design-foundation/` (legacy) — colors, spacing, typography, radius, elevation
+- **Full styles (imports)** — `@amzn/eero-web-design-system/styles.css` (v3, default) or `@amzn/eero-web-design-components/library/styles.css` (legacy)
+- **WDS source + variant examples (reference)** — `.reference/web-design-system/` — a git clone of the WDS repo. Read `components/src/*/stories/` for how to configure each component. Re-running the EDS installer keeps it current.
+- **Insight components (reference)** — `.reference/web-eero-insight/src/components/` — Insight's own components that aren't in WDS yet (DataTable, EditableCard, etc.). Charts are the exception: see Data visualization below.
 - **Page compositions (reference)** — `.reference/web-eero-insight/src/app/` — how components assemble into full pages
 - **Design decisions** — `eds-guidelines.md` — when to use which component, accessibility, UX rules
 
@@ -39,18 +58,34 @@ Rules for building with the eero Design System. Covers component usage, token en
 
 ## Component Usage (Critical)
 
+> **Tables — "table" always means the V2 variants. This is a hard default.**
+>
+> When anyone asks for "a table," "a data table," "a grid," or anything table-like, deliver **`TableV2`** by default (or **`MultiFieldTableV2`** when rows need inline editing/validation). Do this **even if the request does not say "V2"** — users new to EDS will not know V2 exists, so it is your job to serve the latest, not theirs to ask for it. Never present plain `Table` as the default or the recommended option.
+>
+> The legacy **`Table`** component is retained only for backward compatibility. It MUST NOT be recommended, imported, or scaffolded for new work (net-new pages or new features on Insight). The only time you use plain `Table` is when editing pre-existing code that already imports it and the task is to maintain that existing code.
+>
+> **This rule overrides every other reference.** If any import list, package description, Storybook example, or older doc names plain `Table`, treat that as stale — `TableV2` wins. Resolve the conflict in favor of `TableV2` without asking.
+
+> **Data visualization — WDS only. If it's not in WDS, it's not ready.**
+>
+> Charts come from `@amzn/eero-web-design-system` and nowhere else. Today that is **`LineChart`** (WDS 3.4.0+). Check the installed package's typings for what else has shipped before building any chart.
+>
+> - Do NOT copy Insight's bespoke `Chart` / `MultiCharts` / `CircularGauge`, and do NOT install `recharts` to hand-build a chart. Those are what WDS is replacing.
+> - If the chart type or feature isn't in WDS yet (bar, area, donut, scatter, gauge, KPI/stat cards, brush/zoom, thresholds, annotations), it isn't ready to consume. Say so and ask — don't build a stand-in.
+> - Design guidance (palette, decision tree, line chart do's and don'ts) is in `eds-guidelines.md` → Data visualization.
+
 **BEFORE writing any UI code, you MUST:**
 
-1. **Check `node_modules/@amzn/eero-web-design-components/` FIRST.** Browse the full package — typings, library, styles. Look for an existing component that serves the purpose. This is the source of truth for production imports.
-2. **Check `node_modules/@amzn/eero-web-design-foundation/` for all styling values.** Browse the full package — tokens, fonts, presets. This is the source of truth for colors, spacing, typography, radius, and elevation.
+1. **Check `node_modules/@amzn/eero-web-design-system/` FIRST** (unified v3; legacy repos: `@amzn/eero-web-design-components/`). Browse the full package — typings (`library/typings/`), library, styles. Look for an existing component that serves the purpose. This is the source of truth for production imports.
+2. **Check `node_modules/@amzn/eero-web-design-system/tokens/` for all styling values** (unified v3; legacy repos: `@amzn/eero-web-design-foundation/`). Browse the full package — tokens, fonts, presets. This is the source of truth for colors, spacing, typography, radius, and elevation.
 3. **For variant examples, read `.reference/web-design-system/components/src/*/stories/`.** These show every configuration of every WDS component (collapsed sidebar, brush with time range, expandable table, etc.). Use these to configure components correctly.
-4. **If NOT in WDS, check `.reference/web-eero-insight/src/components/` for Insight components.** 92 components exist in Insight that are not in WDS. Reusable examples: Charts (includes CircularGauge), DataTable, EditableCard, ExpandableCard, KeyValuePairs, SimpleData, PageSection, TableWithBulkActions, PeriodSelector, CardSkeleton, TableSkeleton, FileUpload, SimplePagination. Read the actual source code. Install their external dependencies (e.g., `recharts` for Charts) as needed.
+4. **If NOT in WDS, check `.reference/web-eero-insight/src/components/` for Insight components.** 92 components exist in Insight that are not in WDS. Reusable examples: DataTable, EditableCard, ExpandableCard, KeyValuePairs, SimpleData, PageSection, TableWithBulkActions, PeriodSelector, CardSkeleton, TableSkeleton, FileUpload, SimplePagination. Read the actual source code. **Never charts** — data viz is WDS-only (see above).
 5. **For page compositions, read `.reference/web-eero-insight/src/app/`.** This shows how components are assembled into full pages — dashboard layouts, analytics views, settings pages, detail pages. Use these as the reference for page structure.
 6. **If a WDS component exists, USE IT.** Do not create a local version.
 7. **If NOT in WDS or Insight references, check `eds-guidelines.md`** for a documented pattern or foundation that covers the use case.
 8. **Only if nothing exists in WDS, Insight, or guidelines — ASK before creating a bespoke component.**
 9. **Never silently create a component that duplicates existing functionality.**
-10. **Maximize component coverage.** Don't just use the obvious components (Card, Table, Button). Check WDS and Insight for smaller utilities that add polish — Tooltip, Divider, CopyableText, EllipsisText, KeyValuePairs, PageSection, EditableCard, IconButton, TinyIconButton. If it exists and fits the use case, use it.
+10. **Maximize component coverage.** Don't just use the obvious components (Card, TableV2, Button). Check WDS and Insight for smaller utilities that add polish — Tooltip, Divider, CopyableText, EllipsisText, KeyValuePairs, PageSection, EditableCard, IconButton, TinyIconButton. If it exists and fits the use case, use it.
 11. **Before delivering code, self-audit.** Compare every UI element against WDS exports and Insight source. If a component exists for something you built manually, replace it.
 
 ---
@@ -72,9 +107,9 @@ When a user describes what they want to build:
 1. **Clarify scope first** — ask what they need: a full working prototype, page scaffolding/mockups, or a design recommendation.
 2. **Read `insight-patterns.md`** — match their request to existing page templates and scaffolding. Use the exact Tailwind classes documented.
 3. **Read `insight-components.md`** — compose using existing Insight components. Use the exact code structure and styling documented.
-4. **Check `@amzn/eero-web-design-components` typings** — verify props before using any WDS component.
+4. **Check `@amzn/eero-web-design-system` typings** (unified v3; legacy: `@amzn/eero-web-design-components`) — verify props before using any WDS component.
 5. **Check `eds-guidelines.md`** for design decisions — when to use which component, accessibility rules, platform differences.
-6. **Style using tokens from `@amzn/eero-web-design-foundation`** — never hardcode values.
+6. **Style using tokens from `@amzn/eero-web-design-system/tokens`** (unified v3; legacy: `@amzn/eero-web-design-foundation`) — never hardcode values.
 7. Only if no existing component or pattern fits — flag it and ask before creating new.
 
 ---
@@ -83,10 +118,10 @@ When a user describes what they want to build:
 
 - **Always use design tokens.** Never hardcode colors, spacing, font sizes, radius, or elevation values.
 - If a value doesn't match a token, use the nearest token and note the mapping.
-- Token locations:
-  - Colors: `@amzn/eero-web-design-foundation/tokens/tw-styles/color-variables.css`
-  - Theme: `light-variables.css` / `dark-variables.css`
-  - All scales: `tw-custom-preset.js`
+- Token locations (unified v3; legacy repos use `@amzn/eero-web-design-foundation/tokens/tw-styles/...`):
+  - Colors: `@amzn/eero-web-design-system/tokens/tw-styles/color-variables.css`
+  - Theme: `light-variables.css` (WDS 3.5+ ships no dark set)
+  - All scales: `tw-custom-preset` (no `.js` extension in v3)
 
 ### Custom Hex Values from Figma
 
@@ -183,39 +218,6 @@ One task, one scope. Only touch what you're asked to touch.
 - Do not refactor unrelated files
 - Do not change Tailwind config, tokens, global CSS, routing, or app structure
 - Do not "fix" or "improve" things you weren't asked to touch
-
----
-
-## Running the Demo Apps
-
-The `apps/` directory contains runnable demo apps that showcase EDS in real
-product-style UIs.
-
-| Demo        | Package name                             | Run command               |
-| ----------- | ---------------------------------------- | ------------------------- |
-| eero Pulse  | `@ux-design-systems/eds-demo-eero-pulse` | `npm run demo:pulse`      |
-| Backup Data | `@ux-design-systems/eds-demo-backupdata` | `npm run demo:backupdata` |
-| Partner Hub | `@ux-design-systems/eds-demo-partnerhub` | `npm run demo:partnerhub` |
-
-**When a user asks to "run demo pulse", "run the eero pulse demo", "start
-backupdata", etc.:**
-
-1. **Run the single root command** — e.g. `npm run demo:pulse` — from the repo
-   root. It starts the demo's dev server on localhost.
-2. **Do NOT `cd` into the app directory.**
-3. **Do NOT run a separate `npm install` inside the app.** The demos are root
-   workspaces, so their dependencies are already installed and linked by the
-   one root `npm install`. Instructing a per-app install is the old,
-   pre-workspace behavior and must not be used.
-
-**Only fall back to installing if the run command errors:**
-
-- **`Cannot find module` / missing deps / workspace not linked** → run
-  `npm install` **once from the repo root** (never per-app), then re-run the
-  demo command. A root install covers all demos.
-- **`E401` / auth errors on `@amzn/*` packages** → CodeArtifact token expired.
-  Ask the user to run `npm run codeartifact:login` (interactive Amazon auth),
-  then retry.
 
 ---
 
